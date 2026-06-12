@@ -1,0 +1,52 @@
+body {
+  margin: 0;
+  background: linear-gradient(180deg, #eefdf8 0%, #f8fbff 45%, #ffffff 100%);
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.app-page {
+  min-height: 100vh;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 32px 22px 90px;
+  box-sizing: border-box;
+}
+
+button {
+  font-family: inherit;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+img[alt="robot"] {
+  width: 135px !important;
+  max-width: 38vw;
+  filter: drop-shadow(0 14px 18px rgba(63, 169, 245, 0.18));
+}
+
+h2 {
+  font-size: 30px;
+  color: #18324a;
+  margin: 12px 0 22px !important;
+}
+
+h3 {
+  font-size: 23px;
+  color: #18324a;
+  margin: 32px 0 14px !important;
+}
+
+button[style] {
+  border-radius: 18px !important;
+  min-height: 54px !important;
+  font-size: 17px !important;
+  font-weight: 700 !important;
+  box-shadow: 0 12px 24px rgba(31, 111, 235, 0.13) !important;
+}
+
+audio {
+  display: none !important;
+}

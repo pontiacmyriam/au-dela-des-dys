@@ -1,0 +1,1682 @@
+{
+  "premiers_sons": [
+    {
+      "numero": "001",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_001.mp3",
+      "texte": "a e i o u"
+    },
+    {
+      "numero": "001",
+      "dossier": "voyelles",
+      "audio": "voyelles_001.mp3",
+      "texte": "a a a a"
+    },
+    {
+      "numero": "012",
+      "dossier": "voyelles",
+      "audio": "voyelles_012.mp3",
+      "texte": "avion ami ananas"
+    },
+    {
+      "numero": "023",
+      "dossier": "voyelles",
+      "audio": "voyelles_023.mp3",
+      "texte": "Écris le mot avion"
+    },
+    {
+      "numero": "040",
+      "dossier": "voyelles",
+      "audio": "voyelles_040.mp3",
+      "texte": "e e e e"
+    },
+    {
+      "numero": "041",
+      "dossier": "voyelles",
+      "audio": "voyelles_041.mp3",
+      "texte": "éléphant enfant écureuil"
+    },
+    {
+      "numero": "042",
+      "dossier": "voyelles",
+      "audio": "voyelles_042.mp3",
+      "texte": "Écris le mot éléphant"
+    },
+    {
+      "numero": "018",
+      "dossier": "voyelles",
+      "audio": "voyelles_018.mp3",
+      "texte": "é é é é"
+    },
+    {
+      "numero": "019",
+      "dossier": "voyelles",
+      "audio": "voyelles_019.mp3",
+      "texte": "école éléphant été"
+    },
+    {
+      "numero": "020",
+      "dossier": "voyelles",
+      "audio": "voyelles_020.mp3",
+      "texte": "Écris le mot école"
+    },
+    {
+      "numero": "022",
+      "dossier": "voyelles",
+      "audio": "voyelles_022.mp3",
+      "texte": "è è è"
+    },
+    {
+      "numero": "024",
+      "dossier": "voyelles",
+      "audio": "voyelles_024.mp3",
+      "texte": "père crème chèvre"
+    },
+    {
+      "numero": "025",
+      "dossier": "voyelles",
+      "audio": "voyelles_025.mp3",
+      "texte": "Écris le mot père"
+    },
+    {
+      "numero": "027",
+      "dossier": "voyelles",
+      "audio": "voyelles_027.mp3",
+      "texte": "ê ê ê"
+    },
+    {
+      "numero": "028",
+      "dossier": "voyelles",
+      "audio": "voyelles_028.mp3",
+      "texte": "forêt tête fenêtre"
+    },
+    {
+      "numero": "029",
+      "dossier": "voyelles",
+      "audio": "voyelles_029.mp3",
+      "texte": "Écris le mot forêt"
+    },
+    {
+      "numero": "005",
+      "dossier": "voyelles",
+      "audio": "voyelles_005.mp3",
+      "texte": "o o o o"
+    },
+    {
+      "numero": "006",
+      "dossier": "voyelles",
+      "audio": "voyelles_006.mp3",
+      "texte": "orange oiseau os"
+    },
+    {
+      "numero": "007",
+      "dossier": "voyelles",
+      "audio": "voyelles_007.mp3",
+      "texte": "Écris le mot orange"
+    },
+    {
+      "numero": "009",
+      "dossier": "voyelles",
+      "audio": "voyelles_009.mp3",
+      "texte": "u u u u"
+    },
+    {
+      "numero": "010",
+      "dossier": "voyelles",
+      "audio": "voyelles_010.mp3",
+      "texte": "uniforme usine utile"
+    },
+    {
+      "numero": "011",
+      "dossier": "voyelles",
+      "audio": "voyelles_011.mp3",
+      "texte": "Écris le mot uniforme"
+    },
+    {
+      "numero": "031",
+      "dossier": "voyelles",
+      "audio": "voyelles_031.mp3",
+      "texte": "â â â â"
+    },
+    {
+      "numero": "032",
+      "dossier": "voyelles",
+      "audio": "voyelles_032.mp3",
+      "texte": "pâte âne tâche"
+    },
+    {
+      "numero": "033",
+      "dossier": "voyelles",
+      "audio": "voyelles_033.mp3",
+      "texte": "Écris le mot pâte"
+    },
+    {
+      "numero": "036",
+      "dossier": "voyelles",
+      "audio": "voyelles_036.mp3",
+      "texte": "ô ô ô ô"
+    },
+    {
+      "numero": "037",
+      "dossier": "voyelles",
+      "audio": "voyelles_037.mp3",
+      "texte": "côte hôtel dôme"
+    },
+    {
+      "numero": "038",
+      "dossier": "voyelles",
+      "audio": "voyelles_038.mp3",
+      "texte": "Écris le mot côte"
+    }
+  ],
+  "sons_simples": [
+    {
+      "numero": "001",
+      "dossier": "consonnes",
+      "audio": "consonnes_001.mp3",
+      "texte": "ba bé bi bo bu"
+    },
+    {
+      "numero": "002",
+      "dossier": "consonnes",
+      "audio": "consonnes_002.mp3",
+      "texte": "bateau ballon bébé"
+    },
+    {
+      "numero": "003",
+      "dossier": "consonnes",
+      "audio": "consonnes_003.mp3",
+      "texte": "Écris le mot bateau"
+    },
+    {
+      "numero": "005",
+      "dossier": "consonnes",
+      "audio": "consonnes_005.mp3",
+      "texte": "ca ce ci co cu"
+    },
+    {
+      "numero": "006",
+      "dossier": "consonnes",
+      "audio": "consonnes_006.mp3",
+      "texte": "café carte citron"
+    },
+    {
+      "numero": "007",
+      "dossier": "consonnes",
+      "audio": "consonnes_007.mp3",
+      "texte": "Écris le mot café"
+    },
+    {
+      "numero": "009",
+      "dossier": "consonnes",
+      "audio": "consonnes_009.mp3",
+      "texte": "da de di do du"
+    },
+    {
+      "numero": "010",
+      "dossier": "consonnes",
+      "audio": "consonnes_010.mp3",
+      "texte": "dinde dauphin dent"
+    },
+    {
+      "numero": "011",
+      "dossier": "consonnes",
+      "audio": "consonnes_011.mp3",
+      "texte": "Écris le mot dinde"
+    },
+    {
+      "numero": "013",
+      "dossier": "consonnes",
+      "audio": "consonnes_013.mp3",
+      "texte": "fa fe fi fo fu"
+    },
+    {
+      "numero": "014",
+      "dossier": "consonnes",
+      "audio": "consonnes_014.mp3",
+      "texte": "fleur fusée fenêtre"
+    },
+    {
+      "numero": "015",
+      "dossier": "consonnes",
+      "audio": "consonnes_015.mp3",
+      "texte": "Écris le mot fleur"
+    },
+    {
+      "numero": "017",
+      "dossier": "consonnes",
+      "audio": "consonnes_017.mp3",
+      "texte": "ga ge gi go gu"
+    },
+    {
+      "numero": "018",
+      "dossier": "consonnes",
+      "audio": "consonnes_018.mp3",
+      "texte": "gâteau girafe gomme"
+    },
+    {
+      "numero": "019",
+      "dossier": "consonnes",
+      "audio": "consonnes_019.mp3",
+      "texte": "Écris le mot gâteau"
+    },
+    {
+      "numero": "021",
+      "dossier": "consonnes",
+      "audio": "consonnes_021.mp3",
+      "texte": "ma me mi mo mu"
+    },
+    {
+      "numero": "022",
+      "dossier": "consonnes",
+      "audio": "consonnes_022.mp3",
+      "texte": "maison moto main"
+    },
+    {
+      "numero": "023",
+      "dossier": "consonnes",
+      "audio": "consonnes_023.mp3",
+      "texte": "Écris le mot maison"
+    },
+    {
+      "numero": "025",
+      "dossier": "consonnes",
+      "audio": "consonnes_025.mp3",
+      "texte": "na ne ni no nu"
+    },
+    {
+      "numero": "026",
+      "dossier": "consonnes",
+      "audio": "consonnes_026.mp3",
+      "texte": "nuage nez nid"
+    },
+    {
+      "numero": "027",
+      "dossier": "consonnes",
+      "audio": "consonnes_027.mp3",
+      "texte": "Écris le mot nuage"
+    },
+    {
+      "numero": "029",
+      "dossier": "consonnes",
+      "audio": "consonnes_029.mp3",
+      "texte": "pa pe pi po pu"
+    },
+    {
+      "numero": "030",
+      "dossier": "consonnes",
+      "audio": "consonnes_030.mp3",
+      "texte": "papa poule pain"
+    },
+    {
+      "numero": "031",
+      "dossier": "consonnes",
+      "audio": "consonnes_031.mp3",
+      "texte": "Écris le mot papa"
+    },
+    {
+      "numero": "033",
+      "dossier": "consonnes",
+      "audio": "consonnes_033.mp3",
+      "texte": "ra re ri ro ru"
+    },
+    {
+      "numero": "034",
+      "dossier": "consonnes",
+      "audio": "consonnes_034.mp3",
+      "texte": "rat rose rue"
+    },
+    {
+      "numero": "035",
+      "dossier": "consonnes",
+      "audio": "consonnes_035.mp3",
+      "texte": "Écris le mot rat"
+    },
+    {
+      "numero": "037",
+      "dossier": "consonnes",
+      "audio": "consonnes_037.mp3",
+      "texte": "sa se si so su"
+    },
+    {
+      "numero": "038",
+      "dossier": "consonnes",
+      "audio": "consonnes_038.mp3",
+      "texte": "soleil salade souris"
+    }
+  ],
+  "sons_complexes": [
+    {
+      "numero": "001",
+      "dossier": "diagramme",
+      "audio": "diagramme_001.mp3",
+      "texte": "ch chat chaud"
+    },
+    {
+      "numero": "002",
+      "dossier": "diagramme",
+      "audio": "diagramme_002.mp3",
+      "texte": "chat chien choux"
+    },
+    {
+      "numero": "003",
+      "dossier": "diagramme",
+      "audio": "diagramme_003.mp3",
+      "texte": "Écris le mot chat"
+    },
+    {
+      "numero": "004",
+      "dossier": "diagramme",
+      "audio": "diagramme_004.mp3",
+      "texte": "Écris la phrase le chat est ici"
+    },
+    {
+      "numero": "005",
+      "dossier": "diagramme",
+      "audio": "diagramme_005.mp3",
+      "texte": "ou"
+    },
+    {
+      "numero": "006",
+      "dossier": "diagramme",
+      "audio": "diagramme_006.mp3",
+      "texte": "poule fou moulin"
+    },
+    {
+      "numero": "007",
+      "dossier": "diagramme",
+      "audio": "diagramme_007.mp3",
+      "texte": "Écris le mot poule"
+    },
+    {
+      "numero": "008",
+      "dossier": "diagramme",
+      "audio": "diagramme_008.mp3",
+      "texte": "Écris la phrase la poule est ici"
+    },
+    {
+      "numero": "010",
+      "dossier": "diagramme",
+      "audio": "diagramme_010.mp3",
+      "texte": "non melon ballon"
+    },
+    {
+      "numero": "011",
+      "dossier": "diagramme",
+      "audio": "diagramme_011.mp3",
+      "texte": "Écris le mot non"
+    },
+    {
+      "numero": "013",
+      "dossier": "diagramme",
+      "audio": "diagramme_013.mp3",
+      "texte": "an"
+    },
+    {
+      "numero": "014",
+      "dossier": "diagramme",
+      "audio": "diagramme_014.mp3",
+      "texte": "maman gant orange"
+    },
+    {
+      "numero": "015",
+      "dossier": "diagramme",
+      "audio": "diagramme_015.mp3",
+      "texte": "Écris le mot maman"
+    },
+    {
+      "numero": "016",
+      "dossier": "diagramme",
+      "audio": "diagramme_016.mp3",
+      "texte": "Écris la phrase la maman est ici"
+    },
+    {
+      "numero": "017",
+      "dossier": "diagramme",
+      "audio": "diagramme_017.mp3",
+      "texte": "in"
+    },
+    {
+      "numero": "018",
+      "dossier": "diagramme",
+      "audio": "diagramme_018.mp3",
+      "texte": "lapin vin sapin"
+    },
+    {
+      "numero": "019",
+      "dossier": "diagramme",
+      "audio": "diagramme_019.mp3",
+      "texte": "Écris le mot lapin"
+    },
+    {
+      "numero": "020",
+      "dossier": "diagramme",
+      "audio": "diagramme_020.mp3",
+      "texte": "Écris la phrase le lapin est ici"
+    },
+    {
+      "numero": "021",
+      "dossier": "diagramme",
+      "audio": "diagramme_021.mp3",
+      "texte": "oi"
+    },
+    {
+      "numero": "022",
+      "dossier": "diagramme",
+      "audio": "diagramme_022.mp3",
+      "texte": "moi roi toi"
+    },
+    {
+      "numero": "023",
+      "dossier": "diagramme",
+      "audio": "diagramme_023.mp3",
+      "texte": "Écris le mot moi"
+    },
+    {
+      "numero": "025",
+      "dossier": "diagramme",
+      "audio": "diagramme_025.mp3",
+      "texte": "gn"
+    },
+    {
+      "numero": "026",
+      "dossier": "diagramme",
+      "audio": "diagramme_026.mp3",
+      "texte": "agneau montagne ligne"
+    },
+    {
+      "numero": "027",
+      "dossier": "diagramme",
+      "audio": "diagramme_027.mp3",
+      "texte": "Écris le mot agneau"
+    },
+    {
+      "numero": "028",
+      "dossier": "diagramme",
+      "audio": "diagramme_028.mp3",
+      "texte": "Écris la phrase l'agneau est ici"
+    },
+    {
+      "numero": "029",
+      "dossier": "diagramme",
+      "audio": "diagramme_029.mp3",
+      "texte": "lle"
+    },
+    {
+      "numero": "030",
+      "dossier": "diagramme",
+      "audio": "diagramme_030.mp3",
+      "texte": "fille briller papillon"
+    },
+    {
+      "numero": "031",
+      "dossier": "diagramme",
+      "audio": "diagramme_031.mp3",
+      "texte": "Écris le mot fille"
+    },
+    {
+      "numero": "032",
+      "dossier": "diagramme",
+      "audio": "diagramme_032.mp3",
+      "texte": "Écris la phrase la fille est ici"
+    },
+    {
+      "numero": "033",
+      "dossier": "diagramme",
+      "audio": "diagramme_033.mp3",
+      "texte": "eau"
+    },
+    {
+      "numero": "034",
+      "dossier": "diagramme",
+      "audio": "diagramme_034.mp3",
+      "texte": "bateau château sceau"
+    },
+    {
+      "numero": "035",
+      "dossier": "diagramme",
+      "audio": "diagramme_035.mp3",
+      "texte": "Écris le mot bateau"
+    },
+    {
+      "numero": "036",
+      "dossier": "diagramme",
+      "audio": "diagramme_036.mp3",
+      "texte": "Écris la phrase le bateau est ici"
+    },
+    {
+      "numero": "013",
+      "dossier": "complement",
+      "audio": "complement_013.mp3",
+      "texte": "oi"
+    },
+    {
+      "numero": "014",
+      "dossier": "complement",
+      "audio": "complement_014.mp3",
+      "texte": "roi toi moi"
+    },
+    {
+      "numero": "015",
+      "dossier": "complement",
+      "audio": "complement_015.mp3",
+      "texte": "Écris le mot roi"
+    },
+    {
+      "numero": "016",
+      "dossier": "complement",
+      "audio": "complement_016.mp3",
+      "texte": "Écris la phrase le roi est ici"
+    },
+    {
+      "numero": "017",
+      "dossier": "complement",
+      "audio": "complement_017.mp3",
+      "texte": "ouille"
+    },
+    {
+      "numero": "018",
+      "dossier": "complement",
+      "audio": "complement_018.mp3",
+      "texte": "grenouille bouilloire fouille"
+    },
+    {
+      "numero": "019",
+      "dossier": "complement",
+      "audio": "complement_019.mp3",
+      "texte": "Écris le mot grenouille"
+    },
+    {
+      "numero": "020",
+      "dossier": "complement",
+      "audio": "complement_020.mp3",
+      "texte": "Écris la phrase la grenouille est ici"
+    },
+    {
+      "numero": "021",
+      "dossier": "complement",
+      "audio": "complement_021.mp3",
+      "texte": "ail"
+    },
+    {
+      "numero": "022",
+      "dossier": "complement",
+      "audio": "complement_022.mp3",
+      "texte": "travail détail fermail"
+    },
+    {
+      "numero": "023",
+      "dossier": "complement",
+      "audio": "complement_023.mp3",
+      "texte": "Écris le mot travail"
+    },
+    {
+      "numero": "024",
+      "dossier": "complement",
+      "audio": "complement_024.mp3",
+      "texte": "Écris la phrase le travail est ici"
+    },
+    {
+      "numero": "025",
+      "dossier": "complement",
+      "audio": "complement_025.mp3",
+      "texte": "eille aille"
+    },
+    {
+      "numero": "026",
+      "dossier": "complement",
+      "audio": "complement_026.mp3",
+      "texte": "soleil abeille merveille"
+    },
+    {
+      "numero": "027",
+      "dossier": "complement",
+      "audio": "complement_027.mp3",
+      "texte": "Écris le mot soleil"
+    },
+    {
+      "numero": "028",
+      "dossier": "complement",
+      "audio": "complement_028.mp3",
+      "texte": "Écris la phrase le soleil est ici"
+    }
+  ],
+  "mots": [
+    {
+      "numero": "083",
+      "dossier": "complement",
+      "audio": "complement_083.mp3",
+      "texte": "Écoute bien le mot avant de l'écrire"
+    },
+    {
+      "numero": "002",
+      "dossier": "voyelles",
+      "audio": "voyelles_002.mp3",
+      "texte": "igloo île idée"
+    },
+    {
+      "numero": "003",
+      "dossier": "voyelles",
+      "audio": "voyelles_003.mp3",
+      "texte": "Écris le mot igloo"
+    },
+    {
+      "numero": "015",
+      "dossier": "voyelles",
+      "audio": "voyelles_015.mp3",
+      "texte": "yacht yaourt yen"
+    },
+    {
+      "numero": "016",
+      "dossier": "voyelles",
+      "audio": "voyelles_016.mp3",
+      "texte": "Écris le mot yacht"
+    },
+    {
+      "numero": "083",
+      "dossier": "complement",
+      "audio": "complement_083.mp3",
+      "texte": "Écoute bien le mot avant de l'écrire"
+    },
+    {
+      "numero": "002",
+      "dossier": "complement",
+      "audio": "complement_002.mp3",
+      "texte": "lapin matin pain"
+    },
+    {
+      "numero": "003",
+      "dossier": "complement",
+      "audio": "complement_003.mp3",
+      "texte": "Écris le mot lapin"
+    },
+    {
+      "numero": "004",
+      "dossier": "complement",
+      "audio": "complement_004.mp3",
+      "texte": "Écris la phrase le lapin est joli"
+    },
+    {
+      "numero": "006",
+      "dossier": "complement",
+      "audio": "complement_006.mp3",
+      "texte": "maman gant orange"
+    },
+    {
+      "numero": "007",
+      "dossier": "complement",
+      "audio": "complement_007.mp3",
+      "texte": "Écris le mot maman"
+    },
+    {
+      "numero": "008",
+      "dossier": "complement",
+      "audio": "complement_008.mp3",
+      "texte": "Écris la phrase la maman est jolie"
+    },
+    {
+      "numero": "010",
+      "dossier": "complement",
+      "audio": "complement_010.mp3",
+      "texte": "ballon melon non"
+    },
+    {
+      "numero": "011",
+      "dossier": "complement",
+      "audio": "complement_011.mp3",
+      "texte": "Écris le mot ballon"
+    },
+    {
+      "numero": "012",
+      "dossier": "complement",
+      "audio": "complement_012.mp3",
+      "texte": "Écris la phrase le ballon est joli"
+    },
+    {
+      "numero": "029",
+      "dossier": "complement",
+      "audio": "complement_029.mp3",
+      "texte": "chanter marcher danser"
+    },
+    {
+      "numero": "030",
+      "dossier": "complement",
+      "audio": "complement_030.mp3",
+      "texte": "Écris le mot chanter"
+    },
+    {
+      "numero": "032",
+      "dossier": "complement",
+      "audio": "complement_032.mp3",
+      "texte": "balai jouet gilet"
+    },
+    {
+      "numero": "033",
+      "dossier": "complement",
+      "audio": "complement_033.mp3",
+      "texte": "Écris le mot balai"
+    },
+    {
+      "numero": "035",
+      "dossier": "complement",
+      "audio": "complement_035.mp3",
+      "texte": "jouer manger regarder"
+    },
+    {
+      "numero": "036",
+      "dossier": "complement",
+      "audio": "complement_036.mp3",
+      "texte": "Écris le mot jouer"
+    },
+    {
+      "numero": "038",
+      "dossier": "complement",
+      "audio": "complement_038.mp3",
+      "texte": "heureux chanceux peureux"
+    },
+    {
+      "numero": "039",
+      "dossier": "complement",
+      "audio": "complement_039.mp3",
+      "texte": "Écris le mot heureux"
+    }
+  ],
+  "phrases": [
+    {
+      "numero": "004",
+      "dossier": "voyelles",
+      "audio": "voyelles_004.mp3",
+      "texte": "Écris la phrase l'igloo est joli"
+    },
+    {
+      "numero": "008",
+      "dossier": "voyelles",
+      "audio": "voyelles_008.mp3",
+      "texte": "Écris la phrase l'orange est jolie"
+    },
+    {
+      "numero": "013",
+      "dossier": "voyelles",
+      "audio": "voyelles_013.mp3",
+      "texte": "Écris la phrase l'uniforme est joli"
+    },
+    {
+      "numero": "017",
+      "dossier": "voyelles",
+      "audio": "voyelles_017.mp3",
+      "texte": "Écris la phrase le yacht est joli"
+    },
+    {
+      "numero": "030",
+      "dossier": "voyelles",
+      "audio": "voyelles_030.mp3",
+      "texte": "Écris la phrase la forêt est jolie"
+    },
+    {
+      "numero": "035",
+      "dossier": "voyelles",
+      "audio": "voyelles_035.mp3",
+      "texte": "Écris la phrase la pâte est jolie"
+    },
+    {
+      "numero": "039",
+      "dossier": "voyelles",
+      "audio": "voyelles_039.mp3",
+      "texte": "Écris la phrase la côte est jolie"
+    },
+    {
+      "numero": "043",
+      "dossier": "voyelles",
+      "audio": "voyelles_043.mp3",
+      "texte": "Écris la phrase l'éléphant est joli"
+    },
+    {
+      "numero": "041",
+      "dossier": "complement",
+      "audio": "complement_041.mp3",
+      "texte": "Lis cette phrase le chat boit du lait"
+    },
+    {
+      "numero": "043",
+      "dossier": "complement",
+      "audio": "complement_043.mp3",
+      "texte": "Lis cette phrase un avion vole haut"
+    },
+    {
+      "numero": "045",
+      "dossier": "complement",
+      "audio": "complement_045.mp3",
+      "texte": "Lis cette phrase la pluie tombe fort"
+    },
+    {
+      "numero": "047",
+      "dossier": "complement",
+      "audio": "complement_047.mp3",
+      "texte": "Lis cette phrase le lapin mange une carotte"
+    },
+    {
+      "numero": "049",
+      "dossier": "complement",
+      "audio": "complement_049.mp3",
+      "texte": "Lis cette phrase un train passe vite"
+    },
+    {
+      "numero": "051",
+      "dossier": "complement",
+      "audio": "complement_051.mp3",
+      "texte": "Lis cette phrase le soleil chauffe la terre"
+    },
+    {
+      "numero": "053",
+      "dossier": "complement",
+      "audio": "complement_053.mp3",
+      "texte": "Lis cette phrase les enfants rient ensemble"
+    },
+    {
+      "numero": "055",
+      "dossier": "complement",
+      "audio": "complement_055.mp3",
+      "texte": "Lis cette phrase la mer est belle"
+    },
+    {
+      "numero": "057",
+      "dossier": "complement",
+      "audio": "complement_057.mp3",
+      "texte": "Lis cette phrase une étoile brille la nuit"
+    },
+    {
+      "numero": "059",
+      "dossier": "complement",
+      "audio": "complement_059.mp3",
+      "texte": "Lis cette phrase un cheval court dans le pré"
+    },
+    {
+      "numero": "061",
+      "dossier": "complement",
+      "audio": "complement_061.mp3",
+      "texte": "Lis cette phrase la maîtresse explique la leçon"
+    },
+    {
+      "numero": "063",
+      "dossier": "complement",
+      "audio": "complement_063.mp3",
+      "texte": "Lis cette phrase le vent souffle fort"
+    },
+    {
+      "numero": "065",
+      "dossier": "complement",
+      "audio": "complement_065.mp3",
+      "texte": "Lis cette phrase une souris court vite"
+    },
+    {
+      "numero": "067",
+      "dossier": "complement",
+      "audio": "complement_067.mp3",
+      "texte": "Lis cette phrase un élève lève la main"
+    },
+    {
+      "numero": "069",
+      "dossier": "complement",
+      "audio": "complement_069.mp3",
+      "texte": "Lis cette phrase la voiture roule lentement"
+    },
+    {
+      "numero": "071",
+      "dossier": "complement",
+      "audio": "complement_071.mp3",
+      "texte": "Lis cette phrase le ballon est rouge"
+    },
+    {
+      "numero": "073",
+      "dossier": "complement",
+      "audio": "complement_073.mp3",
+      "texte": "Lis cette phrase un chien aboie fort"
+    },
+    {
+      "numero": "075",
+      "dossier": "complement",
+      "audio": "complement_075.mp3",
+      "texte": "Lis cette phrase l'oiseau chante dans l'arbre"
+    },
+    {
+      "numero": "077",
+      "dossier": "complement",
+      "audio": "complement_077.mp3",
+      "texte": "Lis cette phrase une fleur pousse au jardin"
+    },
+    {
+      "numero": "079",
+      "dossier": "complement",
+      "audio": "complement_079.mp3",
+      "texte": "Lis cette phrase le bébé dort paisiblement"
+    }
+  ],
+  "lecture_fluide": [
+    {
+      "numero": "001",
+      "dossier": "challenge_fluide",
+      "audio": "challenge_fluide_001.mp3",
+      "texte": "Lis cette phrase le chat dort"
+    },
+    {
+      "numero": "002",
+      "dossier": "challenge_fluide",
+      "audio": "challenge_fluide_002.mp3",
+      "texte": "Lis cette phrase le soleil brille"
+    },
+    {
+      "numero": "003",
+      "dossier": "challenge_fluide",
+      "audio": "challenge_fluide_003.mp3",
+      "texte": "Lis cette phrase la mer monte"
+    },
+    {
+      "numero": "004",
+      "dossier": "challenge_fluide",
+      "audio": "challenge_fluide_004.mp3",
+      "texte": "Lis cette phrase le lapin court dans le pré"
+    },
+    {
+      "numero": "005",
+      "dossier": "challenge_fluide",
+      "audio": "challenge_fluide_005.mp3",
+      "texte": "Lis cette phrase la maison est petite et jolie"
+    },
+    {
+      "numero": "006",
+      "dossier": "challenge_fluide",
+      "audio": "challenge_fluide_006.mp3",
+      "texte": "Lis cette phrase un enfant lit son livre"
+    },
+    {
+      "numero": "007",
+      "dossier": "challenge_fluide",
+      "audio": "challenge_fluide_007.mp3",
+      "texte": "Lis cette phrase la maîtresse parle doucement"
+    },
+    {
+      "numero": "008",
+      "dossier": "challenge_fluide",
+      "audio": "challenge_fluide_008.mp3",
+      "texte": "Lis cette phrase les fleurs poussent au jardin"
+    },
+    {
+      "numero": "009",
+      "dossier": "challenge_fluide",
+      "audio": "challenge_fluide_009.mp3",
+      "texte": "Lis cette phrase un oiseau chante dans l'arbre"
+    },
+    {
+      "numero": "010",
+      "dossier": "challenge_fluide",
+      "audio": "challenge_fluide_010.mp3",
+      "texte": "Lis cette phrase le ballon rouge roule vite"
+    },
+    {
+      "numero": "011",
+      "dossier": "challenge_fluide",
+      "audio": "challenge_fluide_011.mp3",
+      "texte": "Lis cette phrase un poisson nage dans l'eau claire"
+    },
+    {
+      "numero": "012",
+      "dossier": "challenge_fluide",
+      "audio": "challenge_fluide_012.mp3",
+      "texte": "Lis cette phrase la lune brille"
+    },
+    {
+      "numero": "013",
+      "dossier": "challenge_fluide",
+      "audio": "challenge_fluide_013.mp3",
+      "texte": "Lis cette phrase le tigre dort sous l'arbre"
+    },
+    {
+      "numero": "014",
+      "dossier": "challenge_fluide",
+      "audio": "challenge_fluide_014.mp3",
+      "texte": "Lis cette phrase la neige tombe sur la route"
+    },
+    {
+      "numero": "015",
+      "dossier": "challenge_fluide",
+      "audio": "challenge_fluide_015.mp3",
+      "texte": "Lis cette phrase les élèves écoutent la leçon en silence"
+    },
+    {
+      "numero": "016",
+      "dossier": "challenge_fluide",
+      "audio": "challenge_fluide_016.mp3",
+      "texte": "Lis cette phrase un cheval galope dans le champ vert"
+    },
+    {
+      "numero": "017",
+      "dossier": "challenge_fluide",
+      "audio": "challenge_fluide_017.mp3",
+      "texte": "Lis cette phrase le facteur apporte une lettre aujourd'hui"
+    },
+    {
+      "numero": "018",
+      "dossier": "challenge_fluide",
+      "audio": "challenge_fluide_018.mp3",
+      "texte": "Lis cette phrase la maîtresse lit une histoire drôle"
+    },
+    {
+      "numero": "019",
+      "dossier": "challenge_fluide",
+      "audio": "challenge_fluide_019.mp3",
+      "texte": "Lis cette phrase les enfants jouent ensemble dans la cour"
+    },
+    {
+      "numero": "020",
+      "dossier": "challenge_fluide",
+      "audio": "challenge_fluide_020.mp3",
+      "texte": "Lis cette phrase un train passe très vite sur la voie"
+    },
+    {
+      "numero": "021",
+      "dossier": "challenge_fluide",
+      "audio": "challenge_fluide_021.mp3",
+      "texte": "Lis cette phrase le soleil se couche derrière les montagnes"
+    },
+    {
+      "numero": "022",
+      "dossier": "challenge_fluide",
+      "audio": "challenge_fluide_022.mp3",
+      "texte": "Lis cette phrase un chaton boit du lait dans une tasse"
+    },
+    {
+      "numero": "023",
+      "dossier": "challenge_fluide",
+      "audio": "challenge_fluide_023.mp3",
+      "texte": "Lis cette phrase un chien aboie"
+    },
+    {
+      "numero": "024",
+      "dossier": "challenge_fluide",
+      "audio": "challenge_fluide_024.mp3",
+      "texte": "Lis cette phrase la cloche sonne à l'école le matin"
+    },
+    {
+      "numero": "025",
+      "dossier": "challenge_fluide",
+      "audio": "challenge_fluide_025.mp3",
+      "texte": "Lis cette phrase un petit garçon chante une chanson douce"
+    },
+    {
+      "numero": "026",
+      "dossier": "challenge_fluide",
+      "audio": "challenge_fluide_026.mp3",
+      "texte": "Lis cette phrase la maîtresse demande aux élèves de ranger leur cahier"
+    },
+    {
+      "numero": "027",
+      "dossier": "challenge_fluide",
+      "audio": "challenge_fluide_027.mp3",
+      "texte": "Lis cette phrase un petit oiseau construit son nid avec des brindilles"
+    },
+    {
+      "numero": "028",
+      "dossier": "challenge_fluide",
+      "audio": "challenge_fluide_028.mp3",
+      "texte": "Lis cette phrase le fermier nourrit les animaux tôt le matin"
+    },
+    {
+      "numero": "029",
+      "dossier": "challenge_fluide",
+      "audio": "challenge_fluide_029.mp3",
+      "texte": "Lis cette phrase les enfants dessinent des maisons avec des crayons de couleur"
+    },
+    {
+      "numero": "030",
+      "dossier": "challenge_fluide",
+      "audio": "challenge_fluide_030.mp3",
+      "texte": "Lis cette phrase la pluie tombe fort mais les fleurs restent debout"
+    },
+    {
+      "numero": "031",
+      "dossier": "challenge_fluide",
+      "audio": "challenge_fluide_031.mp3",
+      "texte": "Lis cette phrase un chien et un chat jouent ensemble dans le jardin"
+    },
+    {
+      "numero": "032",
+      "dossier": "challenge_fluide",
+      "audio": "challenge_fluide_032.mp3",
+      "texte": "Lis cette phrase un jeune garçon raconte une belle histoire à ses amis"
+    },
+    {
+      "numero": "033",
+      "dossier": "challenge_fluide",
+      "audio": "challenge_fluide_033.mp3",
+      "texte": "Lis cette phrase les élèves écrivent une dictée sur leur cahier propre"
+    },
+    {
+      "numero": "034",
+      "dossier": "challenge_fluide",
+      "audio": "challenge_fluide_034.mp3",
+      "texte": "Lis cette phrase le bébé rit"
+    },
+    {
+      "numero": "035",
+      "dossier": "challenge_fluide",
+      "audio": "challenge_fluide_035.mp3",
+      "texte": "Lis cette phrase la cloche sonne et les enfants courent vers la sortie"
+    },
+    {
+      "numero": "036",
+      "dossier": "challenge_fluide",
+      "audio": "challenge_fluide_036.mp3",
+      "texte": "Lis cette phrase une fille lit un poème devant toute la classe"
+    },
+    {
+      "numero": "037",
+      "dossier": "challenge_fluide",
+      "audio": "challenge_fluide_037.mp3",
+      "texte": "Lis cette phrase la porte s'ouvre"
+    },
+    {
+      "numero": "038",
+      "dossier": "challenge_fluide",
+      "audio": "challenge_fluide_038.mp3",
+      "texte": "Lis cette phrase le vent souffle"
+    },
+    {
+      "numero": "039",
+      "dossier": "challenge_fluide",
+      "audio": "challenge_fluide_039.mp3",
+      "texte": "Lis cette phrase un avion vole"
+    },
+    {
+      "numero": "040",
+      "dossier": "challenge_fluide",
+      "audio": "challenge_fluide_040.mp3",
+      "texte": "Lis cette phrase la pluie tombe"
+    }
+  ],
+  "defis": [
+    {
+      "numero": "001",
+      "dossier": "challenge",
+      "audio": "challenge_001.mp3",
+      "texte": "Trouve l'intrus bateau ballon chat"
+    },
+    {
+      "numero": "002",
+      "dossier": "challenge",
+      "audio": "challenge_002.mp3",
+      "texte": "Trouve l'intrus chien chat maison"
+    },
+    {
+      "numero": "003",
+      "dossier": "challenge",
+      "audio": "challenge_003.mp3",
+      "texte": "Trouve l'intrus soleil lune vélo"
+    },
+    {
+      "numero": "004",
+      "dossier": "challenge",
+      "audio": "challenge_004.mp3",
+      "texte": "Trouve les mots avec le son ou"
+    },
+    {
+      "numero": "005",
+      "dossier": "challenge",
+      "audio": "challenge_005.mp3",
+      "texte": "Trouve les mots avec le son m"
+    },
+    {
+      "numero": "006",
+      "dossier": "challenge",
+      "audio": "challenge_006.mp3",
+      "texte": "Trouve les mots avec le son an"
+    }
+  ],
+  "sons_avances": [
+    {
+      "numero": "002",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_002.mp3",
+      "texte": "hélicoptère héros harpe"
+    },
+    {
+      "numero": "003",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_003.mp3",
+      "texte": "Écris le mot hélicoptère"
+    },
+    {
+      "numero": "004",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_004.mp3",
+      "texte": "Écris la phrase l'hélicoptère est joli"
+    },
+    {
+      "numero": "005",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_005.mp3",
+      "texte": "ja je ji jo ju"
+    },
+    {
+      "numero": "006",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_006.mp3",
+      "texte": "jardin jaune jupe"
+    },
+    {
+      "numero": "007",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_007.mp3",
+      "texte": "Écris le mot jardin"
+    },
+    {
+      "numero": "008",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_008.mp3",
+      "texte": "Écris la phrase le jardin est joli"
+    },
+    {
+      "numero": "009",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_009.mp3",
+      "texte": "ka ke ki ko ku"
+    },
+    {
+      "numero": "010",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_010.mp3",
+      "texte": "koala kiwi kilo"
+    },
+    {
+      "numero": "011",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_011.mp3",
+      "texte": "Écris le mot koala"
+    },
+    {
+      "numero": "012",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_012.mp3",
+      "texte": "Écris la phrase le koala est joli"
+    },
+    {
+      "numero": "013",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_013.mp3",
+      "texte": "la le li lo lu"
+    },
+    {
+      "numero": "014",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_014.mp3",
+      "texte": "lune lapin lit"
+    },
+    {
+      "numero": "015",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_015.mp3",
+      "texte": "Écris le mot lune"
+    },
+    {
+      "numero": "016",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_016.mp3",
+      "texte": "Écris la phrase la lune est jolie"
+    },
+    {
+      "numero": "017",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_017.mp3",
+      "texte": "qu que qui quoi"
+    },
+    {
+      "numero": "018",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_018.mp3",
+      "texte": "quatre qui quinze"
+    },
+    {
+      "numero": "019",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_019.mp3",
+      "texte": "Écris le mot quatre"
+    },
+    {
+      "numero": "021",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_021.mp3",
+      "texte": "va ve vi vo vu"
+    },
+    {
+      "numero": "022",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_022.mp3",
+      "texte": "vache vélo vert"
+    },
+    {
+      "numero": "023",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_023.mp3",
+      "texte": "Écris le mot vache"
+    },
+    {
+      "numero": "024",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_024.mp3",
+      "texte": "Écris la phrase la vache est jolie"
+    },
+    {
+      "numero": "025",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_025.mp3",
+      "texte": "wa we wi"
+    },
+    {
+      "numero": "026",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_026.mp3",
+      "texte": "wagon week-end web"
+    },
+    {
+      "numero": "027",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_027.mp3",
+      "texte": "Écris le mot wagon"
+    },
+    {
+      "numero": "028",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_028.mp3",
+      "texte": "Écris la phrase le wagon est joli"
+    },
+    {
+      "numero": "030",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_030.mp3",
+      "texte": "xylophone taxi box"
+    },
+    {
+      "numero": "031",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_031.mp3",
+      "texte": "Écris le mot xylophone"
+    },
+    {
+      "numero": "032",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_032.mp3",
+      "texte": "Écris la phrase le xylophone est joli"
+    },
+    {
+      "numero": "033",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_033.mp3",
+      "texte": "za ze zi zo zu"
+    },
+    {
+      "numero": "034",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_034.mp3",
+      "texte": "zèbre zéro zone"
+    },
+    {
+      "numero": "035",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_035.mp3",
+      "texte": "Écris le mot zèbre"
+    },
+    {
+      "numero": "036",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_036.mp3",
+      "texte": "Écris la phrase le zèbre est joli"
+    },
+    {
+      "numero": "038",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_038.mp3",
+      "texte": "photo phare phonème"
+    },
+    {
+      "numero": "039",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_039.mp3",
+      "texte": "Écris le mot photo"
+    },
+    {
+      "numero": "040",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_040.mp3",
+      "texte": "Écris la phrase la photo est au tableau"
+    },
+    {
+      "numero": "041",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_041.mp3",
+      "texte": "the tha tho"
+    },
+    {
+      "numero": "042",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_042.mp3",
+      "texte": "thé théâtre thym"
+    },
+    {
+      "numero": "043",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_043.mp3",
+      "texte": "Écris le mot thé"
+    },
+    {
+      "numero": "045",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_045.mp3",
+      "texte": "sce sca sco"
+    },
+    {
+      "numero": "046",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_046.mp3",
+      "texte": "science scène scorpion"
+    },
+    {
+      "numero": "047",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_047.mp3",
+      "texte": "Écris le mot science"
+    },
+    {
+      "numero": "049",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_049.mp3",
+      "texte": "gu gua gui"
+    },
+    {
+      "numero": "050",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_050.mp3",
+      "texte": "guitare guerre guide"
+    },
+    {
+      "numero": "051",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_051.mp3",
+      "texte": "Écris le mot guitare"
+    },
+    {
+      "numero": "053",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_053.mp3",
+      "texte": "ge gi"
+    },
+    {
+      "numero": "054",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_054.mp3",
+      "texte": "gentil girafe gilet"
+    },
+    {
+      "numero": "055",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_055.mp3",
+      "texte": "Écris le mot gentil"
+    },
+    {
+      "numero": "058",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_058.mp3",
+      "texte": "nation attention addition"
+    },
+    {
+      "numero": "059",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_059.mp3",
+      "texte": "Écris le mot nation"
+    },
+    {
+      "numero": "062",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_062.mp3",
+      "texte": "un chacun lundi"
+    },
+    {
+      "numero": "063",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_063.mp3",
+      "texte": "Écris le mot un"
+    },
+    {
+      "numero": "065",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_065.mp3",
+      "texte": "im ym"
+    },
+    {
+      "numero": "066",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_066.mp3",
+      "texte": "gym timbre impossible"
+    },
+    {
+      "numero": "067",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_067.mp3",
+      "texte": "Écris le mot gym"
+    },
+    {
+      "numero": "070",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_070.mp3",
+      "texte": "chien bien ancien"
+    },
+    {
+      "numero": "071",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_071.mp3",
+      "texte": "Écris le mot chien"
+    },
+    {
+      "numero": "072",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_072.mp3",
+      "texte": "Écris la phrase le chien est joli"
+    },
+    {
+      "numero": "074",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_074.mp3",
+      "texte": "pion avion champion"
+    },
+    {
+      "numero": "075",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_075.mp3",
+      "texte": "Écris le mot pion"
+    },
+    {
+      "numero": "076",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_076.mp3",
+      "texte": "Écris la phrase le pion est joli"
+    },
+    {
+      "numero": "078",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_078.mp3",
+      "texte": "piano canadien indien"
+    },
+    {
+      "numero": "079",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_079.mp3",
+      "texte": "Écris le mot piano"
+    },
+    {
+      "numero": "080",
+      "dossier": "sons_restants",
+      "audio": "sons_restants_080.mp3",
+      "texte": "Écris la phrase le piano est joli"
+    }
+  ],
+  "consignes": [
+    {
+      "numero": "081",
+      "dossier": "complement",
+      "audio": "complement_081.mp3",
+      "texte": "Prépare ton crayon"
+    },
+    {
+      "numero": "082",
+      "dossier": "complement",
+      "audio": "complement_082.mp3",
+      "texte": "Lis d'abord doucement, puis recommence plus vite"
+    },
+    {
+      "numero": "083",
+      "dossier": "complement",
+      "audio": "complement_083.mp3",
+      "texte": "Écoute bien le mot avant de l'écrire"
+    },
+    {
+      "numero": "084",
+      "dossier": "complement",
+      "audio": "complement_084.mp3",
+      "texte": "Relis la phrase en entier une deuxième fois"
+    },
+    {
+      "numero": "085",
+      "dossier": "complement",
+      "audio": "complement_085.mp3",
+      "texte": "Clique dès que tu entends le bon son"
+    },
+    {
+      "numero": "086",
+      "dossier": "complement",
+      "audio": "complement_086.mp3",
+      "texte": "Cherche l'intrus et dis-le à voix haute"
+    },
+    {
+      "numero": "087",
+      "dossier": "complement",
+      "audio": "complement_087.mp3",
+      "texte": "Associe les cartes en les disant à voix haute"
+    },
+    {
+      "numero": "088",
+      "dossier": "complement",
+      "audio": "complement_088.mp3",
+      "texte": "Concentre-toi et répète après moi"
+    },
+    {
+      "numero": "089",
+      "dossier": "complement",
+      "audio": "complement_089.mp3",
+      "texte": "Lis les syllabes en les chantant"
+    },
+    {
+      "numero": "090",
+      "dossier": "complement",
+      "audio": "complement_090.mp3",
+      "texte": "Fais une pause, puis recommence la lecture"
+    }
+  ]
+}

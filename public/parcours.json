@@ -1,0 +1,69 @@
+[08:59, 27/04/2026] Pontiac: {
+  "voyelles": [
+    { "numero": "001", "audio": "voyelles_001.mp3", "texte": "a a a a" },
+    { "numero": "002", "audio": "voyelles_002.mp3", "texte": "igloo île idée" },
+    { "numero": "003", "audio": "voyelles_003.mp3", "texte": "Écris le mot igloo" },
+    { "numero": "004", "audio": "voyelles_004.mp3", "texte": "Écris la phrase l'igloo est joli" },
+
+    { "numero": "005", "audio": "voyelles_005.mp3", "texte": "o o o o" },
+    { "numero": "006", "audio": "voyelles_006.mp3", "texte": "orange oiseau os" },
+    { "numero": "007", "audio": "voyelles_007.mp3", "texte": "Écris le mot orange" },
+    { "numero": "008", "audio": "voyelles_008.mp3", "texte": "Écris la phrase l'orange est jolie" },
+
+    { "numero": "009", "audio": "voyelles_009.mp3", "texte": "u u…
+[09:11, 27/04/2026] Pontiac: {
+  "parcours": [
+    {
+      "id": "demarrage",
+      "titre": "Commencer mon entraînement",
+      "description": "J’écoute les sons et je découvre les premiers mots.",
+      "exercices": [
+        "voyelles_001.mp3",
+        "voyelles_002.mp3",
+        "voyelles_003.mp3",
+        "voyelles_005.mp3",
+        "voyelles_006.mp3",
+        "voyelles_007.mp3",
+        "voyelles_009.mp3",
+        "voyelles_010.mp3",
+        "voyelles_011.mp3",
+        "consonnes_001.mp3",
+        "consonnes_002.mp3",
+        "consonnes_003.mp3"
+      ]
+    },
+    {
+      "id": "sons_complexes",
+      "titre": "Je découvre les sons complexes",
+      "description": "Je travaille les sons comme CH, OU, ON, AN, IN.",
+      "exercices": [
+        "diagramme_001.mp3",
+        "diagramme_002.mp3",
+        "diagramme_003.mp3",
+        "diagramme_005.mp3",
+        "diagramme_006.mp3",
+        "diagramme_009.mp3",
+        "diagramme_010.mp3",
+        "diagramme_013.mp3",
+        "diagramme_014.mp3",
+        "diagramme_017.mp3",
+        "diagramme_018.mp3"
+      ]
+    },
+    {
+      "id": "lecture",
+      "titre": "Je lis des phrases",
+      "description": "Je lis doucement puis je deviens plus fluide.",
+      "exercices": [
+        "complement_041.mp3",
+        "complement_043.mp3",
+        "complement_045.mp3",
+        "complement_047.mp3",
+        "complement_049.mp3",
+        "challenge_fluide_001.mp3",
+        "challenge_fluide_002.mp3",
+        "challenge_fluide_003.mp3"
+      ]
+    }
+  ]
+}
