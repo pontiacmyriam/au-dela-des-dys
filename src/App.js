@@ -1022,6 +1022,30 @@ speech.volume = 1;
       <div style={styles.desktopPage}>
         <div style={styles.avatarCard}>
           <h1 style={styles.avatarTitle}>Choisis ton robot</h1>
+<button
+  onClick={() => {
+    const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+    if (isIOS) {
+      alert("Pour installer Au-delà des Dys : appuie sur le bouton Partager, puis sur “Sur l’écran d’accueil”.");
+    } else {
+      alert("Pour installer Au-delà des Dys : ouvre le menu du navigateur puis choisis “Installer l’application” ou “Ajouter à l’écran d’accueil”.");
+    }
+  }}
+  style={{
+    marginBottom: 24,
+    padding: "12px 18px",
+    borderRadius: 18,
+    border: "none",
+    background: "#38BDF8",
+    color: "white",
+    fontWeight: 700,
+    fontSize: 16,
+    cursor: "pointer",
+  }}
+>
+  📲 Installer l'application
+</button>
 
           <div style={styles.avatarGrid}>
             <button style={styles.avatarBtn} onClick={() => chooseAvatar("girl")}>
