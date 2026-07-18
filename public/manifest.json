@@ -1,6 +1,9 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "id": "/",
+  "short_name": "Au-delà des Dys",
+  "name": "Au-delà des Dys",
+  "description": "Application éducative de lecture, d’écriture et de compréhension pour les enfants dys.",
+  "lang": "fr-FR",
   "icons": [
     {
       "src": "favicon.ico",
@@ -18,8 +21,9 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "theme_color": "#000000",
+  "theme_color": "#38BDF8",
   "background_color": "#ffffff"
 }
