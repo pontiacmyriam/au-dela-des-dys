@@ -23,6 +23,17 @@ const FOLDER_ORDER = [
   "sons_avances",
 ];
 
+const FREE_FOLDER_KEY = "premiers_sons";
+const FREE_EXERCISE_COUNT = 22;
+
+function canAccessActivity(folderKey, exerciseIndex, hasActiveSubscription) {
+  if (hasActiveSubscription) return true;
+
+  return (
+    folderKey === FREE_FOLDER_KEY && exerciseIndex < FREE_EXERCISE_COUNT
+  );
+}
+
 const KEYWORDS = [
   "ENTOURE",
   "SOULIGNE",
@@ -387,6 +398,7 @@ function loadSavedFolder() {
 }
 
 export default function App() {
+  const hasActiveSubscription = false;
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -527,6 +539,11 @@ export default function App() {
   }, [folders, completedFolders]);
 
   const item = items[index] || null;
+  const canAccessCurrentActivity = canAccessActivity(
+    currentFolder,
+    index,
+    hasActiveSubscription
+  );
   const instructionText = item ? item.texte || "" : "";
 
   const needsWriting = isWriteInstruction(instructionText);
@@ -1470,6 +1487,28 @@ speech.volume = 1;
             </button>
           </div>
         </section>
+      </div>
+    );
+  }
+
+  if (item && !canAccessCurrentActivity) {
+    return renderAppShell(
+      "exercise",
+      <div style={styles.finishCard}>
+        <div style={{ fontSize: 64 }}>🔒</div>
+        <h1 style={styles.finishTitle}>
+          Cette activité est réservée aux abonnés.
+        </h1>
+        <p style={styles.finishText}>
+          Débloquez tous les exercices de lecture, d’écriture et de compréhension
+          pour 7,99 € par mois.
+        </p>
+        <button style={styles.btn} onClick={handleSubscribe}>
+          S’abonner
+        </button>
+        <button style={styles.btnSecondary} onClick={goBackToMenu}>
+          ← Retour au menu
+        </button>
       </div>
     );
   }
