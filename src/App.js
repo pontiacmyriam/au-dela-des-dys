@@ -584,6 +584,29 @@ export default function App() {
     resetExerciseVisuals();
   }
 
+  async function handleSubscribe() {
+    try {
+      const response = await fetch("/api/create-checkout-session", {
+        method: "POST",
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Erreur lors de la création du paiement.");
+      }
+
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        alert("Impossible d’ouvrir le paiement pour le moment.");
+      }
+    } catch (error) {
+      console.error("Erreur pendant l’ouverture du paiement :", error);
+      alert("Erreur pendant l’ouverture du paiement.");
+    }
+  }
+
   function startTraining() {
     if (!folders.length) return;
 
@@ -1145,6 +1168,10 @@ speech.volume = 1;
             ← Retour
           </button>
         </div>
+
+        <button style={styles.btn} onClick={handleSubscribe}>
+          S’abonner
+        </button>
 
         <div style={styles.parentsText}>
           <h2>Bienvenue</h2>
