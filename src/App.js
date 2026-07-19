@@ -34,32 +34,6 @@ function canAccessActivity(folderKey, exerciseIndex, hasActiveSubscription) {
   );
 }
 
-const KEYWORDS = [
-  "ENTOURE",
-  "SOULIGNE",
-  "RECOPIE",
-  "COMPLETE",
-  "COMPLÈTE",
-  "ECRIS",
-  "ÉCRIS",
-  "LIS",
-  "RELIE",
-  "COLORIE",
-  "BARRE",
-  "OBSERVE",
-  "CHERCHE",
-  "OU",
-  "ON",
-  "AN",
-  "CH",
-  "GN",
-  "EAU",
-  "OI",
-  "IN",
-  "AI",
-  "EU",
-];
-
 function normalizeText(value) {
   return (value || "")
     .toString()
@@ -235,17 +209,6 @@ function cleanOCRText(text) {
     .join("\n")
     .replace(/\n{3,}/g, "\n\n")
     .trim();
-}
-
-function splitScannerLines(text) {
-  return (text || "")
-    .split(/\n+/)
-    .map((line) => line.trim())
-    .filter(Boolean);
-}
-
-function escapeRegExp(string) {
-  return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
 function isReadInstruction(text) {
@@ -775,15 +738,6 @@ export default function App() {
     audioRef.current.play().catch(() => {});
   }
 
-  function readText(text) {
-    if (!text) return;
-    window.speechSynthesis.cancel();
-    const speech = new SpeechSynthesisUtterance(text);
-    speech.lang = "fr-FR";
-    speech.rate = 0.9;
-    window.speechSynthesis.speak(speech);
-  }
-
   function stopCamera() {
     if (streamRef.current) {
       streamRef.current.getTracks().forEach((track) => track.stop());
@@ -1049,10 +1003,10 @@ speech.volume = 1;
   if (loading) {
     return (
       <div style={styles.desktopPage}>
-        <div style={styles.loadingCard}>
+        <main style={styles.loadingCard}>
           <h1>Au-delà des Dys</h1>
           <p>Chargement...</p>
-        </div>
+        </main>
       </div>
     );
   }
@@ -1060,7 +1014,7 @@ speech.volume = 1;
   if (!avatar) {
     return (
       <div style={styles.desktopPage}>
-        <div style={styles.avatarCard}>
+        <main style={styles.avatarCard}>
           <h1 style={styles.avatarTitle}>Choisis ton robot</h1>
 <button
   onClick={() => {
@@ -1077,7 +1031,7 @@ speech.volume = 1;
     padding: "12px 18px",
     borderRadius: 18,
     border: "none",
-    background: "#38BDF8",
+    background: "#087EAF",
     color: "white",
     fontWeight: 700,
     fontSize: 16,
@@ -1089,16 +1043,28 @@ speech.volume = 1;
 
           <div style={styles.avatarGrid}>
             <button style={styles.avatarBtn} onClick={() => chooseAvatar("girl")}>
-              <img src="/robots/robot_girl.png" alt="Robot fille" style={styles.avatarImg} />
+              <img
+                src="/robots/robot_girl.png"
+                alt="Robot fille"
+                width="150"
+                height="225"
+                style={styles.avatarImg}
+              />
               <span>Robot fille</span>
             </button>
 
             <button style={styles.avatarBtn} onClick={() => chooseAvatar("boy")}>
-              <img src="/robots/robot_boy.png" alt="Robot garçon" style={styles.avatarImg} />
+              <img
+                src="/robots/robot_boy.png"
+                alt="Robot garçon"
+                width="150"
+                height="225"
+                style={styles.avatarImg}
+              />
               <span>Robot garçon</span>
             </button>
           </div>
-        </div>
+        </main>
       </div>
     );
   }
@@ -1322,7 +1288,11 @@ speech.volume = 1;
 
         {scannedImage && !cameraOpen && (
           <div style={{ marginTop: 20 }}>
-            <img src={scannedImage} alt="scan" style={styles.scannedImage} />
+            <img
+              src={scannedImage}
+              alt="Aperçu de l’exercice photographié"
+              style={styles.scannedImage}
+            />
           </div>
         )}
 
@@ -1542,7 +1512,14 @@ speech.volume = 1;
             {LABELS[currentFolder] || currentFolder} — Exercice {index + 1} / {items.length}
           </div>
 
-          <div style={styles.progressBar}>
+          <div
+            style={styles.progressBar}
+            role="progressbar"
+            aria-label="Progression dans le dossier"
+            aria-valuemin="0"
+            aria-valuemax={items.length}
+            aria-valuenow={index + 1}
+          >
             <div style={{ ...styles.progressFill, width: progressPercent + "%" }} />
           </div>
         </div>
@@ -1599,6 +1576,7 @@ speech.volume = 1;
         {needsWriting && (
           <>
             <input
+              aria-label="Réponse à l’exercice"
               style={{
                 ...styles.inputFinal,
                 ...(readingStep ? styles.inputSuccess : {}),
