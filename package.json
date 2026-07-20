@@ -16,8 +16,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "prebuild": "node scripts/validate-sitemap.js",
+    "prebuild": "node scripts/generate-articles.js && node scripts/validate-articles.js && node scripts/validate-sitemap.js",
     "build": "react-scripts build",
+    "generate:articles": "node scripts/generate-articles.js",
+    "validate:articles": "node scripts/validate-articles.js",
     "validate:sitemap": "node scripts/validate-sitemap.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

@@ -15,9 +15,11 @@ const requiredPatterns = [
 ];
 
 for (const [pattern, description] of requiredPatterns) {
-  if (!pattern.test(sitemap)) {
-    throw new Error(`Sitemap invalide : ${description} est absent(e) ou incorrect(e).`);
-  }
+  if (!pattern.test(sitemap)) throw new Error(`Sitemap invalide : ${description} est absent(e) ou incorrect(e).`);
 }
 
-console.log("Sitemap XML valide : public/sitemap.xml");
+const locations = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
+if (locations.length !== 22) throw new Error(`Sitemap invalide : 22 URL attendues, ${locations.length} trouvées.`);
+if (new Set(locations).size !== locations.length) throw new Error("Sitemap invalide : des URL sont dupliquées.");
+
+console.log("Sitemap XML valide : 22 URL uniques.");

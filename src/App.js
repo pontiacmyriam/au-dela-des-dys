@@ -977,6 +977,15 @@ speech.volume = 1;
         <div style={styles.sideDivider} />
 
         <button
+          style={styles.sideTab}
+          onClick={() => {
+            window.location.href = "/articles/";
+          }}
+        >
+          📚 Conseils et articles
+        </button>
+
+        <button
           style={{
             ...styles.sideTab,
             ...(active === "parents" ? styles.sideTabActive : {}),
