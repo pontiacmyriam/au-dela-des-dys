@@ -7,6 +7,10 @@ module.exports = async function handler(req, res) {
     return res.status(405).json({ error: "Méthode non autorisée" });
   }
 
+  if (!req.body || req.body.legalConsent !== true) {
+    return res.status(400).json({ error: "L’acceptation des CGV et de la politique de confidentialité est obligatoire." });
+  }
+
   try {
     const session = await stripe.checkout.sessions.create({
       mode: "subscription",

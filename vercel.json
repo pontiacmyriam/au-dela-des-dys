@@ -22,6 +22,10 @@
       "dest": "/articles/index.html"
     },
     {
+      "src": "/(contact|mentions-legales|politique-confidentialite|cgu|cgv|politique-cookies|remboursement-retractation)/?",
+      "dest": "/$1/index.html"
+    },
+    {
       "src": "/(dyslexie-premiers-signes|aider-enfant-dyslexique|dysorthographie|jeux-dyslexie|diagnostic-dyslexie|difference-dyslexie-dysorthographie-dysgraphie|professionnel-troubles-dys|exercices-dyslexie|devoirs-enfant-dys|amenagement-scolaire-dys|enfant-lit-lentement|dyslexie-confiance-en-soi|outils-dyslexie|expliquer-dyslexie-enfant|idees-recues-dyslexie|apprendre-a-lire|dyslexie-ecole|inverse-confond-lettres|livres-dyslexie|parcours-enfant-dys)/?",
       "dest": "/$1/index.html"
     },

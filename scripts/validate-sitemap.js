@@ -19,7 +19,7 @@ for (const [pattern, description] of requiredPatterns) {
 }
 
 const locations = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
-if (locations.length !== 22) throw new Error(`Sitemap invalide : 22 URL attendues, ${locations.length} trouvées.`);
+if (locations.length !== 29) throw new Error(`Sitemap invalide : 29 URL attendues, ${locations.length} trouvées.`);
 if (new Set(locations).size !== locations.length) throw new Error("Sitemap invalide : des URL sont dupliquées.");
 
-console.log("Sitemap XML valide : 22 URL uniques.");
+console.log("Sitemap XML valide : 29 URL uniques.");

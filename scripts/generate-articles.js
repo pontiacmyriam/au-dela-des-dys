@@ -7,6 +7,7 @@ const PUBLIC_DIR = path.join(ROOT, "public");
 const SITE_URL = "https://www.audeladesdys.fr";
 const SITE_NAME = "Au-delà des Dys";
 const BUILD_DATE = new Date().toISOString().slice(0, 10);
+const LEGAL_SLUGS = ["contact", "mentions-legales", "politique-confidentialite", "cgu", "cgv", "politique-cookies", "remboursement-retractation"];
 
 function escapeHtml(value = "") {
   return value
@@ -228,7 +229,7 @@ function pageTemplate(article, allArticles) {
       <p><a class="button" href="/">Découvrir les activités</a></p>
     </aside>
   </main>
-  <footer><p>© ${new Date().getFullYear()} Au-delà des Dys — Informations générales, sans diagnostic médical.</p><p><a href="/articles/">Articles</a> · <a href="/">Application</a></p></footer>
+  <footer><p>© ${new Date().getFullYear()} Au-delà des Dys — Informations générales, sans diagnostic médical.</p><p><a href="/articles/">Articles</a> · <a href="/">Application</a> · <a href="/contact/">Contact</a> · <a href="/mentions-legales/">Mentions légales</a> · <a href="/politique-confidentialite/">Confidentialité</a> · <a href="/cgu/">CGU</a> · <a href="/cgv/">CGV</a> · <a href="/politique-cookies/">Cookies</a> · <a href="/remboursement-retractation/">Rétractation</a></p></footer>
 </body>
 </html>`;
 }
@@ -283,6 +284,7 @@ fs.writeFileSync(path.join(articlesDir, "index.html"), indexTemplate(articles), 
 const sitemapUrls = [
   { url: "/", priority: "1.0", frequency: "weekly" },
   { url: "/articles/", priority: "0.9", frequency: "weekly" },
+  ...LEGAL_SLUGS.map((slug) => ({ url: `/${slug}/`, priority: "0.4", frequency: "yearly" })),
   ...articles.map((article) => ({ url: article.url, priority: "0.8", frequency: "monthly" })),
 ];
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapUrls.map((item) => `  <url>\n    <loc>${SITE_URL}${item.url}</loc>\n    <lastmod>${BUILD_DATE}</lastmod>\n    <changefreq>${item.frequency}</changefreq>\n    <priority>${item.priority}</priority>\n  </url>`).join("\n")}\n</urlset>\n`;

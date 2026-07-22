@@ -381,6 +381,16 @@ export default function App() {
   const [showStar, setShowStar] = useState(false);
 
   const [screen, setScreen] = useState("home");
+  const [showCheckoutConsent, setShowCheckoutConsent] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [cookieChoice, setCookieChoice] = useState(() => {
+    try {
+      return localStorage.getItem("cookieConsent");
+    } catch {
+      return null;
+    }
+  });
+  const [showCookiePreferences, setShowCookiePreferences] = useState(false);
   const [avatar, setAvatar] = useState(localStorage.getItem("avatar") || null);
 
   const [readingStep, setReadingStep] = useState(false);
@@ -564,10 +574,18 @@ export default function App() {
     resetExerciseVisuals();
   }
 
-  async function handleSubscribe() {
+  function handleSubscribe() {
+    setTermsAccepted(false);
+    setShowCheckoutConsent(true);
+  }
+
+  async function startCheckout() {
+    if (!termsAccepted) return;
     try {
       const response = await fetch("/api/create-checkout-session", {
         method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ legalConsent: true }),
       });
 
       const data = await response.json();
@@ -585,6 +603,14 @@ export default function App() {
       console.error("Erreur pendant l’ouverture du paiement :", error);
       alert("Erreur pendant l’ouverture du paiement.");
     }
+  }
+
+  function saveCookieChoice(choice) {
+    try {
+      localStorage.setItem("cookieConsent", choice);
+    } catch {}
+    setCookieChoice(choice);
+    setShowCookiePreferences(false);
   }
 
   function startTraining() {
@@ -908,6 +934,22 @@ speech.volume = 1;
     setRobotMood("happy");
   }
 
+  function renderCookiePreferences() {
+    if (cookieChoice && !showCookiePreferences) return null;
+    return (
+      <section style={styles.cookieBanner} role="dialog" aria-modal="true" aria-labelledby="cookie-title">
+        <h2 id="cookie-title" style={{ marginTop: 0 }}>Vos préférences de cookies</h2>
+        <p>Le site utilise le stockage nécessaire à son fonctionnement. Aucun cookie de mesure d’audience ou publicitaire n’est actuellement chargé sans votre accord.</p>
+        <p><a href="/politique-cookies/">Consulter la Politique de cookies</a></p>
+        <div style={styles.cookieActions}>
+          <button style={styles.btnSecondarySmall} onClick={() => saveCookieChoice("refused")}>Refuser les non essentiels</button>
+          <button style={styles.btnSecondarySmall} onClick={() => saveCookieChoice("customized")}>Personnaliser</button>
+          <button style={styles.btnSecondarySmall} onClick={() => saveCookieChoice("accepted")}>Tout accepter</button>
+        </div>
+      </section>
+    );
+  }
+
   function renderSidebar(active = "home") {
     return (
       <aside style={styles.sidebar}>
@@ -1003,8 +1045,53 @@ speech.volume = 1;
       <div style={styles.desktopPage}>
         <div style={styles.appFrame}>
           {renderSidebar(active)}
-          <main style={styles.mainPanel}>{children}</main>
+          <main style={styles.mainPanel}>
+            {children}
+            <footer style={styles.legalFooter} aria-label="Informations légales">
+              <a href="/contact/">Contact</a>
+              <a href="/mentions-legales/">Mentions légales</a>
+              <a href="/politique-confidentialite/">Confidentialité</a>
+              <a href="/cgu/">CGU</a>
+              <a href="/cgv/">CGV</a>
+              <a href="/politique-cookies/">Cookies</a>
+              <a href="/remboursement-retractation/">Remboursement et rétractation</a>
+              <button type="button" style={styles.footerLinkButton} onClick={() => setShowCookiePreferences(true)}>Gérer mes cookies</button>
+            </footer>
+          </main>
         </div>
+        {showCheckoutConsent && (
+          <div style={styles.modalBackdrop} role="presentation">
+            <section style={styles.consentModal} role="dialog" aria-modal="true" aria-labelledby="checkout-consent-title">
+              <h2 id="checkout-consent-title">Avant de poursuivre vers le paiement</h2>
+              <p>L’abonnement coûte 7,99 € par mois. Vous pourrez vérifier votre commande sur la page de paiement sécurisée Stripe.</p>
+              <label style={styles.consentLabel}>
+                <input
+                  type="checkbox"
+                  checked={termsAccepted}
+                  onChange={(event) => setTermsAccepted(event.target.checked)}
+                  required
+                />
+                <span>J’accepte les <a href="/cgv/" target="_blank" rel="noopener noreferrer">CGV</a> et j’ai lu la <a href="/politique-confidentialite/" target="_blank" rel="noopener noreferrer">Politique de confidentialité</a>.</span>
+              </label>
+              <div style={styles.consentActions}>
+                <button style={styles.btnSecondary} onClick={() => setShowCheckoutConsent(false)}>Annuler</button>
+                <button style={{ ...styles.btn, opacity: termsAccepted ? 1 : 0.55 }} disabled={!termsAccepted} onClick={startCheckout}>Continuer vers Stripe</button>
+              </div>
+            </section>
+          </div>
+        )}
+        {(!cookieChoice || showCookiePreferences) && (
+          <section style={styles.cookieBanner} role="dialog" aria-modal="true" aria-labelledby="cookie-title">
+            <h2 id="cookie-title" style={{ marginTop: 0 }}>Vos préférences de cookies</h2>
+            <p>Le site utilise le stockage nécessaire à son fonctionnement. Aucun cookie de mesure d’audience ou publicitaire n’est actuellement chargé sans votre accord.</p>
+            <p><a href="/politique-cookies/">Consulter la Politique de cookies</a></p>
+            <div style={styles.cookieActions}>
+              <button style={styles.btnSecondarySmall} onClick={() => saveCookieChoice("refused")}>Refuser les non essentiels</button>
+              <button style={styles.btnSecondarySmall} onClick={() => saveCookieChoice("customized")}>Personnaliser</button>
+              <button style={styles.btnSecondarySmall} onClick={() => saveCookieChoice("accepted")}>Tout accepter</button>
+            </div>
+          </section>
+        )}
       </div>
     );
   }
@@ -1016,6 +1103,7 @@ speech.volume = 1;
           <h1>Au-delà des Dys</h1>
           <p>Chargement...</p>
         </main>
+        {renderCookiePreferences()}
       </div>
     );
   }
@@ -1074,6 +1162,7 @@ speech.volume = 1;
             </button>
           </div>
         </main>
+        {renderCookiePreferences()}
       </div>
     );
   }
@@ -2437,5 +2526,83 @@ const styles = {
     fontSize: 18,
     lineHeight: 1.6,
     color: "#607086",
+  },
+
+  legalFooter: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    gap: "10px 18px",
+    marginTop: 28,
+    padding: "22px 12px 8px",
+    borderTop: "1px solid #D9ECFF",
+    fontSize: 13,
+  },
+
+  modalBackdrop: {
+    position: "fixed",
+    inset: 0,
+    zIndex: 1000,
+    display: "grid",
+    placeItems: "center",
+    padding: 20,
+    background: "rgba(15, 42, 67, 0.62)",
+  },
+
+  consentModal: {
+    width: "min(560px, 100%)",
+    boxSizing: "border-box",
+    padding: 28,
+    borderRadius: 28,
+    background: "#FFFFFF",
+    boxShadow: "0 30px 80px rgba(15, 42, 67, 0.3)",
+  },
+
+  consentLabel: {
+    display: "flex",
+    alignItems: "flex-start",
+    gap: 12,
+    padding: 16,
+    borderRadius: 16,
+    background: "#F8FCFF",
+    lineHeight: 1.5,
+  },
+
+  consentActions: {
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr",
+    gap: 12,
+    marginTop: 20,
+  },
+
+  footerLinkButton: {
+    padding: 0,
+    border: 0,
+    background: "transparent",
+    color: "#056B98",
+    font: "inherit",
+    textDecoration: "underline",
+    cursor: "pointer",
+  },
+
+  cookieBanner: {
+    position: "fixed",
+    right: 20,
+    bottom: 20,
+    zIndex: 1100,
+    width: "min(620px, calc(100% - 40px))",
+    boxSizing: "border-box",
+    padding: 24,
+    border: "1px solid #D9ECFF",
+    borderRadius: 24,
+    background: "#FFFFFF",
+    boxShadow: "0 24px 70px rgba(15, 42, 67, 0.28)",
+  },
+
+  cookieActions: {
+    display: "flex",
+    flexWrap: "wrap",
+    gap: 10,
+    justifyContent: "flex-end",
   },
 };
