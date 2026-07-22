@@ -2,6 +2,51 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import Tesseract from "tesseract.js";
 import "./App.css";
 
+const GA_MEASUREMENT_ID = "G-0XBCSQCE21";
+
+function googleTag() {
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push(arguments);
+}
+
+function setGoogleConsent(analyticsStorage) {
+  googleTag("consent", "update", {
+    analytics_storage: analyticsStorage,
+    ad_storage: "denied",
+    ad_user_data: "denied",
+    ad_personalization: "denied",
+  });
+}
+
+function enableGoogleAnalytics() {
+  setGoogleConsent("granted");
+  if (!document.getElementById("google-analytics-script")) {
+    const script = document.createElement("script");
+    script.id = "google-analytics-script";
+    script.async = true;
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
+    document.head.appendChild(script);
+  }
+  if (!window.__auDelaDesDysGaConfigured) {
+    googleTag("js", new Date());
+    googleTag("config", GA_MEASUREMENT_ID, {
+      allow_google_signals: false,
+      allow_ad_personalization_signals: false,
+    });
+    window.__auDelaDesDysGaConfigured = true;
+  }
+}
+
+function disableGoogleAnalytics() {
+  setGoogleConsent("denied");
+  document.cookie.split(";").forEach((cookie) => {
+    const name = cookie.split("=")[0].trim();
+    if (name === "_ga" || name.startsWith("_ga_")) {
+      document.cookie = `${name}=; Max-Age=0; path=/; SameSite=Lax`;
+    }
+  });
+}
+
 const LABELS = {
   premiers_sons: "👉 Commencer ici",
   sons_simples: "Sons simples",
@@ -391,6 +436,8 @@ export default function App() {
     }
   });
   const [showCookiePreferences, setShowCookiePreferences] = useState(false);
+  const [customAnalyticsAllowed, setCustomAnalyticsAllowed] = useState(false);
+  const [showCookieCustomization, setShowCookieCustomization] = useState(false);
   const [avatar, setAvatar] = useState(localStorage.getItem("avatar") || null);
 
   const [readingStep, setReadingStep] = useState(false);
@@ -419,6 +466,20 @@ export default function App() {
     "🚀 Tu progresses !",
     "🎉 Excellent !",
   ];
+
+  useEffect(() => {
+    googleTag("consent", "default", {
+      analytics_storage: "denied",
+      ad_storage: "denied",
+      ad_user_data: "denied",
+      ad_personalization: "denied",
+    });
+    if (cookieChoice === "accepted" || cookieChoice === "analytics-granted") {
+      enableGoogleAnalytics();
+    } else {
+      disableGoogleAnalytics();
+    }
+  }, [cookieChoice]);
 
   useEffect(() => {
     fetch("/prototype_vfinal.json")
@@ -611,6 +672,7 @@ export default function App() {
     } catch {}
     setCookieChoice(choice);
     setShowCookiePreferences(false);
+    setShowCookieCustomization(false);
   }
 
   function startTraining() {
@@ -939,13 +1001,30 @@ speech.volume = 1;
     return (
       <section style={styles.cookieBanner} role="dialog" aria-modal="true" aria-labelledby="cookie-title">
         <h2 id="cookie-title" style={{ marginTop: 0 }}>Vos préférences de cookies</h2>
-        <p>Le site utilise le stockage nécessaire à son fonctionnement. Aucun cookie de mesure d’audience ou publicitaire n’est actuellement chargé sans votre accord.</p>
+        <p>Le stockage nécessaire au fonctionnement reste actif. Google Analytics est chargé uniquement avec votre accord.</p>
         <p><a href="/politique-cookies/">Consulter la Politique de cookies</a></p>
-        <div style={styles.cookieActions}>
-          <button style={styles.btnSecondarySmall} onClick={() => saveCookieChoice("refused")}>Refuser les non essentiels</button>
-          <button style={styles.btnSecondarySmall} onClick={() => saveCookieChoice("customized")}>Personnaliser</button>
-          <button style={styles.btnSecondarySmall} onClick={() => saveCookieChoice("accepted")}>Tout accepter</button>
-        </div>
+        {showCookieCustomization ? (
+          <>
+            <p><strong>Cookies nécessaires</strong> — toujours actifs pour mémoriser vos choix et assurer le service.</p>
+            <label style={styles.consentLabel}>
+              <input type="checkbox" checked={customAnalyticsAllowed} onChange={(event) => setCustomAnalyticsAllowed(event.target.checked)} />
+              <span><strong>Mesure d’audience Google Analytics</strong><br />Autoriser la collecte de statistiques de fréquentation.</span>
+            </label>
+            <div style={styles.cookieActions}>
+              <button style={styles.btnSecondarySmall} onClick={() => setShowCookieCustomization(false)}>Retour</button>
+              <button style={styles.btnSecondarySmall} onClick={() => saveCookieChoice(customAnalyticsAllowed ? "analytics-granted" : "analytics-denied")}>Enregistrer mes choix</button>
+            </div>
+          </>
+        ) : (
+          <div style={styles.cookieActions}>
+            <button style={styles.btnSecondarySmall} onClick={() => saveCookieChoice("refused")}>Refuser les non essentiels</button>
+            <button style={styles.btnSecondarySmall} onClick={() => {
+              setCustomAnalyticsAllowed(cookieChoice === "accepted" || cookieChoice === "analytics-granted");
+              setShowCookieCustomization(true);
+            }}>Personnaliser</button>
+            <button style={styles.btnSecondarySmall} onClick={() => saveCookieChoice("accepted")}>Tout accepter</button>
+          </div>
+        )}
       </section>
     );
   }
@@ -1080,18 +1159,7 @@ speech.volume = 1;
             </section>
           </div>
         )}
-        {(!cookieChoice || showCookiePreferences) && (
-          <section style={styles.cookieBanner} role="dialog" aria-modal="true" aria-labelledby="cookie-title">
-            <h2 id="cookie-title" style={{ marginTop: 0 }}>Vos préférences de cookies</h2>
-            <p>Le site utilise le stockage nécessaire à son fonctionnement. Aucun cookie de mesure d’audience ou publicitaire n’est actuellement chargé sans votre accord.</p>
-            <p><a href="/politique-cookies/">Consulter la Politique de cookies</a></p>
-            <div style={styles.cookieActions}>
-              <button style={styles.btnSecondarySmall} onClick={() => saveCookieChoice("refused")}>Refuser les non essentiels</button>
-              <button style={styles.btnSecondarySmall} onClick={() => saveCookieChoice("customized")}>Personnaliser</button>
-              <button style={styles.btnSecondarySmall} onClick={() => saveCookieChoice("accepted")}>Tout accepter</button>
-            </div>
-          </section>
-        )}
+        {renderCookiePreferences()}
       </div>
     );
   }
