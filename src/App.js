@@ -1907,6 +1907,7 @@ const styles = {
 
   loadingCard: {
     width: "min(520px, 92vw)",
+    boxSizing: "border-box",
     margin: "12vh auto",
     background: "#FFFFFF",
     borderRadius: 32,
@@ -1917,6 +1918,7 @@ const styles = {
 
   avatarCard: {
     width: "min(760px, 92vw)",
+    boxSizing: "border-box",
     margin: "8vh auto",
     background: "#FFFFFF",
     borderRadius: 34,
