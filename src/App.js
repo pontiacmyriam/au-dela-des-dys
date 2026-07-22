@@ -1029,6 +1029,21 @@ speech.volume = 1;
     );
   }
 
+  function renderLegalFooter() {
+    return (
+      <footer style={styles.legalFooter} aria-label="Informations légales">
+        <a href="/contact/">Contact</a>
+        <a href="/mentions-legales/">Mentions légales</a>
+        <a href="/politique-confidentialite/">Politique de confidentialité</a>
+        <a href="/cgu/">CGU</a>
+        <a href="/cgv/">CGV</a>
+        <a href="/politique-cookies/">Cookies</a>
+        <a href="/remboursement-retractation/">Remboursement et rétractation</a>
+        <button type="button" style={styles.footerLinkButton} onClick={() => setShowCookiePreferences(true)}>Gérer mes cookies</button>
+      </footer>
+    );
+  }
+
   function renderSidebar(active = "home") {
     return (
       <aside style={styles.sidebar}>
@@ -1126,16 +1141,7 @@ speech.volume = 1;
           {renderSidebar(active)}
           <main style={styles.mainPanel}>
             {children}
-            <footer style={styles.legalFooter} aria-label="Informations légales">
-              <a href="/contact/">Contact</a>
-              <a href="/mentions-legales/">Mentions légales</a>
-              <a href="/politique-confidentialite/">Confidentialité</a>
-              <a href="/cgu/">CGU</a>
-              <a href="/cgv/">CGV</a>
-              <a href="/politique-cookies/">Cookies</a>
-              <a href="/remboursement-retractation/">Remboursement et rétractation</a>
-              <button type="button" style={styles.footerLinkButton} onClick={() => setShowCookiePreferences(true)}>Gérer mes cookies</button>
-            </footer>
+            {renderLegalFooter()}
           </main>
         </div>
         {showCheckoutConsent && (
@@ -1171,6 +1177,7 @@ speech.volume = 1;
           <h1>Au-delà des Dys</h1>
           <p>Chargement...</p>
         </main>
+        {renderLegalFooter()}
         {renderCookiePreferences()}
       </div>
     );
@@ -1230,6 +1237,7 @@ speech.volume = 1;
             </button>
           </div>
         </main>
+        {renderLegalFooter()}
         {renderCookiePreferences()}
       </div>
     );

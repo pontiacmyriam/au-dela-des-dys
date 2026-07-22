@@ -69,3 +69,14 @@ test("permet de rouvrir les préférences depuis le pied de page", async () => {
 
   expect(screen.getByRole("heading", { name: "Vos préférences de cookies" })).toBeInTheDocument();
 });
+
+test("affiche les liens juridiques dès la première visite", async () => {
+  render(<App />);
+  await screen.findByRole("heading", { name: "Vos préférences de cookies" });
+
+  expect(screen.getByRole("link", { name: "Mentions légales" })).toHaveAttribute("href", "/mentions-legales/");
+  expect(screen.getByRole("link", { name: "Politique de confidentialité" })).toHaveAttribute("href", "/politique-confidentialite/");
+  expect(screen.getByRole("link", { name: "CGU" })).toHaveAttribute("href", "/cgu/");
+  expect(screen.getByRole("link", { name: "CGV" })).toHaveAttribute("href", "/cgv/");
+  expect(screen.getByRole("link", { name: "Cookies" })).toHaveAttribute("href", "/politique-cookies/");
+});
