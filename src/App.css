@@ -50,3 +50,77 @@ button[style] {
 audio {
   display: none !important;
 }
+
+/* Mobile: the desktop shell used fixed grid columns that squeezed the main
+   content into a narrow strip on phones. Stack the navigation above the
+   content and let every panel use the viewport width. */
+@media (max-width: 760px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  #root > div {
+    padding: 12px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  div[style*="grid-template-columns: 285px 1fr"] {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: auto !important;
+    gap: 14px !important;
+  }
+
+  aside[style] {
+    position: static !important;
+    top: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    padding: 14px !important;
+    border-radius: 24px !important;
+    overflow: visible !important;
+    box-sizing: border-box !important;
+  }
+
+  aside[style] button {
+    min-width: 0 !important;
+    white-space: normal !important;
+  }
+
+  main[style] {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  div[style*="grid-template-columns: minmax(340px, 420px) 1fr"] {
+    display: block !important;
+    width: 100% !important;
+  }
+
+  main[style] > div,
+  main[style] section,
+  main[style] article {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  h1 {
+    overflow-wrap: anywhere;
+  }
+
+  h2 {
+    font-size: 25px;
+  }
+
+  h3 {
+    font-size: 21px;
+  }
+}
