@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import Tesseract from "tesseract.js";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import "./App.css";
 
 const GA_MEASUREMENT_ID = "G-0XBCSQCE21";
@@ -1166,6 +1167,7 @@ speech.volume = 1;
           </div>
         )}
         {renderCookiePreferences()}
+        <SpeedInsights />
       </div>
     );
   }
@@ -1179,6 +1181,7 @@ speech.volume = 1;
         </main>
         {renderLegalFooter()}
         {renderCookiePreferences()}
+        <SpeedInsights />
       </div>
     );
   }
@@ -1239,6 +1242,7 @@ speech.volume = 1;
         </main>
         {renderLegalFooter()}
         {renderCookiePreferences()}
+        <SpeedInsights />
       </div>
     );
   }
