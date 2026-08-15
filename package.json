@@ -23,25 +23,10 @@
     "generate:legal": "node scripts/generate-legal-pages.js",
     "validate:articles": "node scripts/validate-articles.js",
     "validate:sitemap": "node scripts/validate-sitemap.js",
+    "qa:launch": "node scripts/qa-launch.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+  "eslintConfig": { "extends": ["react-app", "react-app/jest"] },
+  "browserslist": { "production": [">0.2%", "not dead", "not op_mini all"], "development": ["last 1 chrome version", "last 1 firefox version", "last 1 safari version"] }
 }
