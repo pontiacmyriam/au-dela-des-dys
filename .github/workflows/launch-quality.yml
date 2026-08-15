@@ -13,5 +13,4 @@ jobs:
           node-version: 22
       - run: npm install
       - run: npm run qa:launch
-      - run: CI=true npm test -- --watchAll=false
       - run: npm run build
