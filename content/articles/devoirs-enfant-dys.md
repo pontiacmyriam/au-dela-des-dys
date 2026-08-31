@@ -1,12 +1,12 @@
 ---
-meta_title: "Comment accompagner les devoirs d’un enfant Dys"
-meta_description: "Découvrez des conseils concrets pour rendre les devoirs plus sereins et accompagner votre enfant sans conflits."
+meta_title: "Devoirs enfant Dys : aider sans conflit | Au-delà des Dys"
+meta_description: "Fatigue, pauses, consignes, durée et autonomie : des conseils concrets pour accompagner les devoirs d’un enfant Dys sans transformer la soirée en conflit."
 url: "/devoirs-enfant-dys"
 article_id: "SEO-ADD-009"
 article_type: "satellite"
 ---
 
-# Comment accompagner les devoirs d’un enfant Dys
+# Devoirs d’un enfant Dys : comment aider sans conflit
 
 Pour un enfant Dys, les devoirs arrivent souvent après une journée passée à compenser ses difficultés. Lire une consigne, copier une phrase, organiser son matériel ou rester concentré peut lui demander beaucoup plus d’énergie qu’il n’y paraît. À la maison, cette fatigue se transforme parfois en lenteur, en refus ou en conflit.
 
