@@ -1,12 +1,12 @@
 ---
-meta_title: "Comment aider un enfant dyslexique à progresser en lecture"
-meta_description: "Conseils pratiques et méthodes bienveillantes pour accompagner un enfant dyslexique dans l’apprentissage de la lecture."
+meta_title: "Comment aider un enfant dyslexique à la maison | Au-delà des Dys"
+meta_description: "Comment aider un enfant dyslexique à la maison : lecture, fatigue, motivation, outils et conseils concrets pour progresser sans conflit."
 url: "/aider-enfant-dyslexique"
 article_id: "SEO-ADD-002"
 article_type: "satellite"
 ---
 
-# Comment aider un enfant dyslexique à lire
+# Comment aider un enfant dyslexique à la maison
 
 Lire avec un enfant dyslexique peut devenir un moment de tension : il hésite, recommence, se fatigue, tandis que l’adulte cherche à l’aider sans toujours savoir comment intervenir. Pourtant, l’accompagnement à la maison n’a pas vocation à reproduire la classe ou une séance d’orthophonie. Son rôle est différent : offrir un cadre rassurant, entretenir le plaisir des histoires et permettre de s’entraîner sans peur de l’erreur.
 
