@@ -6,7 +6,6 @@ const CONTENT_DIR = path.join(ROOT, "content", "articles");
 const PUBLIC_DIR = path.join(ROOT, "public");
 const SITE_URL = "https://www.audeladesdys.fr";
 const SITE_NAME = "Au-delà des Dys";
-const BUILD_DATE = new Date().toISOString().slice(0, 10);
 const LEGAL_SLUGS = ["contact", "mentions-legales", "politique-confidentialite", "cgu", "cgv", "politique-cookies", "remboursement-retractation"];
 
 function escapeHtml(value = "") {
@@ -144,27 +143,65 @@ function extractDescription(markdown) {
   return cleaned.slice(0, 220);
 }
 
+const TOPIC_GROUPS = [
+  ["ecole", "scolaire", "amenagement", "pap", "pps", "ppre", "devoir", "parcours"],
+  ["lecture", "lire", "apprendre", "lentement", "lettres", "inverse", "confond"],
+  ["dysorthographie", "orthographe", "ecriture", "dysgraphie"],
+  ["outil", "numerique", "exercice", "jeu", "livre"],
+  ["diagnostic", "premiers", "signes", "professionnel"],
+  ["confiance", "estime", "expliquer", "idees", "recues"],
+];
+
+function normalizeText(value = "") {
+  return value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+}
+
+function relatedScore(article, candidate) {
+  const source = normalizeText(`${article.url} ${article.h1}`);
+  const target = normalizeText(`${candidate.url} ${candidate.h1}`);
+  let score = 0;
+  for (const group of TOPIC_GROUPS) {
+    const sourceHits = group.filter((term) => source.includes(term)).length;
+    const targetHits = group.filter((term) => target.includes(term)).length;
+    if (sourceHits && targetHits) score += Math.min(sourceHits, targetHits) * 4;
+  }
+  const sourceTerms = new Set(source.split(/[^a-z0-9]+/).filter((term) => term.length > 4 && !["enfant", "dyslexie", "dyslexique", "troubles"].includes(term)));
+  for (const term of sourceTerms) if (target.includes(term)) score += 2;
+  return score;
+}
+
+function selectRelated(article, allArticles) {
+  return allArticles
+    .filter((candidate) => candidate.url !== article.url)
+    .map((candidate) => ({ candidate, score: relatedScore(article, candidate) }))
+    .sort((a, b) => b.score - a.score || (a.candidate.articleId || "").localeCompare(b.candidate.articleId || "", "fr", { numeric: true }))
+    .slice(0, 6)
+    .map(({ candidate }) => candidate);
+}
+
 function pageTemplate(article, allArticles) {
   const canonical = `${SITE_URL}${article.url}`;
   const faq = extractFaq(article.markdown);
-  const schemas = [
-    {
-      "@context": "https://schema.org",
-      "@type": "Article",
-      headline: article.h1,
-      description: article.metaDescription,
-      mainEntityOfPage: canonical,
-      image: `${SITE_URL}/logo512.png`,
-      datePublished: BUILD_DATE,
-      dateModified: BUILD_DATE,
-      author: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
-      publisher: {
-        "@type": "Organization",
-        name: SITE_NAME,
-        url: SITE_URL,
-        logo: { "@type": "ImageObject", url: `${SITE_URL}/logo512.png` },
-      },
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: article.h1,
+    description: article.metaDescription,
+    mainEntityOfPage: canonical,
+    image: `${SITE_URL}/logo512.png`,
+    author: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: SITE_URL,
+      logo: { "@type": "ImageObject", url: `${SITE_URL}/logo512.png` },
     },
+  };
+  if (article.datePublished) articleSchema.datePublished = article.datePublished;
+  if (article.dateModified) articleSchema.dateModified = article.dateModified;
+
+  const schemas = [
+    articleSchema,
     {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
@@ -187,9 +224,7 @@ function pageTemplate(article, allArticles) {
     });
   }
 
-  const related = allArticles
-    .filter((candidate) => candidate.url !== article.url)
-    .slice(0, 6)
+  const related = selectRelated(article, allArticles)
     .map((candidate) => `<li><a href="${candidate.url}">${escapeHtml(candidate.h1)}</a></li>`)
     .join("\n");
 
@@ -246,7 +281,7 @@ function indexTemplate(articles) {
     url: canonical,
     mainEntity: { "@type": "ItemList", itemListElement: articles.map((article, index) => ({ "@type": "ListItem", position: index + 1, url: `${SITE_URL}${article.url}`, name: article.h1 })) },
   };
-  return `<!doctype html><html lang="fr"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" /><title>Conseils dyslexie et troubles Dys | Au-delà des Dys</title><meta name="description" content="Découvrez 20 guides pratiques sur la dyslexie, les apprentissages et l’accompagnement des enfants Dys." /><link rel="canonical" href="${canonical}" /><meta property="og:type" content="website" /><meta property="og:title" content="Conseils dyslexie et troubles Dys" /><meta property="og:description" content="20 guides pratiques et fiables pour accompagner les enfants Dys." /><meta property="og:url" content="${canonical}" /><meta property="og:image" content="${SITE_URL}/logo512.png" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content="Conseils dyslexie et troubles Dys" /><meta name="twitter:description" content="20 guides pratiques pour accompagner les enfants Dys." /><meta name="twitter:image" content="${SITE_URL}/logo512.png" /><link rel="stylesheet" href="../articles.css" /><script type="application/ld+json">${JSON.stringify(schema)}</script></head><body><a class="skip-link" href="#articles">Aller au contenu</a><header class="site-header"><a class="brand" href="/">Au-delà des Dys</a><nav><a href="/">Application</a><a href="/articles/" aria-current="page">Articles</a></nav></header><main id="articles" class="index"><section class="index-hero"><p class="eyebrow">Ressources pour les familles</p><h1>Comprendre et accompagner les troubles Dys</h1><p>Des articles approfondis, prudents et directement utiles pour mieux comprendre les difficultés de lecture et accompagner chaque enfant.</p></section><section class="article-grid" aria-label="Liste des articles">${cards}</section></main><footer><p>© ${new Date().getFullYear()} Au-delà des Dys — Informations générales, sans diagnostic médical.</p></footer></body></html>`;
+  return `<!doctype html><html lang="fr"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" /><title>Conseils dyslexie et troubles Dys | Au-delà des Dys</title><meta name="description" content="Guides pratiques sur la dyslexie, les apprentissages et l’accompagnement des enfants Dys." /><link rel="canonical" href="${canonical}" /><meta property="og:type" content="website" /><meta property="og:title" content="Conseils dyslexie et troubles Dys" /><meta property="og:description" content="Guides pratiques et fiables pour accompagner les enfants Dys." /><meta property="og:url" content="${canonical}" /><meta property="og:image" content="${SITE_URL}/logo512.png" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content="Conseils dyslexie et troubles Dys" /><meta name="twitter:description" content="Guides pratiques pour accompagner les enfants Dys." /><meta name="twitter:image" content="${SITE_URL}/logo512.png" /><link rel="stylesheet" href="../articles.css" /><script type="application/ld+json">${JSON.stringify(schema)}</script></head><body><a class="skip-link" href="#articles">Aller au contenu</a><header class="site-header"><a class="brand" href="/">Au-delà des Dys</a><nav><a href="/">Application</a><a href="/articles/" aria-current="page">Articles</a></nav></header><main id="articles" class="index"><section class="index-hero"><p class="eyebrow">Ressources pour les familles</p><h1>Comprendre et accompagner les troubles Dys</h1><p>Des articles approfondis, prudents et directement utiles pour mieux comprendre les difficultés de lecture et accompagner chaque enfant.</p></section><section class="article-grid" aria-label="Liste des articles">${cards}</section></main><footer><p>© ${new Date().getFullYear()} Au-delà des Dys — Informations générales, sans diagnostic médical.</p></footer></body></html>`;
 }
 
 const files = fs.readdirSync(CONTENT_DIR).filter((name) => name.endsWith(".md")).sort();
@@ -262,6 +297,8 @@ const articles = files.map((filename) => {
     articleId: data.article_id,
     metaTitle: data.meta_title || h1Match[1],
     metaDescription: data.meta_description || extractDescription(markdown),
+    datePublished: data.date_published || "",
+    dateModified: data.date_modified || "",
     h1: h1Match[1],
     markdown,
     html: markdownToHtml(markdown),
@@ -282,12 +319,12 @@ fs.mkdirSync(articlesDir, { recursive: true });
 fs.writeFileSync(path.join(articlesDir, "index.html"), indexTemplate(articles), "utf8");
 
 const sitemapUrls = [
-  { url: "/", priority: "1.0", frequency: "weekly" },
-  { url: "/articles/", priority: "0.9", frequency: "weekly" },
-  ...LEGAL_SLUGS.map((slug) => ({ url: `/${slug}/`, priority: "0.4", frequency: "yearly" })),
-  ...articles.map((article) => ({ url: article.url, priority: "0.8", frequency: "monthly" })),
+  { url: "/" },
+  { url: "/articles/" },
+  ...LEGAL_SLUGS.map((slug) => ({ url: `/${slug}/` })),
+  ...articles.map((article) => ({ url: article.url, lastmod: article.dateModified || article.datePublished || "" })),
 ];
-const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapUrls.map((item) => `  <url>\n    <loc>${SITE_URL}${item.url}</loc>\n    <lastmod>${BUILD_DATE}</lastmod>\n    <changefreq>${item.frequency}</changefreq>\n    <priority>${item.priority}</priority>\n  </url>`).join("\n")}\n</urlset>\n`;
+const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapUrls.map((item) => `  <url>\n    <loc>${SITE_URL}${item.url}</loc>${item.lastmod ? `\n    <lastmod>${item.lastmod}</lastmod>` : ""}\n  </url>`).join("\n")}\n</urlset>\n`;
 fs.writeFileSync(path.join(PUBLIC_DIR, "sitemap.xml"), sitemap, "utf8");
 
 console.log(`${articles.length} articles générés dans public/ et sitemap mis à jour.`);
