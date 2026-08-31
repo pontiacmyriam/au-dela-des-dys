@@ -1,12 +1,12 @@
 ---
-meta_title: "Aménagements scolaires pour un enfant Dys : guide pratique"
-meta_description: "Découvrez les principaux aménagements scolaires destinés aux enfants Dys et les démarches pour les mettre en place."
+meta_title: "PAP, PPS, PPRE : aménagements scolaires pour un enfant Dys"
+meta_description: "PAP, PPS, PPRE : quelles différences et quels aménagements scolaires pour un enfant Dys ? Démarches, exemples et conseils concrets pour les parents."
 url: "/amenagement-scolaire-dys"
 article_id: "SEO-ADD-010"
 article_type: "satellite"
 ---
 
-# Les aménagements scolaires pour un enfant Dys
+# PAP, PPS, PPRE : quels aménagements scolaires pour un enfant Dys ?
 
 Un enfant Dys peut connaître sa leçon et pourtant ne pas terminer une évaluation, comprendre une histoire mais peiner à la lire seul, ou raisonner correctement sans parvenir à rédiger sa réponse. Les aménagements scolaires cherchent à réduire ces obstacles afin qu’il puisse accéder aux apprentissages et montrer ses compétences.
 
