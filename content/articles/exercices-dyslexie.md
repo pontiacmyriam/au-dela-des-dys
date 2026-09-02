@@ -1,6 +1,6 @@
 ---
-meta_title: "Exercices pour enfant dyslexique : progresser en lecture"
-meta_description: "Découvrez des exercices simples pour développer progressivement les compétences de lecture de votre enfant."
+meta_title: "Exercices dyslexie enfant : lecture, sons et syllabes"
+meta_description: "Exercices pour enfant dyslexique : sons, syllabes, décodage et fluidité. Des activités courtes et progressives à faire à la maison."
 url: "/exercices-dyslexie"
 article_id: "SEO-ADD-008"
 article_type: "satellite"

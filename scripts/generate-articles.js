@@ -6,7 +6,6 @@ const CONTENT_DIR = path.join(ROOT, "content", "articles");
 const PUBLIC_DIR = path.join(ROOT, "public");
 const SITE_URL = "https://www.audeladesdys.fr";
 const SITE_NAME = "Au-delà des Dys";
-const LEGAL_SLUGS = ["contact", "mentions-legales", "politique-confidentialite", "cgu", "cgv", "politique-cookies", "remboursement-retractation"];
 
 function escapeHtml(value = "") {
   return value
@@ -321,7 +320,6 @@ fs.writeFileSync(path.join(articlesDir, "index.html"), indexTemplate(articles), 
 const sitemapUrls = [
   { url: "/" },
   { url: "/articles/" },
-  ...LEGAL_SLUGS.map((slug) => ({ url: `/${slug}/` })),
   ...articles.map((article) => ({ url: article.url, lastmod: article.dateModified || article.datePublished || "" })),
 ];
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapUrls.map((item) => `  <url>\n    <loc>${SITE_URL}${item.url}</loc>${item.lastmod ? `\n    <lastmod>${item.lastmod}</lastmod>` : ""}\n  </url>`).join("\n")}\n</urlset>\n`;

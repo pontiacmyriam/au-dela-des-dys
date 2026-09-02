@@ -16,8 +16,23 @@ for (const [pattern, description] of requiredPatterns) {
 }
 
 const locations = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
-if (locations.length !== 29) throw new Error(`Sitemap invalide : 29 URL attendues, ${locations.length} trouvées.`);
+if (locations.length !== 22) throw new Error(`Sitemap invalide : 22 URL SEO attendues, ${locations.length} trouvées.`);
 if (new Set(locations).size !== locations.length) throw new Error("Sitemap invalide : des URL sont dupliquées.");
+
+const excludedUtilityPaths = [
+  "/contact/",
+  "/mentions-legales/",
+  "/politique-confidentialite/",
+  "/cgu/",
+  "/cgv/",
+  "/politique-cookies/",
+  "/remboursement-retractation/",
+];
+for (const pathname of excludedUtilityPaths) {
+  if (locations.includes(`https://www.audeladesdys.fr${pathname}`)) {
+    throw new Error(`Sitemap invalide : la page utilitaire ${pathname} ne doit pas être incluse.`);
+  }
+}
 
 const lastmods = [...sitemap.matchAll(/<lastmod>([^<]+)<\/lastmod>/g)].map((match) => match[1]);
 for (const date of lastmods) {
