@@ -20,7 +20,9 @@ for (const file of files) {
   const page = path.join(publicDir, url.replace(/^\//, ""), "index.html");
   if (!fs.existsSync(page)) throw new Error(`Page générée absente : ${url}`);
   const html = fs.readFileSync(page, "utf8");
-  for (const requirement of ['<link rel="canonical"', 'property="og:title"', 'name="twitter:card"', '"@type":"Article"', '"@type":"FAQPage"', '"@type":"BreadcrumbList"']) {
+  const requirements = ['<link rel="canonical"', 'property="og:title"', 'name="twitter:card"', '"@type":"Article"', '"@type":"BreadcrumbList"'];
+  if (/^## Questions fréquentes\s*$/m.test(source)) requirements.push('"@type":"FAQPage"');
+  for (const requirement of requirements) {
     if (!html.includes(requirement)) throw new Error(`${requirement} absent de ${url}`);
   }
 }
