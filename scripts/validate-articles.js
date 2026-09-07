@@ -6,7 +6,7 @@ const contentDir = path.join(root, "content", "articles");
 const publicDir = path.join(root, "public");
 const files = fs.readdirSync(contentDir).filter((name) => name.endsWith(".md"));
 
-if (files.length !== 20) throw new Error(`20 articles Markdown attendus, ${files.length} trouvés.`);
+if (files.length < 20) throw new Error(`Au moins 20 articles Markdown attendus, ${files.length} trouvés.`);
 
 const urls = new Map();
 for (const file of files) {
@@ -37,4 +37,4 @@ for (const [url] of urls) {
 if (broken.length) throw new Error(`Liens internes invalides :\n${broken.join("\n")}`);
 if (!fs.existsSync(path.join(publicDir, "articles", "index.html"))) throw new Error("Index des articles absent.");
 
-console.log("Articles valides : 20 pages, SEO, données structurées et liens internes contrôlés.");
+console.log(`Articles valides : ${files.length} pages, SEO, données structurées et liens internes contrôlés.`);
