@@ -1,7 +1,9 @@
 const fs = require("fs");
 const path = require("path");
 
-const sitemapPath = path.join(__dirname, "..", "public", "sitemap.xml");
+const root = path.join(__dirname, "..");
+const sitemapPath = path.join(root, "public", "sitemap.xml");
+const contentDir = path.join(root, "content", "articles");
 const sitemap = fs.readFileSync(sitemapPath, "utf8");
 
 const requiredPatterns = [
@@ -16,7 +18,11 @@ for (const [pattern, description] of requiredPatterns) {
 }
 
 const locations = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
-if (locations.length !== 22) throw new Error(`Sitemap invalide : 22 URL SEO attendues, ${locations.length} trouvées.`);
+const articleCount = fs.readdirSync(contentDir).filter((name) => name.endsWith(".md")).length;
+const expectedLocations = articleCount + 2; // accueil + index /articles/
+if (locations.length !== expectedLocations) {
+  throw new Error(`Sitemap invalide : ${expectedLocations} URL SEO attendues pour ${articleCount} articles, ${locations.length} trouvées.`);
+}
 if (new Set(locations).size !== locations.length) throw new Error("Sitemap invalide : des URL sont dupliquées.");
 
 const excludedUtilityPaths = [
@@ -39,4 +45,4 @@ for (const date of lastmods) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) throw new Error(`Sitemap invalide : lastmod incorrect (${date}).`);
 }
 
-console.log(`Sitemap XML valide : ${locations.length} URL uniques, ${lastmods.length} date(s) lastmod explicite(s).`);
+console.log(`Sitemap XML valide : ${locations.length} URL uniques pour ${articleCount} articles, ${lastmods.length} date(s) lastmod explicite(s).`);
