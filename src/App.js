@@ -407,7 +407,7 @@ function loadSavedFolder() {
 }
 
 export default function App() {
-  const hasActiveSubscription = false;
+  const [hasActiveSubscription, setHasActiveSubscription] = useState(false);
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -481,6 +481,19 @@ export default function App() {
       disableGoogleAnalytics();
     }
   }, [cookieChoice]);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const sessionId = params.get("session_id");
+    if (params.get("paiement") !== "success" || !sessionId) return;
+
+    fetch(`/api/subscription-status?session_id=${encodeURIComponent(sessionId)}`, {
+      cache: "no-store",
+    })
+      .then((response) => response.json())
+      .then((result) => setHasActiveSubscription(result.active === true))
+      .catch(() => setHasActiveSubscription(false));
+  }, []);
 
   useEffect(() => {
     fetch("/prototype_vfinal.json")
