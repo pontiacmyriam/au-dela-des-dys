@@ -24,6 +24,7 @@
     "validate:articles": "node scripts/validate-articles.js",
     "validate:sitemap": "node scripts/validate-sitemap.js",
     "qa:launch": "node scripts/qa-launch.js",
+    "test:api": "node --test tests/*.test.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
