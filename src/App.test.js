@@ -1,6 +1,10 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import App from "./App";
 
+jest.mock("@vercel/speed-insights/react", () => ({
+  SpeedInsights: () => null,
+}), { virtual: true });
+
 beforeEach(() => {
   localStorage.clear();
   Object.defineProperty(window, "speechSynthesis", {
