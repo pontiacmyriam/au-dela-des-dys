@@ -71,6 +71,7 @@ const FOLDER_ORDER = [
 
 const FREE_FOLDER_KEY = "premiers_sons";
 const FREE_EXERCISE_COUNT = 22;
+const PREMIUM_SESSION_STORAGE_KEY = "premiumStripeSessionId";
 
 function canAccessActivity(folderKey, exerciseIndex, hasActiveSubscription) {
   if (hasActiveSubscription) return true;
@@ -407,7 +408,7 @@ function loadSavedFolder() {
 }
 
 export default function App() {
-  const hasActiveSubscription = false;
+  const [hasActiveSubscription, setHasActiveSubscription] = useState(false);
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -481,6 +482,41 @@ export default function App() {
       disableGoogleAnalytics();
     }
   }, [cookieChoice]);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const checkoutSessionId = params.get("paiement") === "success"
+      ? params.get("session_id")
+      : null;
+    let savedSessionId = null;
+    try {
+      savedSessionId = localStorage.getItem(PREMIUM_SESSION_STORAGE_KEY);
+    } catch {}
+    const sessionId = checkoutSessionId || savedSessionId;
+    if (!sessionId) return;
+
+    fetch(`/api/subscription-status?session_id=${encodeURIComponent(sessionId)}`, {
+      cache: "no-store",
+    })
+      .then((response) => response.ok ? response.json() : { active: false })
+      .then((result) => {
+        const isActive = result.active === true;
+        setHasActiveSubscription(isActive);
+        try {
+          if (isActive) localStorage.setItem(PREMIUM_SESSION_STORAGE_KEY, sessionId);
+          else localStorage.removeItem(PREMIUM_SESSION_STORAGE_KEY);
+        } catch {}
+        if (checkoutSessionId) {
+          window.history.replaceState({}, document.title, window.location.pathname);
+        }
+      })
+      .catch(() => {
+        setHasActiveSubscription(false);
+        try {
+          localStorage.removeItem(PREMIUM_SESSION_STORAGE_KEY);
+        } catch {}
+      });
+  }, []);
 
   useEffect(() => {
     fetch("/prototype_vfinal.json")
