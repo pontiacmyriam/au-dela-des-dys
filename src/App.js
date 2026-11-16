@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import Tesseract from "tesseract.js";
+import { assessOCRQuality } from "./ocrQuality";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import "./App.css";
 
@@ -140,52 +141,6 @@ function cleanOCRText(text) {
       .replace(/[—–-]{2,}/g, " ... ");
   }
 
-  function repairKnownSchoolOCRLine(line) {
-    const normalized = normalizeText(line);
-
-    // Pointillés scolaires : on restaure les blancs, sans jamais donner les réponses.
-    if (normalized.includes("chat") && normalized.includes("canap")) {
-      return "... chat dort sur ... canapé.";
-    }
-
-    if (normalized.includes("enfant") && normalized.includes("jardin")) {
-      return "... enfants jouent dans ... jardin.";
-    }
-
-    if (normalized.includes("voiture") && normalized.includes("rouge")) {
-      return "... voiture est rouge.";
-    }
-
-    if (normalized.includes("arbre") && normalized.includes("haut")) {
-      return "... arbre est très haut.";
-    }
-
-    if (normalized.includes("pomme") && normalized.includes("sucree")) {
-      return "... pommes sont sucrées.";
-    }
-
-    if (
-      normalized.includes("amie") &&
-      (normalized.includes("julie") || normalized.includes("lea"))
-    ) {
-      return "... amie de Julie s'appelle Léa.";
-    }
-
-    const hasDeterminers =
-      normalized.includes("le") &&
-      normalized.includes("la") &&
-      normalized.includes("les") &&
-      normalized.includes("un") &&
-      normalized.includes("une") &&
-      normalized.includes("des");
-
-    if (hasDeterminers && normalized.length < 90) {
-      return "le - la - les - un - une - des";
-    }
-
-    return line;
-  }
-
   function cleanLine(line) {
     let cleaned = protectSchoolBlanks(line)
       .replace(/[·•]/g, " ")
@@ -193,8 +148,6 @@ function cleanOCRText(text) {
       .replace(/\s+/g, " ")
       .replace(/\s+([.,!?;:])/g, "$1")
       .trim();
-
-    cleaned = repairKnownSchoolOCRLine(cleaned);
 
     cleaned = cleaned
       .replace(/^\s*(e|E|6|§|S|y|Y|l|I|!|1)\s+(?=\.\.\.)/, "")
@@ -447,6 +400,7 @@ export default function App() {
 
   const [scannedImage, setScannedImage] = useState(null);
   const [scannedText, setScannedText] = useState("");
+  const [scannerReviewed, setScannerReviewed] = useState(false);
   const [scannerLoading, setScannerLoading] = useState(false);
   const [scannerStatus, setScannerStatus] = useState("");
   const [scannerSpeaking, setScannerSpeaking] = useState(false);
@@ -889,6 +843,7 @@ export default function App() {
       setScannerLoading(true);
       setScannerStatus("Analyse de l’image en cours...");
       setScannedText("");
+      setScannerReviewed(false);
       setScannerSpeaking(false);
       setScannerPaused(false);
       window.speechSynthesis.cancel();
@@ -907,12 +862,12 @@ export default function App() {
 
       const rawText = result?.data?.text || "";
       const cleanText = cleanOCRText(rawText);
-
-      setScannedText(cleanText);
+      const quality = assessOCRQuality(cleanText, result?.data?.confidence);
+      setScannedText(quality.usable ? cleanText : "");
       setScannerStatus(
-        cleanText
-          ? "Texte détecté. Tu peux lancer la lecture."
-          : "Aucun texte détecté. Cadre uniquement un exercice, avec une photo nette et bien éclairée."
+        quality.usable
+          ? "Texte proposé : vérifie-le avec un adulte avant de le faire lire."
+          : `${quality.reason} Reprends une photo nette d'un seul exercice.`
       );
     } catch (err) {
       console.error("Erreur OCR :", err);
@@ -986,6 +941,7 @@ speech.volume = 1;
     setCameraError("");
     setScannedImage(null);
     setScannedText("");
+    setScannerReviewed(false);
     setScannerLoading(false);
     setScannerStatus("");
     setScannerSpeaking(false);
@@ -1484,8 +1440,22 @@ speech.volume = 1;
 
         {scannedText && (
           <>
+            <label htmlFor="scanner-reviewed-text" style={{ display: "block", fontWeight: 700, marginTop: 16 }}>
+              Vérifier et corriger le texte reconnu
+            </label>
+            <textarea
+              id="scanner-reviewed-text"
+              value={scannedText}
+              onChange={(event) => { setScannedText(event.target.value); setScannerReviewed(false); }}
+              rows={5}
+              style={{ width: "100%", padding: 12, boxSizing: "border-box", fontSize: 18, borderRadius: 12 }}
+            />
+            <label style={{ display: "flex", gap: 10, alignItems: "center", margin: "14px 0" }}>
+              <input type="checkbox" checked={scannerReviewed} onChange={(event) => setScannerReviewed(event.target.checked)} />
+              J'ai vérifié le texte avec un adulte.
+            </label>
             <div style={styles.rowButtons}>
-              <button style={styles.btnSecondary} onClick={speakScannerText}>
+              <button style={styles.btnSecondary} disabled={!scannerReviewed} onClick={speakScannerText}>
                 🔊 Lire le texte
               </button>
 
