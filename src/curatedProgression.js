@@ -52,3 +52,45 @@ export function buildIntroProgression(data) {
     generatedWord('midi', false),
   ];
 }
+
+// Second stage: consolidate already acquired correspondences before introducing
+// context-sensitive spellings (c/g), silent endings or long sentences. The
+// single-syllable recordings are shared with the introductory stage.
+export function buildSimpleProgression(data) {
+  const listening = (folder, sourceText, syllable, distractors) => {
+    const source = data?.[folder]?.find((entry) => entry.texte === sourceText);
+    if (!source) throw new Error(`Missing audio for ${folder}/${sourceText}`);
+    return {
+      ...source,
+      quiz: {
+        prompt: 'Écoute, puis touche la syllabe entendue.',
+        correct: syllable,
+        choices: [syllable, ...distractors],
+      },
+    };
+  };
+  const word = (value, dictate = false) => ({
+    texte: dictate ? `Écris le mot ${value}` : `Écoute le mot ${value}`,
+    dossier: 'quiz',
+    audio: `${value}.mp3`,
+    ...(!dictate ? { quiz: {
+      prompt: 'Écoute, puis touche le mot entendu.',
+      correct: value,
+      choices: [value, ...['papa', 'ami', 'midi'].filter((other) => other !== value)],
+    } } : {}),
+  });
+
+  return [
+    listening('sons_simples', 'ma me mi mo mu', 'mi', ['li', 'ri']),
+    listening('sons_simples', 'pa pe pi po pu', 'po', ['so', 'mo']),
+    listening('sons_avances', 'la le li lo lu', 'lu', ['nu', 'ru']),
+    listening('sons_simples', 'ra re ri ro ru', 'ri', ['li', 'mi']),
+    listening('sons_simples', 'sa se si so su', 'so', ['fo', 'po']),
+    listening('sons_simples', 'na ne ni no nu', 'na', ['ma', 'la']),
+    listening('sons_simples', 'da de di do du', 'di', ['mi', 'ri']),
+    listening('sons_simples', 'fa fe fi fo fu', 'fa', ['sa', 'pa']),
+    word('papa'), word('papa', true),
+    word('ami'), word('ami', true),
+    word('midi'), word('midi', true),
+  ];
+}
