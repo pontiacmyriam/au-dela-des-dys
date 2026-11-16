@@ -70,3 +70,16 @@ test('catalog identifies passive activities as requiring human pedagogical revie
     !/^Écris (?:le mot|la phrase)|^Lis cette phrase/i.test(item.texte));
   assert.equal(passive.length, 68);
 });
+
+test('phonological spelling assessment is encouraging but preserves sound differences', async () => {
+  const { assessSpelling } = await import('../src/spellingValidation.js');
+  assert.equal(assessSpelling('MIDI', 'midi'), 'correct');
+  assert.equal(assessSpelling('ecole', 'école'), 'correct');
+  assert.equal(assessSpelling('bateau', 'bato'), 'phonologically_correct');
+  assert.equal(assessSpelling('foto', 'photo'), 'phonologically_correct');
+  assert.equal(assessSpelling('ami', 'amie'), 'phonologically_correct');
+  assert.equal(assessSpelling('rat', 'chat'), 'retry');
+  assert.equal(assessSpelling('rue', 'roue'), 'retry');
+  assert.equal(assessSpelling('lechatdort', 'le chat dort'), 'retry');
+  assert.equal(assessSpelling('', 'midi'), 'retry');
+});
