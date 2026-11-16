@@ -235,3 +235,107 @@ body {
   #root button:not(:disabled):hover,
   #root button:not(:disabled):active { transform: none !important; }
 }
+
+
+/* The welcoming game-world: decorative scenery stays behind readable content. */
+.world-home .world-hero {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  border: 3px solid #fff !important;
+  background:
+    radial-gradient(ellipse at 50% 38%, rgba(255,255,255,.98) 0 20%, transparent 57%),
+    linear-gradient(180deg, #d9e7ff 0%, #f3ecff 54%, #e7fff2 100%) !important;
+  box-shadow: 0 12px 0 rgba(110,92,183,.12), 0 24px 56px rgba(90,83,165,.18) !important;
+}
+.world-hero::before {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: -1;
+  width: 230px;
+  height: 230px;
+  top: 18%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: linear-gradient(145deg, #fff3b0, #ffe0fb);
+  box-shadow: 0 0 0 18px rgba(255,255,255,.38), 0 0 0 38px rgba(255,255,255,.22);
+}
+.world-hero::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: -8%;
+  right: -8%;
+  bottom: 0;
+  height: 22%;
+  background:
+    radial-gradient(ellipse at 15% 100%, #9ee9ca 0 40%, transparent 41%),
+    radial-gradient(ellipse at 78% 100%, #8bddbb 0 48%, transparent 49%),
+    linear-gradient(0deg, #b7f2d1, transparent);
+  opacity: .66;
+  pointer-events: none;
+}
+.world-hero img[alt="robot"] {
+  position: relative;
+  z-index: 1;
+  width: clamp(155px, 30vw, 205px) !important;
+}
+.world-hero > button[style] {
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(135deg, #6956de, #438af0) !important;
+  color: #fff !important;
+  border: 2px solid #fff !important;
+  padding: 16px 22px !important;
+  box-shadow: 0 7px 0 #4943a8, 0 16px 24px rgba(70,74,161,.21) !important;
+}
+.world-hero > button[style]:active {
+  box-shadow: 0 2px 0 #4943a8, 0 7px 13px rgba(70,74,161,.18) !important;
+}
+.world-journey {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 13px;
+  max-width: 520px;
+  margin: 8px auto 26px;
+  position: relative;
+}
+.world-journey-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 97px;
+  padding: 10px 6px;
+  color: #2c3960;
+  background: rgba(255,255,255,.92);
+  border: 2px solid rgba(255,255,255,1);
+  border-radius: 25px;
+  box-shadow: 0 6px 0 rgba(95,95,165,.14), 0 14px 22px rgba(100,101,172,.10);
+  font-size: clamp(13px, 2.5vw, 16px);
+}
+.world-journey-step span {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 17px;
+  background: #ddedff;
+  font-size: 27px;
+}
+.world-journey-step:nth-child(2) span { background: #fff0bf; }
+.world-journey-step:nth-child(3) span { background: #dbf8e9; }
+.world-hero .world-journey + button + div button[style] {
+  background: rgba(255,255,255,.94) !important;
+  border: 2px solid #fff !important;
+}
+@media (max-width: 480px) {
+  .world-home .world-hero { padding: 20px 13px 24px !important; }
+  .world-hero::before { width: 160px; height: 160px; }
+  .world-journey { gap: 7px; }
+  .world-journey-step { min-height: 85px; border-radius: 18px; }
+  .world-journey-step span { width: 39px; height: 39px; font-size: 23px; }
+}
