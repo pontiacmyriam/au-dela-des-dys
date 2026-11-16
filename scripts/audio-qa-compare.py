@@ -55,7 +55,7 @@ for name in sorted(signal):
     elif acoustic:
         status = "acoustic_review"
     elif not expected:
-        status = "missing_reference"
+        status = "not_in_catalogue"
     elif lexical_candidate:
         status = "lexical_match_candidate"
     else:
@@ -65,7 +65,7 @@ for name in sorted(signal):
         "expected": expected, "vosk_text": recognized, "cnam_phones": phones,
         "acoustic_flags": "|".join(acoustic), "duration_s": s.get("duration_s", ""),
         "status": status, "engine_errors": "|".join(errors),
-        "human_validated": "NO", "note": "Automatic results cannot alone certify French phonemes."
+        "human_validated": "NO", "note": "Missing catalogue text does not prove audio unused. Automatic results cannot alone certify phonemes."
     })
 
 fields = list(out[0])
@@ -95,7 +95,7 @@ lines += [f"- \`{r['file']}\`: expected={r['expected']!r}, Vosk={r['vosk_text']!
 (OUT / "SUMMARY.md").write_text("\n".join(lines)+"\n", encoding="utf-8")
 print(json.dumps({"total": len(out), "classification_counts": dict(counts), "human_validated": 0}, ensure_ascii=False))
 for row in out:
-    if row["status"] in ("missing_reference", "acoustic_review"):
+    if row["status"] in ("not_in_catalogue", "acoustic_review"):
         print("ACTIONABLE_REVIEW " + json.dumps({k:row[k] for k in ("file","status","expected","acoustic_flags","duration_s")}, ensure_ascii=False), flush=True)
 if len(out) != 379 or counts.get("execution_error"):
     raise SystemExit(1)
