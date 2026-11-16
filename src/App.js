@@ -1606,7 +1606,7 @@ speech.volume = 1;
 
     return renderAppShell(
       "exercise",
-      <div style={styles.finishCard}>
+      <div className="world-victory" style={styles.finishCard}>
         <img src="/robots/robot_happy.png" alt="robot" style={styles.finishRobot} />
 
         <h1 style={styles.finishTitle}>🎉 Bravo !</h1>
@@ -1758,7 +1758,7 @@ speech.volume = 1;
 
   return renderAppShell(
     "exercise",
-    <div style={styles.exercisePage}>
+    <div className="world-exercise" style={styles.exercisePage}>
       <div style={styles.exerciseTop}>
         <button style={styles.btnSecondarySmall} onClick={goBackToMenu}>
           ← Menu
@@ -1782,13 +1782,13 @@ speech.volume = 1;
         </div>
       </div>
 
-      <div style={styles.exerciseCardFinal}>
+      <div className="world-exercise-card" style={styles.exerciseCardFinal}>
         <div style={styles.robotStage}>
           <img src={robotSrc} alt="robot" style={styles.bigRobot} />
           {showStar && <div style={styles.starAnim}>⭐</div>}
         </div>
 
-        <div style={styles.mainInstructionBox}>
+        <div className="world-instruction" style={styles.mainInstructionBox}>
           <div style={styles.mainInstructionIcon}>
             {needsWriting ? "✏️" : isReadInstruction(instructionText) ? "📖" : "👂"}
           </div>
