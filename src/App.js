@@ -3,6 +3,7 @@ import Tesseract from "tesseract.js";
 import { assessOCRQuality } from "./ocrQuality";
 import { buildIntroProgression, buildSimpleProgression } from "./curatedProgression";
 import { orderPedagogically } from "./pedagogicalOrder";
+import { matchesSpelling } from "./spellingValidation";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import "./App.css";
 
@@ -375,6 +376,10 @@ function loadSavedFolder() {
 
 export default function App() {
   const [hasActiveSubscription, setHasActiveSubscription] = useState(false);
+  // Temporary QA-only switch: enabled in one branch-scoped Vercel Preview,
+  // never for audeladesdys.fr or another production hostname.
+  const previewQaAccess = process.env.REACT_APP_QA_ACCESS === "true" &&
+    window.location.hostname.endsWith('.vercel.app');
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -585,7 +590,7 @@ export default function App() {
   const canAccessCurrentActivity = canAccessActivity(
     currentFolder,
     index,
-    hasActiveSubscription
+    hasActiveSubscription || previewQaAccess
   );
   const instructionText = item ? item.texte || "" : "";
 
@@ -594,8 +599,10 @@ export default function App() {
   const isIntruder = isIntruderExercise(instructionText);
   const isTap = isTapExercise(instructionText);
   const isQuiz = Boolean(item?.quiz);
+  const isPassiveListening = !isQuiz && !needsWriting && !isReadInstruction(instructionText) && !isIntruder && !isTap;
   const [quizChoice, setQuizChoice] = useState(null);
   const [quizAudioPlayed, setQuizAudioPlayed] = useState(false);
+  const [passiveRepeated, setPassiveRepeated] = useState(false);
   const [intruderSolved, setIntruderSolved] = useState(false);
   const intruderWords = extractIntruderWords(instructionText);
 
@@ -637,6 +644,7 @@ export default function App() {
     setQuizChoice(null);
     setIntruderSolved(false);
     setQuizAudioPlayed(false);
+    setPassiveRepeated(false);
     setAnswer("");
     setHelpLevel(0);
     setFeedback("");
@@ -755,7 +763,7 @@ export default function App() {
 
     // Spaces between words (and within a word) matter in spelling. In
     // particular, "lechatdort" is not equivalent to "le chat dort".
-    const isCorrect = answerNorm === expectedNorm;
+    const isCorrect = matchesSpelling(answer, expectedRaw);
 
     if (isCorrect) {
       const msg = encouragements[Math.floor(Math.random() * encouragements.length)];
@@ -1774,8 +1782,10 @@ speech.volume = 1;
           </div>
 
           <div style={styles.mainInstructionText}>
-            {isQuiz ? "Écoute puis choisis la bonne réponse" : getDisplayedInstruction(instructionText)}
+            {isQuiz ? "Écoute puis choisis la bonne réponse" : isPassiveListening ? "Écoute, puis répète" : getDisplayedInstruction(instructionText)}
           </div>
+
+          {isPassiveListening && <div style={styles.readingSentence}>{instructionText}</div>}
 
           {isReadInstruction(instructionText) && (
             <div style={styles.readingSentence}>
@@ -1812,6 +1822,17 @@ speech.volume = 1;
             </div>
             {!quizAudioPlayed && <p style={{ textAlign: 'center' }}>Appuie d’abord sur « Écouter ».</p>}
           </section>
+        )}
+
+        {isPassiveListening && (
+          <div style={{ textAlign: 'center', margin: '14px auto' }}>
+            <p>Écoute le modèle, puis répète doucement à voix haute.</p>
+            <button style={styles.btnSecondary} disabled={!quizAudioPlayed} onClick={() => {
+              setPassiveRepeated(true);
+              setFeedback('Bravo d’avoir essayé ! Tu peux réécouter ou continuer.');
+              setRobotMood('happy');
+            }}>🗣️ J’ai répété</button>
+          </div>
         )}
 
         {isIntruder && intruderWords.length > 0 && (
@@ -1903,7 +1924,7 @@ speech.volume = 1;
         )}
 
         {!needsWriting && !readingStep && (
-          <button style={styles.btnSecondary} disabled={(isQuiz && quizChoice !== item.quiz.correct) || (isIntruder && !intruderSolved)} onClick={next}>
+          <button style={styles.btnSecondary} disabled={(isQuiz && quizChoice !== item.quiz.correct) || (isIntruder && !intruderSolved) || (isPassiveListening && !passiveRepeated)} onClick={next}>
             Suivant →
           </button>
         )}
