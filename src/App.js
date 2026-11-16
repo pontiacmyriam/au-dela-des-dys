@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import Tesseract from "tesseract.js";
 import { assessOCRQuality } from "./ocrQuality";
+import { buildIntroProgression } from "./curatedProgression";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import "./App.css";
 
@@ -508,7 +509,9 @@ export default function App() {
 
   const items = useMemo(() => {
     if (!data || !currentFolder) return [];
-    const folderItems = data[currentFolder] || [];
+    const folderItems = currentFolder === FREE_FOLDER_KEY
+      ? buildIntroProgression(data)
+      : data[currentFolder] || [];
     return Array.isArray(folderItems) ? folderItems : [];
   }, [data, currentFolder]);
 
@@ -539,6 +542,9 @@ export default function App() {
   const isPhrase = isPhraseInstruction(instructionText);
   const isIntruder = isIntruderExercise(instructionText);
   const isTap = isTapExercise(instructionText);
+  const isQuiz = Boolean(item?.quiz);
+  const [quizChoice, setQuizChoice] = useState(null);
+  const [quizAudioPlayed, setQuizAudioPlayed] = useState(false);
   const intruderWords = extractIntruderWords(instructionText);
 
   const expectedRaw = needsWriting ? extractExpectedFromTexte(instructionText) : "";
@@ -574,6 +580,8 @@ export default function App() {
   }
 
   function resetExerciseVisuals() {
+    setQuizChoice(null);
+    setQuizAudioPlayed(false);
     setAnswer("");
     setHelpLevel(0);
     setFeedback("");
@@ -778,7 +786,9 @@ export default function App() {
   function replayAudio() {
     if (!audioRef.current) return;
     audioRef.current.currentTime = 0;
-    audioRef.current.play().catch(() => {});
+    audioRef.current.play()
+      .then(() => setQuizAudioPlayed(true))
+      .catch(() => setFeedback("Impossible de lancer le son. Vérifie le volume et réessaie."));
   }
 
   function stopCamera() {
@@ -1684,7 +1694,9 @@ speech.volume = 1;
             {needsWriting ? "✏️" : isReadInstruction(instructionText) ? "📖" : "👂"}
           </div>
 
-          <div style={styles.mainInstructionText}>{getDisplayedInstruction(instructionText)}</div>
+          <div style={styles.mainInstructionText}>
+            {isQuiz ? "Écoute puis choisis la bonne réponse" : getDisplayedInstruction(instructionText)}
+          </div>
 
           {isReadInstruction(instructionText) && (
             <div style={styles.readingSentence}>
@@ -1698,6 +1710,30 @@ speech.volume = 1;
         <button style={styles.audioMainBtn} onClick={replayAudio}>
           👂<span>Écouter</span>
         </button>
+
+        {isQuiz && (
+          <section aria-label="Jeu d’écoute" style={{ width: "100%", maxWidth: 520, margin: "16px auto" }}>
+            <p style={{ fontSize: 20, fontWeight: 700, textAlign: "center" }}>{item.quiz.prompt}</p>
+            <div style={styles.choiceGrid}>
+              {item.quiz.choices.map((choice) => (
+                <button
+                  key={choice}
+                  style={styles.choiceBtn}
+                  aria-pressed={quizChoice === choice}
+                  disabled={!quizAudioPlayed}
+                  onClick={() => {
+                    setQuizChoice(choice);
+                    setFeedback(choice === item.quiz.correct ? "Super ! Tu as reconnu le son." : "Réécoute et essaie encore.");
+                    setRobotMood(choice === item.quiz.correct ? "happy" : "think");
+                  }}
+                >
+                  {choice}
+                </button>
+              ))}
+            </div>
+            {!quizAudioPlayed && <p style={{ textAlign: "center" }}>Appuie d’abord sur « Écouter ».</p>}
+          </section>
+        )}
 
         {isIntruder && intruderWords.length > 0 && (
           <div style={styles.choiceGrid}>
@@ -1788,7 +1824,7 @@ speech.volume = 1;
         )}
 
         {!needsWriting && !readingStep && (
-          <button style={styles.btnSecondary} onClick={next}>
+          <button style={styles.btnSecondary} disabled={isQuiz && quizChoice !== item.quiz.correct} onClick={next}>
             Suivant →
           </button>
         )}
