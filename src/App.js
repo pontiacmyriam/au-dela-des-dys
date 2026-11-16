@@ -767,9 +767,13 @@ export default function App() {
 
     if (isCorrect) {
       const msg = encouragements[Math.floor(Math.random() * encouragements.length)];
+      // Uppercase alone is never a reason to correct. A different spelling,
+      // including a missing accent, receives a gentle visual model.
+      const showSpellingModel = answer.trim().toLocaleLowerCase('fr') !==
+        expectedRaw.trim().toLocaleLowerCase('fr');
 
-      setFeedback(spellingResult === 'phonologically_correct'
-        ? `Bravo, tu as bien entendu les sons ! On peut aussi écrire : « ${expectedRaw} ». 💚`
+      setFeedback(showSpellingModel
+        ? `🌟 Bravo ! Tu as bien reconnu les sons ! ${isPhrase ? 'La phrase s’écrit' : 'Le mot s’écrit'} comme ceci : « ${expectedRaw} ». 💚 Continue, tu progresses !`
         : msg);
       setRobotMood("happy");
       setShowStar(true);
