@@ -94,5 +94,8 @@ lines += ["", "## Sample requiring review", ""]
 lines += [f"- \`{r['file']}\`: expected={r['expected']!r}, Vosk={r['vosk_text']!r}, Cnam={r['cnam_phones']!r}, status={r['status']}" for r in out if r["status"] != "lexical_match_candidate"][:35]
 (OUT / "SUMMARY.md").write_text("\n".join(lines)+"\n", encoding="utf-8")
 print(json.dumps({"total": len(out), "classification_counts": dict(counts), "human_validated": 0}, ensure_ascii=False))
+for row in out:
+    if row["status"] in ("missing_reference", "acoustic_review"):
+        print("ACTIONABLE_REVIEW " + json.dumps({k:row[k] for k in ("file","status","expected","acoustic_flags","duration_s")}, ensure_ascii=False), flush=True)
 if len(out) != 379 or counts.get("execution_error"):
     raise SystemExit(1)
