@@ -593,3 +593,16 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .island-land { transition: none; }
 }
+
+.island-unlocked-badge {
+  display: inline-block;
+  padding: 10px 18px;
+  margin: 4px auto 8px;
+  border: 2px solid #fff;
+  border-radius: 999px;
+  background: #fff5c4;
+  color: #74500c;
+  box-shadow: 0 5px 0 rgba(174,140,62,.16);
+  font-size: 18px;
+  font-weight: 900;
+}
