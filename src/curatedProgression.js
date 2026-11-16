@@ -89,6 +89,8 @@ export function buildSimpleProgression(data) {
     listening('sons_simples', 'na ne ni no nu', 'na', ['ma', 'la']),
     listening('sons_simples', 'da de di do du', 'di', ['mi', 'ri']),
     listening('sons_simples', 'fa fe fi fo fu', 'fa', ['sa', 'pa']),
+    // Introduce /b/ explicitly before later words such as « bateau ».
+    listening('sons_simples', 'ba bé bi bo bu', 'ba', ['pa', 'da']),
     word('papa'), word('papa', true),
     word('ami'), word('ami', true),
     word('midi'), word('midi', true),
