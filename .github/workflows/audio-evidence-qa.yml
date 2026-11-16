@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - "scripts/audio-qa-evidence.py"
+      - "scripts/audio-qa-compare.py"
       - ".github/workflows/audio-evidence-qa.yml"
   workflow_dispatch:
 
@@ -74,4 +75,35 @@ jobs:
         with:
           name: audio-cnam-379
           path: audio-qa-output/
+          retention-days: 90
+
+  compare:
+    needs: [signal, vosk, cnam]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: actions/download-artifact@v4
+        with:
+          name: audio-signal-379
+          path: downloaded-qa/signal
+      - uses: actions/download-artifact@v4
+        with:
+          name: audio-vosk-379
+          path: downloaded-qa/vosk
+      - uses: actions/download-artifact@v4
+        with:
+          name: audio-cnam-379
+          path: downloaded-qa/cnam
+      - name: Compare all 379 results
+        run: python scripts/audio-qa-compare.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: audio-consolidated-comparison-379
+          path: audio-qa-comparison/
           retention-days: 90
