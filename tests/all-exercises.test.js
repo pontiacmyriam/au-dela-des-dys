@@ -18,9 +18,9 @@ async function accessibleExercises() {
   });
 }
 
-test('all 240 accessible activities retain audio and all interactive options are valid', async () => {
+test('all 241 accessible activities retain audio and all interactive options are valid', async () => {
   const exercises = await accessibleExercises();
-  assert.equal(exercises.length, 240);
+  assert.equal(exercises.length, 241);
   const errors = [];
   let quizzes = 0;
   for (const entry of exercises) {
@@ -39,7 +39,16 @@ test('all 240 accessible activities retain audio and all interactive options are
     }
   }
   assert.deepEqual(errors, []);
-  assert.equal(quizzes, 30);
+  assert.equal(quizzes, 31);
+});
+
+test('the /b/ syllable is introduced before the word bateau', async () => {
+  const exercises = await accessibleExercises();
+  const baIndex = exercises.findIndex((entry) => entry.quiz?.correct === 'ba');
+  const bateauIndex = exercises.findIndex((entry) => entry.texte === 'Écris le mot bateau');
+  assert.ok(baIndex >= 0 && bateauIndex > baIndex);
+  assert.ok(exercises.slice(0, baIndex).some((entry) => entry.quiz?.correct === 'pa'));
+  assert.ok(exercises.slice(baIndex, bateauIndex).some((entry) => entry.texte === 'eau'));
 });
 
 test('every dictation rejects empty, incorrect and collapsed-space answers', async () => {
