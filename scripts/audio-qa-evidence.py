@@ -105,8 +105,13 @@ def main():
             elif args.engine == "vosk":
                 from vosk import KaldiRecognizer
                 rec = KaldiRecognizer(model, 16000)
-                rec.AcceptWaveform(raw)
-                row["recognized"] = json.loads(rec.FinalResult()).get("text", "")
+                pieces = []
+                if rec.AcceptWaveform(raw):
+                    pieces.append(json.loads(rec.Result()).get("text", ""))
+                else:
+                    pass
+                pieces.append(json.loads(rec.FinalResult()).get("text", ""))
+                row["recognized"] = " ".join(piece for piece in pieces if piece).strip()
             else:
                 import numpy as np
                 import torch
@@ -133,6 +138,8 @@ def main():
                              else row.get(key, "") for key in fieldnames})
     failed = sum(bool(r.get("error")) for r in results)
     print(f"Finished {args.engine}: files={len(results)}, errors={failed}", flush=True)
+    if failed:
+        print("First errors:", json.dumps([{"file": r["file"], "error": r["error"]} for r in results if r.get("error")][:3], ensure_ascii=False), flush=True)
     if len(files) != 379 or failed:
         raise SystemExit(1)
 
