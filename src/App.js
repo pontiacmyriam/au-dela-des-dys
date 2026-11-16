@@ -327,6 +327,17 @@ function extractIntruderWords(text) {
     .filter(Boolean);
 }
 
+function expectedIntruder(text) {
+  const words = extractIntruderWords(text).map(normalizeText);
+  const known = [
+    { words: ['bateau', 'ballon', 'chat'], answer: 'chat' },
+    { words: ['chien', 'chat', 'maison'], answer: 'maison' },
+    { words: ['soleil', 'lune', 'velo'], answer: 'velo' },
+  ];
+  return known.find((group) =>
+    group.words.length === words.length && group.words.every((word) => words.includes(word)))?.answer || null;
+}
+
 function loadSuccessWords() {
   try {
     const saved = localStorage.getItem("successWords");
@@ -585,6 +596,7 @@ export default function App() {
   const isQuiz = Boolean(item?.quiz);
   const [quizChoice, setQuizChoice] = useState(null);
   const [quizAudioPlayed, setQuizAudioPlayed] = useState(false);
+  const [intruderSolved, setIntruderSolved] = useState(false);
   const intruderWords = extractIntruderWords(instructionText);
 
   const expectedRaw = needsWriting ? extractExpectedFromTexte(instructionText) : "";
@@ -623,6 +635,7 @@ export default function App() {
 
   function resetExerciseVisuals() {
     setQuizChoice(null);
+    setIntruderSolved(false);
     setQuizAudioPlayed(false);
     setAnswer("");
     setHelpLevel(0);
@@ -740,11 +753,9 @@ export default function App() {
       return;
     }
 
-    const compactAnswer = answerNorm.replace(/\s/g, "");
-    const compactExpected = expectedNorm.replace(/\s/g, "");
-
-    const isCorrect =
-      answerNorm === expectedNorm || compactAnswer === compactExpected;
+    // Spaces between words (and within a word) matter in spelling. In
+    // particular, "lechatdort" is not equivalent to "le chat dort".
+    const isCorrect = answerNorm === expectedNorm;
 
     if (isCorrect) {
       const msg = encouragements[Math.floor(Math.random() * encouragements.length)];
@@ -1019,9 +1030,16 @@ speech.volume = 1;
     setScannerPaused(false);
   }
 
-  function handleIntrusClick() {
-    setFeedback("Bien joué !");
-    setRobotMood("happy");
+  function handleIntrusClick(chosenWord) {
+    const correctWord = expectedIntruder(instructionText);
+    if (!correctWord) {
+      setFeedback('Cet exercice doit être vérifié avant de continuer.');
+      return;
+    }
+    const correct = normalizeText(chosenWord) === correctWord;
+    setIntruderSolved(correct);
+    setFeedback(correct ? 'Bien joué ! Tu as trouvé l’intrus.' : 'Essaie encore : cherche ce qui est différent.');
+    setRobotMood(correct ? 'happy' : 'think');
   }
 
   function renderCookiePreferences() {
@@ -1885,7 +1903,7 @@ speech.volume = 1;
         )}
 
         {!needsWriting && !readingStep && (
-          <button style={styles.btnSecondary} disabled={isQuiz && quizChoice !== item.quiz.correct} onClick={next}>
+          <button style={styles.btnSecondary} disabled={(isQuiz && quizChoice !== item.quiz.correct) || (isIntruder && !intruderSolved)} onClick={next}>
             Suivant →
           </button>
         )}
