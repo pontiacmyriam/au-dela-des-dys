@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - "scripts/audio-qa-reference-usage.py"
+      - "scripts/audio-qa-active-usage.py"
       - ".github/workflows/audio-reference-review.yml"
   workflow_dispatch:
 permissions:
@@ -18,9 +19,13 @@ jobs:
           python-version: "3.11"
       - name: Inspect references to all 379 MP3 and broken catalogue links
         run: python scripts/audio-qa-reference-usage.py
+      - name: Count audio paths actually selected by visible learning parcours
+        run: python scripts/audio-qa-active-usage.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: audio-reference-integrity-379
-          path: audio-reference-review/
+          path: |
+            audio-reference-review/
+            audio-active-usage/
           retention-days: 90
