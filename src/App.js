@@ -1700,6 +1700,47 @@ speech.volume = 1;
             🚀 Reprendre mon entraînement
           </button>
 
+          <section className="island-adventure" aria-labelledby="island-map-title">
+            <div className="island-heading">
+              <div>
+                <span className="island-kicker">🗺️ Mon aventure</span>
+                <h2 id="island-map-title">D’île en île !</h2>
+              </div>
+              <span className="island-count">{completedFolders.length} île{completedFolders.length > 1 ? "s" : ""} terminée{completedFolders.length > 1 ? "s" : ""}</span>
+            </div>
+            <p className="island-description">Termine les activités d’une île pour découvrir la suivante. Prends ton temps !</p>
+            <div className="island-sea">
+              <svg className="island-route" viewBox="0 0 320 780" preserveAspectRatio="none" aria-hidden="true">
+                <path d="M95 68 C255 110 255 175 162 190 S35 275 145 310 S275 400 165 430 S32 520 154 550 S265 650 162 710" />
+              </svg>
+              {folders.map((folder, islandIndex) => {
+                const isUnlocked = unlockedFolders.some((unlocked) => unlocked.key === folder.key);
+                const isComplete = completedFolders.includes(folder.key);
+                const icon = ["🏝️", "🌺", "🐚", "🌴", "🦋", "🌈", "🏰", "⭐"][islandIndex % 8];
+                return (
+                  <button
+                    key={folder.key}
+                    type="button"
+                    className={`island-stop ${isComplete ? "is-complete" : isUnlocked ? "is-open" : "is-locked"}`}
+                    style={{ "--island-index": islandIndex }}
+                    disabled={!isUnlocked}
+                    aria-label={`${folder.label || LABELS[folder.key] || folder.key} : ${isComplete ? "terminée, rejouer" : isUnlocked ? "accessible, explorer" : "verrouillée"}`}
+                    onClick={() => selectFolder(folder.key)}
+                  >
+                    <span className="island-land" aria-hidden="true">
+                      <span className="island-number">{islandIndex + 1}</span>
+                      <span className="island-symbol">{isUnlocked ? icon : "🔒"}</span>
+                      <span className="island-status">{isComplete ? "⭐" : isUnlocked ? "▶" : "·"}</span>
+                    </span>
+                    <strong>{folder.label || LABELS[folder.key] || folder.key}</strong>
+                    <small>{isComplete ? "Terminée !" : isUnlocked ? "Explorer" : "À découvrir"}</small>
+                  </button>
+                );
+              })}
+            </div>
+            <p className="island-map-hint">Les îles déjà découvertes restent accessibles pour s’entraîner encore.</p>
+          </section>
+
           <div style={styles.mainChoiceGrid}>
             <button style={styles.quickCardLarge} onClick={() => setScreen("validated")}>
               <span style={styles.quickIcon}>✅</span>
