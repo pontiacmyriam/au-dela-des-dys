@@ -1,0 +1,71 @@
+name: Audio evidence QA (379 files)
+
+on:
+  pull_request:
+    paths:
+      - "scripts/audio-qa-evidence.py"
+      - ".github/workflows/audio-evidence-qa.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  signal:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Decode and measure all 379 files
+        run: python scripts/audio-qa-evidence.py --engine signal
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: audio-signal-379
+          path: audio-qa-output/
+          retention-days: 90
+  vosk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install recognizer
+        run: python -m pip install "vosk==0.3.45"
+      - name: Fetch official small French Vosk model
+        run: |
+          curl --fail --location --retry 3 --output vosk-fr.zip https://alphacephei.com/vosk/models/vosk-model-small-fr-0.22.zip
+          unzip -q vosk-fr.zip
+      - name: Recognize all 379 files
+        run: python scripts/audio-qa-evidence.py --engine vosk
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: audio-vosk-379
+          path: audio-qa-output/
+          retention-days: 90
+  cnam:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install CPU-only speech dependencies
+        run: |
+          python -m pip install "numpy<2" "transformers==4.46.3"
+          python -m pip install "torch==2.5.1" --index-url https://download.pytorch.org/whl/cpu
+      - name: Transcribe phonemes for all 379 files
+        run: python scripts/audio-qa-evidence.py --engine cnam
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: audio-cnam-379
+          path: audio-qa-output/
+          retention-days: 90
