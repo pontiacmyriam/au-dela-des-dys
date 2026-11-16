@@ -1,0 +1,35 @@
+name: Audio verdicts used in current app
+on:
+  pull_request:
+    paths:
+      - "scripts/audio-qa-active-verdict.py"
+      - ".github/workflows/audio-active-verdict.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  used-audio-verdicts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Get preserved phonetic comparison from previous successful run
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run download 43960733155 -n audio-consolidated-comparison-379 -D downloaded-prior-comparison
+      - name: Reconstruct actual visible parcours audio
+        run: python scripts/audio-qa-active-usage.py
+      - name: Cross active paths and 379 previous verdicts
+        run: python scripts/audio-qa-active-verdict.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: audio-active-verdicts-379
+          path: |
+            audio-active-usage/
+            audio-active-verdict/
+          retention-days: 90
