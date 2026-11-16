@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import Tesseract from "tesseract.js";
 import { assessOCRQuality } from "./ocrQuality";
-import { buildIntroProgression } from "./curatedProgression";
+import { buildIntroProgression, buildSimpleProgression } from "./curatedProgression";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import "./App.css";
 
@@ -511,7 +511,9 @@ export default function App() {
     if (!data || !currentFolder) return [];
     const folderItems = currentFolder === FREE_FOLDER_KEY
       ? buildIntroProgression(data)
-      : data[currentFolder] || [];
+      : currentFolder === "sons_simples"
+        ? buildSimpleProgression(data)
+        : data[currentFolder] || [];
     return Array.isArray(folderItems) ? folderItems : [];
   }, [data, currentFolder]);
 
@@ -791,11 +793,13 @@ export default function App() {
       if (!audioRef.current) return;
       audioRef.current.currentTime = 0;
       audioRef.current.play()
-        .then(() => setQuizAudioPlayed(true))
-        .catch(() => setFeedback("Impossible de lancer le son. Vérifie le volume et réessaie."));
+      .then(() => setQuizAudioPlayed(true))
+      .catch(() => setFeedback("Impossible de lancer le son. Vérifie le volume et réessaie."));
     };
 
-    // Dictation must include its instruction, without displaying the answer.
+    // During spelling exercises, pronounce the full instruction. Otherwise the
+    // learner hears only "midi" and cannot know whether to listen or to write.
+    // The written answer stays hidden until the child attempts the exercise.
     if (needsWriting && expectedRaw && "speechSynthesis" in window) {
       window.speechSynthesis.cancel();
       const instruction = new SpeechSynthesisUtterance(`Écris le mot ${expectedRaw}`);
@@ -1730,8 +1734,8 @@ speech.volume = 1;
         </button>
 
         {isQuiz && (
-          <section aria-label="Jeu d’écoute" style={{ width: "100%", maxWidth: 520, margin: "16px auto" }}>
-            <p style={{ fontSize: 20, fontWeight: 700, textAlign: "center" }}>{item.quiz.prompt}</p>
+          <section aria-label="Jeu d'écoute" style={{ width: '100%', maxWidth: 520, margin: '16px auto' }}>
+            <p style={{ fontSize: 20, fontWeight: 700, textAlign: 'center' }}>{item.quiz.prompt}</p>
             <div style={styles.choiceGrid}>
               {item.quiz.choices.map((choice) => (
                 <button
@@ -1741,15 +1745,15 @@ speech.volume = 1;
                   disabled={!quizAudioPlayed}
                   onClick={() => {
                     setQuizChoice(choice);
-                    setFeedback(choice === item.quiz.correct ? "Super ! Tu as reconnu le son." : "Réécoute et essaie encore.");
-                    setRobotMood(choice === item.quiz.correct ? "happy" : "think");
+                    setFeedback(choice === item.quiz.correct ? 'Super ! Tu as reconnu le son.' : 'Réécoute et essaie encore.');
+                    setRobotMood(choice === item.quiz.correct ? 'happy' : 'think');
                   }}
                 >
                   {choice}
                 </button>
               ))}
             </div>
-            {!quizAudioPlayed && <p style={{ textAlign: "center" }}>Appuie d’abord sur « Écouter ».</p>}
+            {!quizAudioPlayed && <p style={{ textAlign: 'center' }}>Appuie d’abord sur « Écouter ».</p>}
           </section>
         )}
 
