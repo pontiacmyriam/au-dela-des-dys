@@ -1671,8 +1671,8 @@ speech.volume = 1;
   if (!currentFolder || screen === "home") {
     return renderAppShell(
       "home",
-      <div style={styles.homeLayoutSingle}>
-        <section style={styles.heroCardLarge}>
+      <div className="world-home" style={styles.homeLayoutSingle}>
+        <section className="world-hero" style={styles.heroCardLarge}>
           <div style={styles.heroTop}>
             <div>
               <div style={styles.eyebrow}>Bienvenue</div>
@@ -1689,6 +1689,12 @@ speech.volume = 1;
           />
 
           <p style={styles.heroText}>Écoute, écris, lis et progresse à ton rythme.</p>
+
+          <div className="world-journey" aria-label="Les trois étapes de ton aventure">
+            <div className="world-journey-step"><span aria-hidden="true">👂</span><strong>J’écoute</strong></div>
+            <div className="world-journey-step"><span aria-hidden="true">✏️</span><strong>J’écris</strong></div>
+            <div className="world-journey-step"><span aria-hidden="true">📖</span><strong>Je lis</strong></div>
+          </div>
 
           <button style={styles.btn} onClick={startTraining}>
             🚀 Reprendre mon entraînement
