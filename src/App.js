@@ -1609,6 +1609,7 @@ speech.volume = 1;
       <div className="world-victory" style={styles.finishCard}>
         <img src="/robots/robot_happy.png" alt="robot" style={styles.finishRobot} />
 
+        <div className="island-unlocked-badge">🏝️ Île franchie !</div>
         <h1 style={styles.finishTitle}>🎉 Bravo !</h1>
 
         <p style={styles.finishText}>
@@ -1618,7 +1619,7 @@ speech.volume = 1;
 
         {nextFolder ? (
           <p style={styles.finishText}>
-            Prêt(e) à continuer avec <strong>{LABELS[nextFolder]}</strong> ?
+            Une nouvelle île t’attend : <strong>{LABELS[nextFolder]}</strong> !
           </p>
         ) : (
           <p style={styles.finishText}>Tu as terminé tout le parcours 👏</p>
@@ -1635,7 +1636,7 @@ speech.volume = 1;
               setScreen("exercise");
             }}
           >
-            ➡️ Continuer
+            🛶 Naviguer vers l’île suivante
           </button>
         )}
 
