@@ -33,3 +33,6 @@ summary={"active_distinct_mp3":sum(current.values()),"inactive_mp3":len(current)
          "caveat":"Automatic concordance is NOT a human phonetic certification."}
 (out/"summary.json").write_text(json.dumps(summary,indent=2,ensure_ascii=False),encoding="utf-8")
 print("ACTIVE_VERDICTS "+json.dumps(summary,ensure_ascii=False),flush=True)
+for item in combined:
+    if item["used_in_current_visible_parcours"] and item["status"]=="acoustic_review":
+        print("ACTIVE_ACOUSTIC_DETAIL "+json.dumps(item,ensure_ascii=False),flush=True)
