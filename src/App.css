@@ -339,3 +339,101 @@ body {
   .world-journey-step { min-height: 85px; border-radius: 18px; }
   .world-journey-step span { width: 39px; height: 39px; font-size: 23px; }
 }
+
+
+/* The activity screen deliberately becomes calmer than the welcome world. */
+.world-exercise {
+  max-width: 860px;
+  margin: 0 auto;
+}
+.world-exercise [role="progressbar"] {
+  height: 16px !important;
+  padding: 3px;
+  box-sizing: border-box;
+  background: #e5defa !important;
+  border: 1px solid #d8cfee;
+  box-shadow: inset 0 2px 4px rgba(47,46,108,.11);
+}
+.world-exercise [role="progressbar"] > div {
+  background: linear-gradient(90deg, #56d5b1, #6b8ff5, #9173e9) !important;
+  box-shadow: 0 2px 6px rgba(85,97,194,.18);
+}
+.world-exercise-card {
+  position: relative;
+  overflow: hidden;
+  border: 3px solid #fff !important;
+  background: linear-gradient(180deg, #fff 0%, #f8f7ff 100%) !important;
+  box-shadow: 0 11px 0 rgba(102,88,170,.09), 0 25px 44px rgba(71,75,140,.12) !important;
+}
+.world-exercise-card::before,
+.world-exercise-card::after {
+  content: "✦";
+  position: absolute;
+  top: 27px;
+  color: #c7b3f3;
+  font-size: 27px;
+  pointer-events: none;
+}
+.world-exercise-card::before { left: 9%; }
+.world-exercise-card::after { right: 9%; color: #f2cf79; }
+.world-exercise-card .world-instruction {
+  border: 2px solid #dfe6fb !important;
+  background: #fff !important;
+  box-shadow: 0 5px 0 #ecedfa, 0 12px 25px rgba(67,75,123,.06);
+}
+.world-instruction > div[style]:not(:first-child) {
+  letter-spacing: .005em;
+  line-height: 1.35 !important;
+}
+.world-exercise-card > button[style]:has(span) {
+  border: 5px solid #fff !important;
+  border-radius: 50% !important;
+  background: linear-gradient(145deg, #7c6de6, #458be9) !important;
+  box-shadow: 0 8px 0 #5d61bc, 0 16px 30px rgba(75,86,177,.22) !important;
+}
+.world-exercise-card > button[style]:has(span):active {
+  box-shadow: 0 2px 0 #5d61bc, 0 8px 15px rgba(75,86,177,.20) !important;
+}
+.world-exercise-card input[aria-label="Réponse à l’exercice"] {
+  background: #fff !important;
+  border: 3px solid #bfc8f3 !important;
+  border-radius: 21px !important;
+  min-height: 75px;
+  line-height: 1.4;
+}
+.world-exercise-card input[aria-label="Réponse à l’exercice"]:focus {
+  border-color: #7369d6 !important;
+}
+.world-victory {
+  position: relative;
+  overflow: hidden;
+  border: 3px solid #fff !important;
+  background:
+    radial-gradient(circle at 50% 25%, #fff9cc 0 10%, transparent 39%),
+    linear-gradient(160deg, #e2dcff, #f9efff 46%, #e1fff1) !important;
+  box-shadow: 0 12px 0 rgba(93,96,164,.11), 0 25px 45px rgba(73,82,146,.15) !important;
+}
+.world-victory::before,
+.world-victory::after {
+  content: "✦  ★  ✦";
+  position: absolute;
+  top: 12%;
+  font-size: 35px;
+  letter-spacing: 18px;
+  color: #e5ba54;
+  opacity: .8;
+  pointer-events: none;
+}
+.world-victory::before { left: 3%; transform: rotate(-19deg); }
+.world-victory::after { right: 0; transform: rotate(19deg); color: #a68de6; }
+@media (max-width: 760px) {
+  .world-exercise-card { padding: 20px 13px 26px !important; }
+  .world-instruction { padding: 18px 12px !important; }
+  .world-instruction > div[style]:not(:first-child) { font-size: clamp(23px, 6vw, 32px) !important; }
+  .world-exercise-card::before, .world-exercise-card::after { font-size: 19px; top: 18px; }
+}
+@media (max-width: 420px) {
+  .world-exercise-card > div[style*="grid-template-columns: 1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+}
