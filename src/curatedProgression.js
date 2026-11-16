@@ -7,6 +7,19 @@ export function buildIntroProgression(data) {
     return quiz ? { ...source, quiz } : { ...source };
   }
 
+  function generatedWord(word, quiz) {
+    return {
+      texte: quiz ? `Écoute le mot ${word}` : `Écris le mot ${word}`,
+      dossier: 'quiz',
+      audio: `${word}.mp3`,
+      ...(quiz ? { quiz: {
+        prompt: 'Écoute puis choisis le mot entendu.',
+        correct: word,
+        choices: [word, ...(['papa', 'ami', 'midi'].filter((other) => other !== word))],
+      } } : {}),
+    };
+  }
+
   const sound = (folder, texte, correct, others) => from(folder, texte, {
     prompt: 'Écoute, puis touche ce que tu as entendu.',
     correct,
@@ -31,11 +44,11 @@ export function buildIntroProgression(data) {
     sound('sons_avances', 'la le li lo lu', 'lu', ['nu', 'ru']),
     sound('sons_simples', 'ra re ri ro ru', 'ri', ['li', 'mi']),
     sound('sons_simples', 'sa se si so su', 'so', ['fo', 'no']),
-    sound('sons_simples', 'papa poule pain', 'papa', ['moto', 'lune']),
+    sound('sons_simples', 'papa poule pain', 'papa', ['ami', 'midi']),
     from('sons_simples', 'Écris le mot papa'),
-    sound('sons_simples', 'rat rose rue', 'rat', ['papa', 'lune']),
-    from('sons_simples', 'Écris le mot rat'),
-    sound('sons_avances', 'lune lapin lit', 'lune', ['papa', 'rat']),
-    from('sons_avances', 'Écris le mot lune'),
+    generatedWord('ami', true),
+    generatedWord('ami', false),
+    generatedWord('midi', true),
+    generatedWord('midi', false),
   ];
 }
