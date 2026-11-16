@@ -787,10 +787,26 @@ export default function App() {
 
   function replayAudio() {
     if (!audioRef.current) return;
-    audioRef.current.currentTime = 0;
-    audioRef.current.play()
-      .then(() => setQuizAudioPlayed(true))
-      .catch(() => setFeedback("Impossible de lancer le son. Vérifie le volume et réessaie."));
+    const playRecordedAudio = () => {
+      if (!audioRef.current) return;
+      audioRef.current.currentTime = 0;
+      audioRef.current.play()
+        .then(() => setQuizAudioPlayed(true))
+        .catch(() => setFeedback("Impossible de lancer le son. Vérifie le volume et réessaie."));
+    };
+
+    // Dictation must include its instruction, without displaying the answer.
+    if (needsWriting && expectedRaw && "speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+      const instruction = new SpeechSynthesisUtterance(`Écris le mot ${expectedRaw}`);
+      instruction.lang = "fr-FR";
+      instruction.rate = 0.82;
+      instruction.onerror = playRecordedAudio;
+      window.speechSynthesis.speak(instruction);
+      return;
+    }
+
+    playRecordedAudio();
   }
 
   function stopCamera() {
