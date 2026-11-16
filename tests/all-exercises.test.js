@@ -83,3 +83,11 @@ test('phonological spelling assessment is encouraging but preserves sound differ
   assert.equal(assessSpelling('lechatdort', 'le chat dort'), 'retry');
   assert.equal(assessSpelling('', 'midi'), 'retry');
 });
+
+test('Stripe Checkout carries the verified session back to the application', () => {
+  const checkoutSource = fs.readFileSync(path.join(__dirname, '../api/create-checkout-session.js'), 'utf8');
+  const appSource = fs.readFileSync(path.join(__dirname, '../src/App.js'), 'utf8');
+  assert.match(checkoutSource, /paiement=success&session_id=\{CHECKOUT_SESSION_ID\}/);
+  assert.match(appSource, /params\.get\("session_id"\)/);
+  assert.match(checkoutSource, /VERCEL_ENV === 'preview'/);
+});
