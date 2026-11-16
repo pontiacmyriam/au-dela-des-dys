@@ -784,6 +784,22 @@ export default function App() {
   }
 
   function replayAudio() {
+    if (item?.quiz) {
+      if (!window.speechSynthesis || !window.SpeechSynthesisUtterance) {
+        setFeedback("La lecture vocale n\'est pas disponible sur cet appareil.");
+        return;
+      }
+      window.speechSynthesis.cancel();
+      setQuizAudioPlayed(false);
+      const utterance = new window.SpeechSynthesisUtterance(item.quiz.correct);
+      utterance.lang = "fr-FR";
+      utterance.rate = 0.72;
+      utterance.pitch = 1;
+      utterance.onstart = () => setQuizAudioPlayed(true);
+      utterance.onerror = () => setFeedback("Le son n\'a pas pu être lu. Réessaie.");
+      window.speechSynthesis.speak(utterance);
+      return;
+    }
     if (!audioRef.current) return;
     audioRef.current.currentTime = 0;
     audioRef.current.play()
