@@ -833,15 +833,15 @@ export default function App() {
 
   function handleReadingChoice(choice) {
     setLastReadingChoice(choice);
-    setFeedback(
-      choice === "success"
-        ? "🎉 Bravo, tu as réussi !"
-        : "💪 Tu progresses, continue comme ça"
-    );
-
-    setTimeout(() => {
-      next();
-    }, 500);
+    if (choice === "difficult") {
+      // A difficulty is not a validated acquisition. Allow a gentle retry.
+      setFeedback("💚 Prends ton temps. Réécoute puis relis quand tu es prêt(e).");
+      setRobotMood("think");
+      return;
+    }
+    setFeedback("🎉 Bravo, tu as réussi !");
+    setRobotMood("happy");
+    setTimeout(() => next(), 500);
   }
 
   function goBackToMenu() {
@@ -1915,7 +1915,7 @@ speech.volume = 1;
               </button>
 
               <button style={styles.btnSecondary} onClick={() => handleReadingChoice("difficult")}>
-                😕 C’était difficile
+                🔁 Je veux réessayer
               </button>
             </div>
 
@@ -1923,7 +1923,7 @@ speech.volume = 1;
               <div style={styles.readingMiniFeedback}>
                 {lastReadingChoice === "success"
                   ? "Super, on passe à la suite."
-                  : "Pas grave, tu progresses quand même."}
+                  : "Tu peux réécouter et lire encore une fois. Prends ton temps."}
               </div>
             )}
           </div>
