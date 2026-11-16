@@ -3,7 +3,7 @@ import Tesseract from "tesseract.js";
 import { assessOCRQuality } from "./ocrQuality";
 import { buildIntroProgression, buildSimpleProgression } from "./curatedProgression";
 import { orderPedagogically } from "./pedagogicalOrder";
-import { matchesSpelling } from "./spellingValidation";
+import { assessSpelling } from "./spellingValidation";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import "./App.css";
 
@@ -761,14 +761,16 @@ export default function App() {
       return;
     }
 
-    // Spaces between words (and within a word) matter in spelling. In
-    // particular, "lechatdort" is not equivalent to "le chat dort".
-    const isCorrect = matchesSpelling(answer, expectedRaw);
+    // Reward phonological progress; spelling variants are not a failure.
+    const spellingResult = assessSpelling(answer, expectedRaw);
+    const isCorrect = spellingResult !== 'retry';
 
     if (isCorrect) {
       const msg = encouragements[Math.floor(Math.random() * encouragements.length)];
 
-      setFeedback(msg);
+      setFeedback(spellingResult === 'phonologically_correct'
+        ? `Bravo, tu as bien entendu les sons ! On peut aussi écrire : « ${expectedRaw} ». 💚`
+        : msg);
       setRobotMood("happy");
       setShowStar(true);
 
