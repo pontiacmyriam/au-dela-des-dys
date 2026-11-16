@@ -1,5 +1,9 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import Tesseract from "tesseract.js";
+import { assessOCRQuality } from "./ocrQuality";
+import { buildIntroProgression, buildSimpleProgression } from "./curatedProgression";
+import { orderPedagogically } from "./pedagogicalOrder";
+import { assessSpelling } from "./spellingValidation";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import "./App.css";
 
@@ -71,6 +75,7 @@ const FOLDER_ORDER = [
 
 const FREE_FOLDER_KEY = "premiers_sons";
 const FREE_EXERCISE_COUNT = 22;
+const PREMIUM_SESSION_STORAGE_KEY = "premiumStripeSessionId";
 
 function canAccessActivity(folderKey, exerciseIndex, hasActiveSubscription) {
   if (hasActiveSubscription) return true;
@@ -140,52 +145,6 @@ function cleanOCRText(text) {
       .replace(/[—–-]{2,}/g, " ... ");
   }
 
-  function repairKnownSchoolOCRLine(line) {
-    const normalized = normalizeText(line);
-
-    // Pointillés scolaires : on restaure les blancs, sans jamais donner les réponses.
-    if (normalized.includes("chat") && normalized.includes("canap")) {
-      return "... chat dort sur ... canapé.";
-    }
-
-    if (normalized.includes("enfant") && normalized.includes("jardin")) {
-      return "... enfants jouent dans ... jardin.";
-    }
-
-    if (normalized.includes("voiture") && normalized.includes("rouge")) {
-      return "... voiture est rouge.";
-    }
-
-    if (normalized.includes("arbre") && normalized.includes("haut")) {
-      return "... arbre est très haut.";
-    }
-
-    if (normalized.includes("pomme") && normalized.includes("sucree")) {
-      return "... pommes sont sucrées.";
-    }
-
-    if (
-      normalized.includes("amie") &&
-      (normalized.includes("julie") || normalized.includes("lea"))
-    ) {
-      return "... amie de Julie s'appelle Léa.";
-    }
-
-    const hasDeterminers =
-      normalized.includes("le") &&
-      normalized.includes("la") &&
-      normalized.includes("les") &&
-      normalized.includes("un") &&
-      normalized.includes("une") &&
-      normalized.includes("des");
-
-    if (hasDeterminers && normalized.length < 90) {
-      return "le - la - les - un - une - des";
-    }
-
-    return line;
-  }
-
   function cleanLine(line) {
     let cleaned = protectSchoolBlanks(line)
       .replace(/[·•]/g, " ")
@@ -193,8 +152,6 @@ function cleanOCRText(text) {
       .replace(/\s+/g, " ")
       .replace(/\s+([.,!?;:])/g, "$1")
       .trim();
-
-    cleaned = repairKnownSchoolOCRLine(cleaned);
 
     cleaned = cleaned
       .replace(/^\s*(e|E|6|§|S|y|Y|l|I|!|1)\s+(?=\.\.\.)/, "")
@@ -371,6 +328,17 @@ function extractIntruderWords(text) {
     .filter(Boolean);
 }
 
+function expectedIntruder(text) {
+  const words = extractIntruderWords(text).map(normalizeText);
+  const known = [
+    { words: ['bateau', 'ballon', 'chat'], answer: 'chat' },
+    { words: ['chien', 'chat', 'maison'], answer: 'maison' },
+    { words: ['soleil', 'lune', 'velo'], answer: 'velo' },
+  ];
+  return known.find((group) =>
+    group.words.length === words.length && group.words.every((word) => words.includes(word)))?.answer || null;
+}
+
 function loadSuccessWords() {
   try {
     const saved = localStorage.getItem("successWords");
@@ -407,7 +375,11 @@ function loadSavedFolder() {
 }
 
 export default function App() {
-  const hasActiveSubscription = false;
+  const [hasActiveSubscription, setHasActiveSubscription] = useState(false);
+  // Temporary QA-only switch: enabled in one branch-scoped Vercel Preview,
+  // never for audeladesdys.fr or another production hostname.
+  const previewQaAccess = process.env.REACT_APP_QA_ACCESS === "true" &&
+    window.location.hostname.endsWith('.vercel.app');
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -447,6 +419,7 @@ export default function App() {
 
   const [scannedImage, setScannedImage] = useState(null);
   const [scannedText, setScannedText] = useState("");
+  const [scannerReviewed, setScannerReviewed] = useState(false);
   const [scannerLoading, setScannerLoading] = useState(false);
   const [scannerStatus, setScannerStatus] = useState("");
   const [scannerSpeaking, setScannerSpeaking] = useState(false);
@@ -481,6 +454,42 @@ export default function App() {
       disableGoogleAnalytics();
     }
   }, [cookieChoice]);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const checkoutSessionId = params.get("paiement") === "success"
+      ? params.get("session_id")
+      : null;
+    let savedSessionId = null;
+    try {
+      savedSessionId = localStorage.getItem(PREMIUM_SESSION_STORAGE_KEY);
+    } catch {}
+    const sessionId = checkoutSessionId || savedSessionId;
+    if (!sessionId) return;
+
+    let cancelled = false;
+    fetch(`/api/subscription-status?session_id=${encodeURIComponent(sessionId)}`, {
+      cache: "no-store",
+    })
+      .then((response) => response.ok ? response.json() : { active: false })
+      .then((result) => {
+        if (cancelled) return;
+        const active = result.active === true;
+        setHasActiveSubscription(active);
+        try {
+          if (active) localStorage.setItem(PREMIUM_SESSION_STORAGE_KEY, sessionId);
+          else if (checkoutSessionId) localStorage.removeItem(PREMIUM_SESSION_STORAGE_KEY);
+        } catch {}
+        if (checkoutSessionId) {
+          window.history.replaceState({}, document.title, window.location.pathname);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) setHasActiveSubscription(false);
+        // A temporary outage must not erase the user's recoverable access link.
+      });
+    return () => { cancelled = true; };
+  }, []);
 
   useEffect(() => {
     fetch("/prototype_vfinal.json")
@@ -554,7 +563,11 @@ export default function App() {
 
   const items = useMemo(() => {
     if (!data || !currentFolder) return [];
-    const folderItems = data[currentFolder] || [];
+    const folderItems = currentFolder === FREE_FOLDER_KEY
+      ? buildIntroProgression(data)
+      : currentFolder === "sons_simples"
+        ? buildSimpleProgression(data)
+        : orderPedagogically(currentFolder, data[currentFolder] || []);
     return Array.isArray(folderItems) ? folderItems : [];
   }, [data, currentFolder]);
 
@@ -577,7 +590,7 @@ export default function App() {
   const canAccessCurrentActivity = canAccessActivity(
     currentFolder,
     index,
-    hasActiveSubscription
+    hasActiveSubscription || previewQaAccess
   );
   const instructionText = item ? item.texte || "" : "";
 
@@ -585,6 +598,12 @@ export default function App() {
   const isPhrase = isPhraseInstruction(instructionText);
   const isIntruder = isIntruderExercise(instructionText);
   const isTap = isTapExercise(instructionText);
+  const isQuiz = Boolean(item?.quiz);
+  const isPassiveListening = !isQuiz && !needsWriting && !isReadInstruction(instructionText) && !isIntruder && !isTap;
+  const [quizChoice, setQuizChoice] = useState(null);
+  const [quizAudioPlayed, setQuizAudioPlayed] = useState(false);
+  const [passiveRepeated, setPassiveRepeated] = useState(false);
+  const [intruderSolved, setIntruderSolved] = useState(false);
   const intruderWords = extractIntruderWords(instructionText);
 
   const expectedRaw = needsWriting ? extractExpectedFromTexte(instructionText) : "";
@@ -592,7 +611,9 @@ export default function App() {
   const answerNorm = normalizeForComparison(answer);
 
   const audioPath =
-    item && item.audio
+    item?.quiz
+      ? "/assets/audio/quiz/" + item.quiz.correct + ".mp3"
+      : item && item.audio
       ? "/assets/audio/" + (item.dossier || currentFolder) + "/" + item.audio
       : "";
 
@@ -620,6 +641,10 @@ export default function App() {
   }
 
   function resetExerciseVisuals() {
+    setQuizChoice(null);
+    setIntruderSolved(false);
+    setQuizAudioPlayed(false);
+    setPassiveRepeated(false);
     setAnswer("");
     setHelpLevel(0);
     setFeedback("");
@@ -736,16 +761,20 @@ export default function App() {
       return;
     }
 
-    const compactAnswer = answerNorm.replace(/\s/g, "");
-    const compactExpected = expectedNorm.replace(/\s/g, "");
-
-    const isCorrect =
-      answerNorm === expectedNorm || compactAnswer === compactExpected;
+    // Reward phonological progress; spelling variants are not a failure.
+    const spellingResult = assessSpelling(answer, expectedRaw);
+    const isCorrect = spellingResult !== 'retry';
 
     if (isCorrect) {
       const msg = encouragements[Math.floor(Math.random() * encouragements.length)];
+      // Uppercase alone is never a reason to correct. A different spelling,
+      // including a missing accent, receives a gentle visual model.
+      const showSpellingModel = answer.trim().toLocaleLowerCase('fr') !==
+        expectedRaw.trim().toLocaleLowerCase('fr');
 
-      setFeedback(msg);
+      setFeedback(showSpellingModel
+        ? `🌟 Bravo ! Tu as bien reconnu les sons ! ${isPhrase ? 'La phrase s’écrit' : 'Le mot s’écrit'} comme ceci : « ${expectedRaw} ». 💚 Continue, tu progresses !`
+        : msg);
       setRobotMood("happy");
       setShowStar(true);
 
@@ -823,8 +852,29 @@ export default function App() {
 
   function replayAudio() {
     if (!audioRef.current) return;
-    audioRef.current.currentTime = 0;
-    audioRef.current.play().catch(() => {});
+    const playRecordedAudio = () => {
+      if (!audioRef.current) return;
+      audioRef.current.currentTime = 0;
+      audioRef.current.play()
+      .then(() => setQuizAudioPlayed(true))
+      .catch(() => setFeedback("Impossible de lancer le son. Vérifie le volume et réessaie."));
+    };
+
+    // During spelling exercises, pronounce the full instruction. Otherwise the
+    // learner hears only "midi" and cannot know whether to listen or to write.
+    // The written answer stays hidden until the child attempts the exercise.
+    if (needsWriting && expectedRaw && "speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+      const kind = isPhrase ? 'la phrase' : 'le mot';
+      const instruction = new SpeechSynthesisUtterance(`Écris ${kind} : ${expectedRaw}`);
+      instruction.lang = "fr-FR";
+      instruction.rate = 0.82;
+      instruction.onerror = playRecordedAudio;
+      window.speechSynthesis.speak(instruction);
+      return;
+    }
+
+    playRecordedAudio();
   }
 
   function stopCamera() {
@@ -889,6 +939,7 @@ export default function App() {
       setScannerLoading(true);
       setScannerStatus("Analyse de l’image en cours...");
       setScannedText("");
+      setScannerReviewed(false);
       setScannerSpeaking(false);
       setScannerPaused(false);
       window.speechSynthesis.cancel();
@@ -907,12 +958,12 @@ export default function App() {
 
       const rawText = result?.data?.text || "";
       const cleanText = cleanOCRText(rawText);
-
-      setScannedText(cleanText);
+      const quality = assessOCRQuality(cleanText, result?.data?.confidence);
+      setScannedText(quality.usable ? cleanText : "");
       setScannerStatus(
-        cleanText
-          ? "Texte détecté. Tu peux lancer la lecture."
-          : "Aucun texte détecté. Cadre uniquement un exercice, avec une photo nette et bien éclairée."
+        quality.usable
+          ? "Texte proposé : vérifie-le avec un adulte avant de le faire lire."
+          : `${quality.reason} Reprends une photo nette d'un seul exercice.`
       );
     } catch (err) {
       console.error("Erreur OCR :", err);
@@ -986,15 +1037,23 @@ speech.volume = 1;
     setCameraError("");
     setScannedImage(null);
     setScannedText("");
+    setScannerReviewed(false);
     setScannerLoading(false);
     setScannerStatus("");
     setScannerSpeaking(false);
     setScannerPaused(false);
   }
 
-  function handleIntrusClick() {
-    setFeedback("Bien joué !");
-    setRobotMood("happy");
+  function handleIntrusClick(chosenWord) {
+    const correctWord = expectedIntruder(instructionText);
+    if (!correctWord) {
+      setFeedback('Cet exercice doit être vérifié avant de continuer.');
+      return;
+    }
+    const correct = normalizeText(chosenWord) === correctWord;
+    setIntruderSolved(correct);
+    setFeedback(correct ? 'Bien joué ! Tu as trouvé l’intrus.' : 'Essaie encore : cherche ce qui est différent.');
+    setRobotMood(correct ? 'happy' : 'think');
   }
 
   function renderCookiePreferences() {
@@ -1484,8 +1543,22 @@ speech.volume = 1;
 
         {scannedText && (
           <>
+            <label htmlFor="scanner-reviewed-text" style={{ display: "block", fontWeight: 700, marginTop: 16 }}>
+              Vérifier et corriger le texte reconnu
+            </label>
+            <textarea
+              id="scanner-reviewed-text"
+              value={scannedText}
+              onChange={(event) => { setScannedText(event.target.value); setScannerReviewed(false); }}
+              rows={5}
+              style={{ width: "100%", padding: 12, boxSizing: "border-box", fontSize: 18, borderRadius: 12 }}
+            />
+            <label style={{ display: "flex", gap: 10, alignItems: "center", margin: "14px 0" }}>
+              <input type="checkbox" checked={scannerReviewed} onChange={(event) => setScannerReviewed(event.target.checked)} />
+              J'ai vérifié le texte avec un adulte.
+            </label>
             <div style={styles.rowButtons}>
-              <button style={styles.btnSecondary} onClick={speakScannerText}>
+              <button style={styles.btnSecondary} disabled={!scannerReviewed} onClick={speakScannerText}>
                 🔊 Lire le texte
               </button>
 
@@ -1714,7 +1787,11 @@ speech.volume = 1;
             {needsWriting ? "✏️" : isReadInstruction(instructionText) ? "📖" : "👂"}
           </div>
 
-          <div style={styles.mainInstructionText}>{getDisplayedInstruction(instructionText)}</div>
+          <div style={styles.mainInstructionText}>
+            {isQuiz ? "Écoute puis choisis la bonne réponse" : isPassiveListening ? "Écoute, puis répète" : getDisplayedInstruction(instructionText)}
+          </div>
+
+          {isPassiveListening && <div style={styles.readingSentence}>{instructionText}</div>}
 
           {isReadInstruction(instructionText) && (
             <div style={styles.readingSentence}>
@@ -1728,6 +1805,41 @@ speech.volume = 1;
         <button style={styles.audioMainBtn} onClick={replayAudio}>
           👂<span>Écouter</span>
         </button>
+
+        {isQuiz && (
+          <section aria-label="Jeu d'écoute" style={{ width: '100%', maxWidth: 520, margin: '16px auto' }}>
+            <p style={{ fontSize: 20, fontWeight: 700, textAlign: 'center' }}>{item.quiz.prompt}</p>
+            <div style={styles.choiceGrid}>
+              {item.quiz.choices.map((choice) => (
+                <button
+                  key={choice}
+                  style={styles.choiceBtn}
+                  aria-pressed={quizChoice === choice}
+                  disabled={!quizAudioPlayed}
+                  onClick={() => {
+                    setQuizChoice(choice);
+                    setFeedback(choice === item.quiz.correct ? 'Super ! Tu as reconnu le son.' : 'Réécoute et essaie encore.');
+                    setRobotMood(choice === item.quiz.correct ? 'happy' : 'think');
+                  }}
+                >
+                  {choice}
+                </button>
+              ))}
+            </div>
+            {!quizAudioPlayed && <p style={{ textAlign: 'center' }}>Appuie d’abord sur « Écouter ».</p>}
+          </section>
+        )}
+
+        {isPassiveListening && (
+          <div style={{ textAlign: 'center', margin: '14px auto' }}>
+            <p>Écoute le modèle, puis répète doucement à voix haute.</p>
+            <button style={styles.btnSecondary} disabled={!quizAudioPlayed} onClick={() => {
+              setPassiveRepeated(true);
+              setFeedback('Bravo d’avoir essayé ! Tu peux réécouter ou continuer.');
+              setRobotMood('happy');
+            }}>🗣️ J’ai répété</button>
+          </div>
+        )}
 
         {isIntruder && intruderWords.length > 0 && (
           <div style={styles.choiceGrid}>
@@ -1818,7 +1930,7 @@ speech.volume = 1;
         )}
 
         {!needsWriting && !readingStep && (
-          <button style={styles.btnSecondary} onClick={next}>
+          <button style={styles.btnSecondary} disabled={(isQuiz && quizChoice !== item.quiz.correct) || (isIntruder && !intruderSolved) || (isPassiveListening && !passiveRepeated)} onClick={next}>
             Suivant →
           </button>
         )}
