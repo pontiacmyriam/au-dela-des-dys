@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import Tesseract from "tesseract.js";
 import { assessOCRQuality } from "./ocrQuality";
 import { buildIntroProgression, buildSimpleProgression } from "./curatedProgression";
+import { orderPedagogically } from "./pedagogicalOrder";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import "./App.css";
 
@@ -513,7 +514,7 @@ export default function App() {
       ? buildIntroProgression(data)
       : currentFolder === "sons_simples"
         ? buildSimpleProgression(data)
-        : data[currentFolder] || [];
+        : orderPedagogically(currentFolder, data[currentFolder] || []);
     return Array.isArray(folderItems) ? folderItems : [];
   }, [data, currentFolder]);
 
@@ -802,7 +803,8 @@ export default function App() {
     // The written answer stays hidden until the child attempts the exercise.
     if (needsWriting && expectedRaw && "speechSynthesis" in window) {
       window.speechSynthesis.cancel();
-      const instruction = new SpeechSynthesisUtterance(`Écris le mot ${expectedRaw}`);
+      const kind = isPhrase ? 'la phrase' : 'le mot';
+      const instruction = new SpeechSynthesisUtterance(`Écris ${kind} : ${expectedRaw}`);
       instruction.lang = "fr-FR";
       instruction.rate = 0.82;
       instruction.onerror = playRecordedAudio;
