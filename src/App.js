@@ -6,6 +6,8 @@ import { orderPedagogically } from "./pedagogicalOrder";
 import { assessSpelling } from "./spellingValidation";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import "./App.css";
+import "./premium.css";
+import LearningJourney from "./LearningJourney";
 
 const GA_MEASUREMENT_ID = "G-0XBCSQCE21";
 
@@ -1106,7 +1108,7 @@ speech.volume = 1;
 
   function renderSidebar(active = "home") {
     return (
-      <aside style={styles.sidebar}>
+      <aside className="ad-sidebar" style={styles.sidebar}>
         <div style={styles.brandBlock}>
           <div style={styles.brandLogo}>AD</div>
           <div>
@@ -1196,10 +1198,10 @@ speech.volume = 1;
 
   function renderAppShell(active, children) {
     return (
-      <div style={styles.desktopPage}>
-        <div style={styles.appFrame}>
+      <div className="ad-shell" style={styles.desktopPage}>
+        <div className="ad-frame" style={styles.appFrame}>
           {renderSidebar(active)}
-          <main style={styles.mainPanel}>
+          <main className="ad-content" style={styles.mainPanel}>
             {children}
             {renderLegalFooter()}
           </main>
@@ -1248,7 +1250,7 @@ speech.volume = 1;
   if (!avatar) {
     return (
       <div style={styles.desktopPage}>
-        <main style={styles.avatarCard}>
+        <main className="ad-avatar-card" style={styles.avatarCard}>
           <h1 style={styles.avatarTitle}>Choisis ton robot</h1>
 <button
   onClick={() => {
@@ -1671,8 +1673,8 @@ speech.volume = 1;
   if (!currentFolder || screen === "home") {
     return renderAppShell(
       "home",
-      <div style={styles.homeLayoutSingle}>
-        <section style={styles.heroCardLarge}>
+      <div className="ad-home" style={styles.homeLayoutSingle}>
+        <section className="ad-hero" style={styles.heroCardLarge}>
           <div style={styles.heroTop}>
             <div>
               <div style={styles.eyebrow}>Bienvenue</div>
@@ -1685,29 +1687,30 @@ speech.volume = 1;
           <img
             src={avatar === "girl" ? "/robots/robot_girl.png" : "/robots/robot_boy.png"}
             alt="robot"
-            style={styles.heroRobot}
+            className="ad-hero-robot" style={styles.heroRobot}
           />
 
           <p style={styles.heroText}>Écoute, écris, lis et progresse à ton rythme.</p>
 
-          <button style={styles.btn} onClick={startTraining}>
+          <button className="ad-primary-cta" style={styles.btn} onClick={startTraining}>
             🚀 Reprendre mon entraînement
           </button>
 
           <div style={styles.mainChoiceGrid}>
-            <button style={styles.quickCardLarge} onClick={() => setScreen("validated")}>
+            <button className="ad-quick-card" style={styles.quickCardLarge} onClick={() => setScreen("validated")}>
               <span style={styles.quickIcon}>✅</span>
               <strong>Voir mes activités validées</strong>
               <small>Retrouver les activités déjà débloquées</small>
             </button>
 
-            <button style={styles.quickCardLarge} onClick={() => setScreen("scanner")}>
+            <button className="ad-quick-card" style={styles.quickCardLarge} onClick={() => setScreen("scanner")}>
               <span style={styles.quickIcon}>📷</span>
               <strong>Scanner un exercice</strong>
               <small>Cadre un seul exercice à la fois</small>
             </button>
           </div>
         </section>
+        <LearningJourney folders={folders} unlockedFolders={unlockedFolders} completedFolders={completedFolders} onSelect={selectFolder} />
       </div>
     );
   }
@@ -1752,7 +1755,7 @@ speech.volume = 1;
 
   return renderAppShell(
     "exercise",
-    <div style={styles.exercisePage}>
+    <div className="ad-exercise" style={styles.exercisePage}>
       <div style={styles.exerciseTop}>
         <button style={styles.btnSecondarySmall} onClick={goBackToMenu}>
           ← Menu
@@ -1776,13 +1779,13 @@ speech.volume = 1;
         </div>
       </div>
 
-      <div style={styles.exerciseCardFinal}>
+      <div className="ad-exercise-card" style={styles.exerciseCardFinal}>
         <div style={styles.robotStage}>
           <img src={robotSrc} alt="robot" style={styles.bigRobot} />
           {showStar && <div style={styles.starAnim}>⭐</div>}
         </div>
 
-        <div style={styles.mainInstructionBox}>
+        <div className="ad-instruction" style={styles.mainInstructionBox}>
           <div style={styles.mainInstructionIcon}>
             {needsWriting ? "✏️" : isReadInstruction(instructionText) ? "📖" : "👂"}
           </div>
@@ -1802,7 +1805,7 @@ speech.volume = 1;
 
         <audio ref={audioRef} src={audioPath} />
 
-        <button style={styles.audioMainBtn} onClick={replayAudio}>
+        <button className="ad-listen" style={styles.audioMainBtn} onClick={replayAudio}>
           👂<span>Écouter</span>
         </button>
 
@@ -1813,6 +1816,7 @@ speech.volume = 1;
               {item.quiz.choices.map((choice) => (
                 <button
                   key={choice}
+                  className="ad-answer"
                   style={styles.choiceBtn}
                   aria-pressed={quizChoice === choice}
                   disabled={!quizAudioPlayed}
