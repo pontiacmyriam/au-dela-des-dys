@@ -2,6 +2,14 @@ const Stripe = require("stripe");
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
+function checkoutBaseUrl() {
+  if (process.env.VERCEL_ENV === 'preview' && process.env.VERCEL_URL &&
+      /^[a-z0-9.-]+\.vercel\.app$/i.test(process.env.VERCEL_URL)) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+  return 'https://www.audeladesdys.fr';
+}
+
 module.exports = async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Méthode non autorisée" });
@@ -21,8 +29,8 @@ module.exports = async function handler(req, res) {
           quantity: 1,
         },
       ],
-      success_url: "https://www.audeladesdys.fr?paiement=success",
-      cancel_url: "https://www.audeladesdys.fr?paiement=cancel",
+      success_url: `${checkoutBaseUrl()}/?paiement=success&session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${checkoutBaseUrl()}/?paiement=cancel`,
     });
 
     res.status(200).json({ url: session.url });
@@ -31,3 +39,5 @@ module.exports = async function handler(req, res) {
     res.status(500).json({ error: "Erreur création session Stripe" });
   }
 };
+
+module.exports.checkoutBaseUrl = checkoutBaseUrl;
