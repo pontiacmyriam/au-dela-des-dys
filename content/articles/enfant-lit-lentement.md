@@ -10,6 +10,12 @@ article_type: "satellite"
 
 Votre enfant déchiffre chaque mot, marque de longues pauses ou met beaucoup plus de temps que prévu pour terminer une page ? Une lecture lente peut inquiéter, surtout lorsque les comparaisons avec les camarades deviennent inévitables. Pourtant, la vitesse ne suffit pas à déterminer si un enfant présente un trouble.
 
+## Votre enfant peine à lire ou à assembler les syllabes ?
+
+Découvrez **22 activités gratuites** pour s’entraîner progressivement aux sons, aux syllabes et aux mots, à son rythme. Ces exercices complètent l’accompagnement éducatif et orthophonique.
+
+**CTA principal :** Essayer les 22 activités gratuites
+
 L’apprentissage de la lecture est progressif. Au début, l’enfant mobilise son attention pour associer les lettres aux sons et assembler les syllabes. Avec l’entraînement, ces opérations s’automatisent et libèrent des ressources pour la compréhension. La question essentielle n’est donc pas seulement « combien de mots lit-il ? », mais comment sa lecture évolue, quels efforts elle demande et ce qu’il comprend.
 
 > **Avertissement :** une lecture lente ne permet pas, à elle seule, de conclure à un trouble des apprentissages. En cas de doute, consultez un professionnel qualifié.
