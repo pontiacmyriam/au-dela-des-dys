@@ -888,20 +888,6 @@ export default function App() {
       .catch(() => setFeedback("Impossible de lancer le son. Vérifie le volume et réessaie."));
     };
 
-    // Known defective recording: quiz/ami.mp3 only plays the initial vowel.
-    // Say the complete target word for this recognition activity while the
-    // recorded asset is awaiting phonetic replacement and validation.
-    if (isQuiz && item?.quiz?.correct === "ami" && "speechSynthesis" in window) {
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance("ami");
-      utterance.lang = "fr-FR";
-      utterance.rate = 0.82;
-      utterance.onend = () => setQuizAudioPlayed(true);
-      utterance.onerror = playRecordedAudio;
-      window.speechSynthesis.speak(utterance);
-      return;
-    }
-
     // During spelling exercises, pronounce the full instruction. Otherwise the
     // learner hears only "midi" and cannot know whether to listen or to write.
     // The written answer stays hidden until the child attempts the exercise.
