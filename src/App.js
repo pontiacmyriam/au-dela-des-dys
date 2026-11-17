@@ -14,6 +14,17 @@ function googleTag() {
   window.dataLayer.push(arguments);
 }
 
+function trackCommercialEvent(eventName, parameters = {}) {
+  // Do not collect children's answers, identities, or activity text.
+  // Analytics events are emitted only after explicit analytics consent.
+  try {
+    const consent = localStorage.getItem("cookieConsent");
+    if (consent !== "accepted" && consent !== "analytics-granted") return;
+    if (!window.__auDelaDesDysGaConfigured) return;
+    googleTag("event", eventName, parameters);
+  } catch {}
+}
+
 function setGoogleConsent(analyticsStorage) {
   googleTag("consent", "update", {
     analytics_storage: analyticsStorage,
@@ -490,6 +501,9 @@ export default function App() {
         if (cancelled) return;
         const active = result.active === true;
         setHasActiveSubscription(active);
+        if (active && checkoutSessionId) {
+          trackCommercialEvent("premium_access_verified", { method: "stripe" });
+        }
         try {
           if (active) localStorage.setItem(PREMIUM_SESSION_STORAGE_KEY, sessionId);
           else if (checkoutSessionId) localStorage.removeItem(PREMIUM_SESSION_STORAGE_KEY);
@@ -606,6 +620,18 @@ export default function App() {
     index,
     hasActiveSubscription || previewQaAccess
   );
+  const lastPaywallViewRef = useRef(null);
+  useEffect(() => {
+    if (screen !== "exercise" || !item || canAccessCurrentActivity) {
+      lastPaywallViewRef.current = null;
+      return;
+    }
+    const key = `${currentFolder}:${index}`;
+    if (lastPaywallViewRef.current !== key) {
+      trackCommercialEvent("premium_offer_view", { location: "exercise" });
+      lastPaywallViewRef.current = key;
+    }
+  }, [screen, item, canAccessCurrentActivity, currentFolder, index]);
   const instructionText = item ? item.texte || "" : "";
 
   const needsWriting = isWriteInstruction(instructionText);
@@ -670,6 +696,7 @@ export default function App() {
   }
 
   function selectFolder(folderKey) {
+    trackCommercialEvent("exercise_open", { folder: folderKey });
     setCurrentFolder(folderKey);
     setScreen("exercise");
     resetExerciseVisuals();
@@ -690,6 +717,7 @@ export default function App() {
   }
 
   function handleSubscribe() {
+    trackCommercialEvent("subscribe_click", { location: screen });
     setTermsAccepted(false);
     setShowCheckoutConsent(true);
   }
@@ -710,6 +738,7 @@ export default function App() {
       }
 
       if (data.url) {
+        trackCommercialEvent("begin_checkout", { method: "stripe" });
         window.location.href = data.url;
       } else {
         alert("Impossible d’ouvrir le paiement pour le moment.");
