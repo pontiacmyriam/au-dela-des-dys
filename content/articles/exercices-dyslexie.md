@@ -10,6 +10,12 @@ article_type: "satellite"
 
 Lorsqu’un enfant dyslexique peine à lire, l’envie de multiplier les exercices est compréhensible. Pourtant, progresser ne consiste pas à répéter toujours plus longtemps la même tâche. Un entraînement utile cible une compétence précise, respecte le niveau réel de l’enfant et s’arrête avant que la fatigue ne transforme chaque mot en obstacle.
 
+## Votre enfant peine à lire ou à assembler les syllabes ?
+
+Découvrez **22 activités gratuites** pour s’entraîner progressivement aux sons, aux syllabes et aux mots, à son rythme. Ces exercices complètent l’accompagnement éducatif et orthophonique.
+
+**CTA principal :** Essayer les 22 activités gratuites
+
 Les exercices proposés ici travaillent progressivement l’écoute des sons, les syllabes, le décodage et la fluidité. Ils peuvent compléter les apprentissages à la maison, mais doivent rester cohérents avec les recommandations de l’enseignant et de l’orthophoniste.
 
 > **Avertissement :** ces exercices constituent un complément d’entraînement. Ils ne sont pas un traitement et ne remplacent ni un bilan ni une prise en soin professionnelle.

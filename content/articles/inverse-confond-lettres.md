@@ -10,6 +10,12 @@ article_type: "satellite"
 
 Votre enfant écrit « b » à la place de « d », lit « par » pour « pra » ou inverse des lettres dans un mot ? Ces erreurs inquiètent souvent les parents parce qu’elles sont associées à la dyslexie. Pourtant, les confusions sont fréquentes au début de l’apprentissage et ne suffisent jamais à poser un diagnostic.
 
+## Votre enfant peine à lire ou à assembler les syllabes ?
+
+Découvrez **22 activités gratuites** pour s’entraîner progressivement aux sons, aux syllabes et aux mots, à son rythme. Ces exercices complètent l’accompagnement éducatif et orthophonique.
+
+**CTA principal :** Essayer les 22 activités gratuites
+
 Pour savoir s’il faut demander un avis, il faut considérer l’âge, les notions déjà enseignées, la persistance des erreurs et les autres difficultés de lecture ou de langage.
 
 > **Avertissement :** les inversions ou confusions de lettres ne suffisent jamais à diagnostiquer une dyslexie. En cas de doute, consultez un professionnel qualifié.
