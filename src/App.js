@@ -388,6 +388,20 @@ export default function App() {
   const [progressMap, setProgressMap] = useState(loadProgressMap);
   const [completedFolders, setCompletedFolders] = useState(loadCompletedFolders);
   const [completedFolder, setCompletedFolder] = useState(null);
+  const [travellingIsland, setTravellingIsland] = useState(null);
+  const travelTimerRef = useRef(null);
+  const [animationsReduced, setAnimationsReduced] = useState(() => {
+    try {
+      const stored = localStorage.getItem("reducedAdventureMotion");
+      if (stored !== null) return stored === "true";
+    } catch {}
+    return window.matchMedia?.("(prefers-reduced-motion: reduce)").matches || false;
+  });
+  useEffect(() => () => clearTimeout(travelTimerRef.current), []);
+  function changeAnimationsReduced(reduced) {
+    setAnimationsReduced(reduced);
+    try { localStorage.setItem("reducedAdventureMotion", String(reduced)); } catch {}
+  }
 
   const [index, setIndex] = useState(0);
   const [answer, setAnswer] = useState("");
@@ -659,6 +673,20 @@ export default function App() {
     setCurrentFolder(folderKey);
     setScreen("exercise");
     resetExerciseVisuals();
+  }
+
+  function travelToFolder(folderKey) {
+    if (travellingIsland) return;
+    if (animationsReduced) {
+      selectFolder(folderKey);
+      return;
+    }
+    setTravellingIsland(folderKey);
+    travelTimerRef.current = setTimeout(() => {
+      selectFolder(folderKey);
+      setTravellingIsland(null);
+      travelTimerRef.current = null;
+    }, 850);
   }
 
   function handleSubscribe() {
@@ -1196,7 +1224,7 @@ speech.volume = 1;
 
   function renderAppShell(active, children) {
     return (
-      <div style={styles.desktopPage}>
+      <div className={animationsReduced ? "world-motion-off" : ""} style={styles.desktopPage}>
         <div style={styles.appFrame}>
           {renderSidebar(active)}
           <main style={styles.mainPanel}>
@@ -1606,9 +1634,10 @@ speech.volume = 1;
 
     return renderAppShell(
       "exercise",
-      <div style={styles.finishCard}>
+      <div className="world-victory" style={styles.finishCard}>
         <img src="/robots/robot_happy.png" alt="robot" style={styles.finishRobot} />
 
+        <div className="island-unlocked-badge">🏝️ Île franchie !</div>
         <h1 style={styles.finishTitle}>🎉 Bravo !</h1>
 
         <p style={styles.finishText}>
@@ -1618,7 +1647,7 @@ speech.volume = 1;
 
         {nextFolder ? (
           <p style={styles.finishText}>
-            Prêt(e) à continuer avec <strong>{LABELS[nextFolder]}</strong> ?
+            Une nouvelle île t’attend : <strong>{LABELS[nextFolder]}</strong> !
           </p>
         ) : (
           <p style={styles.finishText}>Tu as terminé tout le parcours 👏</p>
@@ -1635,7 +1664,7 @@ speech.volume = 1;
               setScreen("exercise");
             }}
           >
-            ➡️ Continuer
+            🛶 Naviguer vers l’île suivante
           </button>
         )}
 
@@ -1671,8 +1700,8 @@ speech.volume = 1;
   if (!currentFolder || screen === "home") {
     return renderAppShell(
       "home",
-      <div style={styles.homeLayoutSingle}>
-        <section style={styles.heroCardLarge}>
+      <div className="world-home" style={styles.homeLayoutSingle}>
+        <section className="world-hero" style={styles.heroCardLarge}>
           <div style={styles.heroTop}>
             <div>
               <div style={styles.eyebrow}>Bienvenue</div>
@@ -1690,9 +1719,67 @@ speech.volume = 1;
 
           <p style={styles.heroText}>Écoute, écris, lis et progresse à ton rythme.</p>
 
+          <div className="world-journey" aria-label="Les trois étapes de ton aventure">
+            <div className="world-journey-step"><span aria-hidden="true">👂</span><strong>J’écoute</strong></div>
+            <div className="world-journey-step"><span aria-hidden="true">✏️</span><strong>J’écris</strong></div>
+            <div className="world-journey-step"><span aria-hidden="true">📖</span><strong>Je lis</strong></div>
+          </div>
+
           <button style={styles.btn} onClick={startTraining}>
             🚀 Reprendre mon entraînement
           </button>
+
+          <section className="island-adventure" aria-labelledby="island-map-title">
+            <div className="island-heading">
+              <div>
+                <span className="island-kicker">🗺️ Mon aventure</span>
+                <h2 id="island-map-title">D’île en île !</h2>
+              </div>
+              <span className="island-count">{completedFolders.length} île{completedFolders.length > 1 ? "s" : ""} terminée{completedFolders.length > 1 ? "s" : ""}</span>
+            </div>
+            <p className="island-description">Termine les activités d’une île pour découvrir la suivante. Prends ton temps !</p>
+            <label className="island-motion-toggle">
+              <input type="checkbox" checked={animationsReduced} onChange={(event) => changeAnimationsReduced(event.target.checked)} />
+              Réduire les animations
+            </label>
+            <div className="island-sea">
+              <svg className="island-route" viewBox="0 0 320 780" preserveAspectRatio="none" aria-hidden="true">
+                <path d="M95 68 C255 110 255 175 162 190 S35 275 145 310 S275 400 165 430 S32 520 154 550 S265 650 162 710" />
+              </svg>
+              {travellingIsland && (
+                <div className="island-travel-animation" role="status" aria-live="polite">
+                  <img src={avatar === "girl" ? "/robots/robot_girl.png" : "/robots/robot_boy.png"} alt="" aria-hidden="true" />
+                  <span>En route vers la prochaine île !</span>
+                </div>
+              )}
+              {folders.map((folder, islandIndex) => {
+                const isUnlocked = unlockedFolders.some((unlocked) => unlocked.key === folder.key);
+                const isComplete = completedFolders.includes(folder.key);
+                const icon = ["🏝️", "🌺", "🐚", "🌴", "🦋", "🌈", "🏰", "⭐"][islandIndex % 8];
+                return (
+                  <button
+                    key={folder.key}
+                    type="button"
+                    className={`island-stop ${isComplete ? "is-complete" : isUnlocked ? "is-open" : "is-locked"} ${travellingIsland === folder.key ? "is-destination" : ""}`}
+                    style={{ "--island-index": islandIndex }}
+                    disabled={!isUnlocked || Boolean(travellingIsland)}
+                    aria-label={`${folder.label || LABELS[folder.key] || folder.key} : ${isComplete ? "terminée, rejouer" : isUnlocked ? "accessible, explorer" : "verrouillée"}`}
+                    onClick={() => travelToFolder(folder.key)}
+                  >
+                    <span className="island-land" aria-hidden="true">
+                      <span className="island-number">{islandIndex + 1}</span>
+                      <span className="island-symbol">{isUnlocked ? icon : "🔒"}</span>
+                      {isUnlocked && !isComplete && !travellingIsland && <span className="island-robot-marker" aria-hidden="true">🤖</span>}
+                      <span className="island-status">{isComplete ? "⭐" : isUnlocked ? "▶" : "·"}</span>
+                    </span>
+                    <strong>{folder.label || LABELS[folder.key] || folder.key}</strong>
+                    <small>{isComplete ? "Terminée !" : isUnlocked ? "Explorer" : "À découvrir"}</small>
+                  </button>
+                );
+              })}
+            </div>
+            <p className="island-map-hint">Les îles déjà découvertes restent accessibles pour s’entraîner encore.</p>
+          </section>
 
           <div style={styles.mainChoiceGrid}>
             <button style={styles.quickCardLarge} onClick={() => setScreen("validated")}>
@@ -1752,7 +1839,7 @@ speech.volume = 1;
 
   return renderAppShell(
     "exercise",
-    <div style={styles.exercisePage}>
+    <div className="world-exercise" style={styles.exercisePage}>
       <div style={styles.exerciseTop}>
         <button style={styles.btnSecondarySmall} onClick={goBackToMenu}>
           ← Menu
@@ -1776,13 +1863,13 @@ speech.volume = 1;
         </div>
       </div>
 
-      <div style={styles.exerciseCardFinal}>
+      <div className="world-exercise-card" style={styles.exerciseCardFinal}>
         <div style={styles.robotStage}>
           <img src={robotSrc} alt="robot" style={styles.bigRobot} />
           {showStar && <div style={styles.starAnim}>⭐</div>}
         </div>
 
-        <div style={styles.mainInstructionBox}>
+        <div className="world-instruction" style={styles.mainInstructionBox}>
           <div style={styles.mainInstructionIcon}>
             {needsWriting ? "✏️" : isReadInstruction(instructionText) ? "📖" : "👂"}
           </div>

@@ -124,3 +124,563 @@ audio {
     font-size: 21px;
   }
 }
+
+
+/* Playful world — visual-only layer. Pedagogical content and flows are untouched. */
+:root {
+  --world-ink: #21304e;
+  --world-purple: #7356d8;
+  --world-blue: #4586eb;
+  --world-mint: #42d6b4;
+  --world-yellow: #ffdb78;
+}
+html { background: #e7e5ff; }
+body {
+  color: var(--world-ink);
+  background:
+    radial-gradient(circle at 8% 9%, rgba(255, 223, 124, .58) 0 6%, transparent 22%),
+    radial-gradient(circle at 93% 16%, rgba(144, 111, 244, .35) 0 9%, transparent 27%),
+    radial-gradient(circle at 82% 85%, rgba(61, 206, 179, .25) 0 10%, transparent 28%),
+    linear-gradient(145deg, #dfeaff 0%, #f5eaff 43%, #e2fcf5 100%) !important;
+  background-attachment: fixed !important;
+}
+#root { isolation: isolate; }
+#root > div[style] {
+  position: relative;
+  background: transparent !important;
+}
+#root > div[style]::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: .38;
+  background-image: radial-gradient(#ffffff 2px, transparent 3px);
+  background-size: 43px 43px;
+  mask-image: linear-gradient(115deg, #000, transparent 80%);
+}
+#root div[style*="grid-template-columns: 285px 1fr"] {
+  gap: 24px !important;
+  align-items: start;
+}
+#root aside[style] {
+  border: 2px solid rgba(255,255,255,.94) !important;
+  border-radius: 32px !important;
+  background: linear-gradient(165deg, #ffffff 0%, #f6f1ff 56%, #e9f9ff 100%) !important;
+  box-shadow: 0 16px 0 rgba(99,83,165,.08), 0 25px 50px rgba(78,70,150,.17) !important;
+}
+#root main[style] {
+  border-radius: 34px !important;
+}
+#root main[style] > div[style] {
+  border-color: rgba(255,255,255,.95) !important;
+}
+#root main[style] h1,
+#root main[style] h2,
+#root main[style] h3 {
+  color: #26345c !important;
+  letter-spacing: -.025em;
+  text-wrap: balance;
+}
+#root button:not(:disabled) { cursor: pointer; }
+#root button[style] {
+  border: 2px solid rgba(255,255,255,.85) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 6px 0 rgba(65,75,130,.13), 0 12px 22px rgba(74,85,148,.10) !important;
+  transition: transform .2s ease, box-shadow .2s ease, filter .2s ease !important;
+}
+@media (hover: hover) and (pointer: fine) {
+  #root button:not(:disabled):hover {
+    transform: translateY(-4px);
+    filter: saturate(1.10);
+    box-shadow: 0 10px 0 rgba(65,75,130,.11), 0 18px 30px rgba(74,85,148,.16) !important;
+  }
+}
+#root button:not(:disabled):active {
+  transform: translateY(2px) scale(.99);
+  box-shadow: 0 2px 0 rgba(65,75,130,.11), 0 5px 12px rgba(74,85,148,.12) !important;
+}
+#root button:focus-visible,
+#root a:focus-visible,
+#root input:focus-visible {
+  outline: 4px solid #f6ad39 !important;
+  outline-offset: 3px;
+}
+#root button:disabled { opacity: .57; cursor: not-allowed; }
+#root input:not([type="checkbox"]):not([type="file"]),
+#root textarea {
+  border: 2px solid #b9c9f1 !important;
+  border-radius: 17px !important;
+  background: #fff !important;
+  color: #233250 !important;
+  box-shadow: inset 0 2px 4px rgba(61,76,122,.06);
+}
+#root img[alt^="Robot"], #root img[alt="robot"] {
+  filter: drop-shadow(0 14px 0 rgba(101,105,191,.11)) drop-shadow(0 20px 25px rgba(83,98,187,.17)) !important;
+}
+#root main[style] > div[style*="background"],
+#root main[style] section[style*="background"] {
+  box-shadow: 0 12px 32px rgba(77,86,154,.08);
+}
+@media (max-width: 760px) {
+  #root div[style*="grid-template-columns: 285px 1fr"] { gap: 16px !important; }
+  #root aside[style] { border-radius: 25px !important; }
+  #root main[style] { border-radius: 25px !important; }
+  #root button[style] { min-height: 52px !important; }
+  #root main[style] h1 { font-size: clamp(25px, 7vw, 36px) !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #root button, #root button[style] { transition: none !important; }
+  #root button:not(:disabled):hover,
+  #root button:not(:disabled):active { transform: none !important; }
+}
+
+
+/* The welcoming game-world: decorative scenery stays behind readable content. */
+.world-home .world-hero {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  border: 3px solid #fff !important;
+  background:
+    radial-gradient(ellipse at 50% 38%, rgba(255,255,255,.98) 0 20%, transparent 57%),
+    linear-gradient(180deg, #d9e7ff 0%, #f3ecff 54%, #e7fff2 100%) !important;
+  box-shadow: 0 12px 0 rgba(110,92,183,.12), 0 24px 56px rgba(90,83,165,.18) !important;
+}
+.world-hero::before {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: -1;
+  width: 230px;
+  height: 230px;
+  top: 18%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: linear-gradient(145deg, #fff3b0, #ffe0fb);
+  box-shadow: 0 0 0 18px rgba(255,255,255,.38), 0 0 0 38px rgba(255,255,255,.22);
+}
+.world-hero::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: -8%;
+  right: -8%;
+  bottom: 0;
+  height: 22%;
+  background:
+    radial-gradient(ellipse at 15% 100%, #9ee9ca 0 40%, transparent 41%),
+    radial-gradient(ellipse at 78% 100%, #8bddbb 0 48%, transparent 49%),
+    linear-gradient(0deg, #b7f2d1, transparent);
+  opacity: .66;
+  pointer-events: none;
+}
+.world-hero img[alt="robot"] {
+  position: relative;
+  z-index: 1;
+  width: clamp(155px, 30vw, 205px) !important;
+}
+.world-hero > button[style] {
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(135deg, #6956de, #438af0) !important;
+  color: #fff !important;
+  border: 2px solid #fff !important;
+  padding: 16px 22px !important;
+  box-shadow: 0 7px 0 #4943a8, 0 16px 24px rgba(70,74,161,.21) !important;
+}
+.world-hero > button[style]:active {
+  box-shadow: 0 2px 0 #4943a8, 0 7px 13px rgba(70,74,161,.18) !important;
+}
+.world-journey {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 13px;
+  max-width: 520px;
+  margin: 8px auto 26px;
+  position: relative;
+}
+.world-journey-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 97px;
+  padding: 10px 6px;
+  color: #2c3960;
+  background: rgba(255,255,255,.92);
+  border: 2px solid rgba(255,255,255,1);
+  border-radius: 25px;
+  box-shadow: 0 6px 0 rgba(95,95,165,.14), 0 14px 22px rgba(100,101,172,.10);
+  font-size: clamp(13px, 2.5vw, 16px);
+}
+.world-journey-step span {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 17px;
+  background: #ddedff;
+  font-size: 27px;
+}
+.world-journey-step:nth-child(2) span { background: #fff0bf; }
+.world-journey-step:nth-child(3) span { background: #dbf8e9; }
+.world-hero .world-journey + button + div button[style] {
+  background: rgba(255,255,255,.94) !important;
+  border: 2px solid #fff !important;
+}
+@media (max-width: 480px) {
+  .world-home .world-hero { padding: 20px 13px 24px !important; }
+  .world-hero::before { width: 160px; height: 160px; }
+  .world-journey { gap: 7px; }
+  .world-journey-step { min-height: 85px; border-radius: 18px; }
+  .world-journey-step span { width: 39px; height: 39px; font-size: 23px; }
+}
+
+
+/* The activity screen deliberately becomes calmer than the welcome world. */
+.world-exercise {
+  max-width: 860px;
+  margin: 0 auto;
+}
+.world-exercise [role="progressbar"] {
+  height: 16px !important;
+  padding: 3px;
+  box-sizing: border-box;
+  background: #e5defa !important;
+  border: 1px solid #d8cfee;
+  box-shadow: inset 0 2px 4px rgba(47,46,108,.11);
+}
+.world-exercise [role="progressbar"] > div {
+  background: linear-gradient(90deg, #56d5b1, #6b8ff5, #9173e9) !important;
+  box-shadow: 0 2px 6px rgba(85,97,194,.18);
+}
+.world-exercise-card {
+  position: relative;
+  overflow: hidden;
+  border: 3px solid #fff !important;
+  background: linear-gradient(180deg, #fff 0%, #f8f7ff 100%) !important;
+  box-shadow: 0 11px 0 rgba(102,88,170,.09), 0 25px 44px rgba(71,75,140,.12) !important;
+}
+.world-exercise-card::before,
+.world-exercise-card::after {
+  content: "✦";
+  position: absolute;
+  top: 27px;
+  color: #c7b3f3;
+  font-size: 27px;
+  pointer-events: none;
+}
+.world-exercise-card::before { left: 9%; }
+.world-exercise-card::after { right: 9%; color: #f2cf79; }
+.world-exercise-card .world-instruction {
+  border: 2px solid #dfe6fb !important;
+  background: #fff !important;
+  box-shadow: 0 5px 0 #ecedfa, 0 12px 25px rgba(67,75,123,.06);
+}
+.world-instruction > div[style]:not(:first-child) {
+  letter-spacing: .005em;
+  line-height: 1.35 !important;
+}
+.world-exercise-card > button[style]:has(span) {
+  border: 5px solid #fff !important;
+  border-radius: 50% !important;
+  background: linear-gradient(145deg, #7c6de6, #458be9) !important;
+  box-shadow: 0 8px 0 #5d61bc, 0 16px 30px rgba(75,86,177,.22) !important;
+}
+.world-exercise-card > button[style]:has(span):active {
+  box-shadow: 0 2px 0 #5d61bc, 0 8px 15px rgba(75,86,177,.20) !important;
+}
+.world-exercise-card input[aria-label="Réponse à l’exercice"] {
+  background: #fff !important;
+  border: 3px solid #bfc8f3 !important;
+  border-radius: 21px !important;
+  min-height: 75px;
+  line-height: 1.4;
+}
+.world-exercise-card input[aria-label="Réponse à l’exercice"]:focus {
+  border-color: #7369d6 !important;
+}
+.world-victory {
+  position: relative;
+  overflow: hidden;
+  border: 3px solid #fff !important;
+  background:
+    radial-gradient(circle at 50% 25%, #fff9cc 0 10%, transparent 39%),
+    linear-gradient(160deg, #e2dcff, #f9efff 46%, #e1fff1) !important;
+  box-shadow: 0 12px 0 rgba(93,96,164,.11), 0 25px 45px rgba(73,82,146,.15) !important;
+}
+.world-victory::before,
+.world-victory::after {
+  content: "✦  ★  ✦";
+  position: absolute;
+  top: 12%;
+  font-size: 35px;
+  letter-spacing: 18px;
+  color: #e5ba54;
+  opacity: .8;
+  pointer-events: none;
+}
+.world-victory::before { left: 3%; transform: rotate(-19deg); }
+.world-victory::after { right: 0; transform: rotate(19deg); color: #a68de6; }
+@media (max-width: 760px) {
+  .world-exercise-card { padding: 20px 13px 26px !important; }
+  .world-instruction { padding: 18px 12px !important; }
+  .world-instruction > div[style]:not(:first-child) { font-size: clamp(23px, 6vw, 32px) !important; }
+  .world-exercise-card::before, .world-exercise-card::after { font-size: 19px; top: 18px; }
+}
+@media (max-width: 420px) {
+  .world-exercise-card > div[style*="grid-template-columns: 1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+
+/* Island adventure: interactive learning navigation, not a decorative illustration. */
+.island-adventure {
+  margin: 30px 0 25px;
+  padding: 22px 18px 18px;
+  border-radius: 30px;
+  border: 3px solid #fff;
+  background: #e2f4ff;
+  box-shadow: 0 8px 0 rgba(77,132,181,.17), 0 18px 30px rgba(67,113,171,.12);
+  text-align: left;
+}
+.island-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.island-kicker { color: #375e9d; font-size: 13px; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; }
+.island-heading h2 { margin: 3px 0 0 !important; font-size: clamp(25px, 5vw, 34px) !important; }
+.island-count {
+  padding: 8px 12px;
+  color: #315278;
+  background: #fff;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 12px;
+}
+.island-description { margin: 12px 0 8px; color: #3c5779; font-size: 15px; line-height: 1.5; }
+.island-sea {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  row-gap: 10px;
+  align-items: center;
+  padding: 26px 0 32px;
+  border-radius: 25px;
+  isolation: isolate;
+  background:
+    radial-gradient(ellipse at 18% 10%, rgba(255,255,255,.5), transparent 28%),
+    radial-gradient(ellipse at 89% 53%, rgba(255,255,255,.5), transparent 30%),
+    repeating-linear-gradient(158deg, transparent 0 47px, rgba(255,255,255,.22) 49px 52px, transparent 54px 110px),
+    linear-gradient(180deg, #b7e8fa, #87d7f4 55%, #a4e9e7);
+}
+.island-route {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+.island-route path {
+  fill: none;
+  stroke: rgba(255,255,255,.93);
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-dasharray: 3 12;
+}
+#root .island-stop[style] {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: min(96%, 225px);
+  min-height: 175px !important;
+  margin: 0 auto;
+  padding: 10px 8px 14px;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: #203c5b;
+  text-align: center;
+  transform: none;
+}
+#root .island-stop:nth-of-type(odd) { grid-column: 1; }
+#root .island-stop:nth-of-type(even) { grid-column: 2; }
+#root .island-stop:nth-of-type(even) { transform: translateY(49%) !important; }
+#root .island-stop:last-of-type { margin-bottom: 14px; }
+.island-land {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 118px;
+  height: 95px;
+  border: 5px solid #fff6d9;
+  border-radius: 48% 52% 41% 57% / 51% 43% 57% 49%;
+  background: radial-gradient(ellipse at 50% 25%, #d3ffa4, #61d69c 70%);
+  box-shadow: 0 10px 0 #36a9b9, 0 15px 21px rgba(38,102,147,.22);
+  transform: rotate(-5deg);
+  transition: transform .18s ease, filter .18s ease;
+}
+.island-stop:nth-of-type(even) .island-land { transform: rotate(6deg); }
+.island-symbol { font-size: 46px; line-height: 1; }
+.island-number {
+  position: absolute;
+  left: -6px;
+  top: -10px;
+  display: grid;
+  place-items: center;
+  width: 29px;
+  height: 29px;
+  color: #fff;
+  font-size: 14px;
+  border-radius: 50%;
+  background: #6059c1;
+  border: 2px solid white;
+}
+.island-status {
+  position: absolute;
+  right: -10px;
+  bottom: -8px;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid white;
+  color: #fff;
+  background: #4a64cd;
+  font-size: 18px;
+}
+.island-stop strong {
+  display: block;
+  max-width: 210px;
+  margin-top: 16px;
+  font-size: 15px;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+.island-stop small { margin-top: 3px; font-size: 12px; color: #3b658a; font-weight: 800; }
+#root .island-stop.is-locked { opacity: 1 !important; }
+.island-stop.is-locked .island-land {
+  background: #c9d8e5;
+  border-color: #eaf1f6;
+  filter: grayscale(.6);
+  box-shadow: 0 8px 0 #8eb6cb, 0 13px 16px rgba(40,78,107,.1);
+}
+.island-stop.is-locked strong, .island-stop.is-locked small { color: #526f81; }
+.island-stop.is-complete .island-status { background: #e9a83a; }
+.island-stop.is-open .island-status { background: #3ca579; }
+@media (hover: hover) and (pointer: fine) {
+  #root .island-stop.is-open:hover .island-land,
+  #root .island-stop.is-complete:hover .island-land {
+    transform: translateY(-6px) rotate(0deg);
+    filter: brightness(1.05);
+  }
+}
+.island-map-hint { color: #426586; text-align: center; font-size: 13px; line-height: 1.45; margin: 13px 0 0; }
+@media (max-width: 480px) {
+  .island-adventure { padding: 15px 10px 14px; }
+  .island-sea { row-gap: 2px; }
+  #root .island-stop[style] { min-height: 150px !important; }
+  .island-land { width: 94px; height: 81px; }
+  .island-symbol { font-size: 37px; }
+  .island-stop strong { font-size: 13px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .island-land { transition: none; }
+}
+
+.island-unlocked-badge {
+  display: inline-block;
+  padding: 10px 18px;
+  margin: 4px auto 8px;
+  border: 2px solid #fff;
+  border-radius: 999px;
+  background: #fff5c4;
+  color: #74500c;
+  box-shadow: 0 5px 0 rgba(174,140,62,.16);
+  font-size: 18px;
+  font-weight: 900;
+}
+
+
+/* Calm companion: journey-only animation, never inside a reading exercise. */
+.island-motion-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin: 3px 0 12px;
+  padding: 8px 11px;
+  background: rgba(255,255,255,.8);
+  border-radius: 14px;
+  color: #325472;
+  font-size: 14px;
+  font-weight: 750;
+  cursor: pointer;
+}
+.island-motion-toggle input { width: 19px; height: 19px; accent-color: #665bd0; }
+.island-robot-marker {
+  position: absolute;
+  right: -19px;
+  top: -22px;
+  font-size: 28px;
+  filter: drop-shadow(0 3px 2px rgba(57,79,138,.18));
+  animation: island-robot-wave 2.8s ease-in-out infinite;
+}
+@keyframes island-robot-wave {
+  0%, 75%, 100% { transform: rotate(0deg); }
+  82% { transform: rotate(13deg) translateY(-4px); }
+  90% { transform: rotate(-9deg); }
+}
+.island-stop.is-destination .island-land {
+  outline: 4px solid #fff2a4;
+  outline-offset: 4px;
+  filter: brightness(1.09);
+}
+.island-travel-animation {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: 24px;
+  background: rgba(217,241,255,.74);
+  backdrop-filter: blur(3px);
+  pointer-events: none;
+  text-align: center;
+  color: #243c69;
+  font-size: 18px;
+  font-weight: 900;
+}
+.island-travel-animation img {
+  width: 94px;
+  height: 118px;
+  object-fit: contain;
+  animation: island-robot-travel .85s ease-in-out both;
+}
+.island-travel-animation span {
+  padding: 9px 14px;
+  border: 2px solid white;
+  background: #fff9d8;
+  border-radius: 18px;
+}
+@keyframes island-robot-travel {
+  0% { transform: translate(-110px,45px) rotate(-16deg) scale(.75); opacity: .4; }
+  40% { transform: translate(0,-25px) rotate(8deg) scale(1.05); opacity: 1; }
+  100% { transform: translate(110px,20px) rotate(-5deg) scale(.85); opacity: .9; }
+}
+.world-motion-off *, .world-motion-off *::before, .world-motion-off *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .island-travel-animation img, .island-robot-marker { animation: none !important; }
+}

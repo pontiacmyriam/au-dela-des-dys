@@ -20,7 +20,7 @@ test('les premières activités n’imposent plus les mots les plus complexes si
 
 test('le deuxième palier consolide les syllabes et les mots réguliers', () => {
   const activities = buildSimpleProgression(prototype);
-  expect(activities).toHaveLength(14);
+  expect(activities).toHaveLength(15);
   expect(activities.every((activity) => activity.audio.endsWith('.mp3'))).toBe(true);
   expect(activities.map((activity) => activity.texte).join(' '))
     .not.toMatch(/éléphant|gâteau|girafe|café|bateau|forêt|rat/i);
