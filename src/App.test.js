@@ -1,6 +1,11 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import App from "./App";
 
+// Jest's legacy resolver cannot load this subpath's package exports, while
+// Vercel's production bundler resolves it correctly. No analytics side effect
+// is needed to test the application's UI.
+jest.mock("@vercel/speed-insights/react", () => ({ SpeedInsights: () => null }), { virtual: true });
+
 beforeEach(() => {
   localStorage.clear();
   Object.defineProperty(window, "speechSynthesis", {
